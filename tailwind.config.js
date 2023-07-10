@@ -2,11 +2,11 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -14,6 +14,34 @@ module.exports = {
       screens: {
         "2xl": "1400px",
       },
+    },
+    colors: {
+      "vita-yellow": "#ffdd35",
+      "vita-purple": "#6256ec",
+      black: "#000000",
+      white: "#ffffff",
+      gray: {
+        200: "#f8f8f8",
+        400: "#f1f1f1",
+        600: "#cdcdcd",
+        800: "#a4a4a4",
+      },
+      "tag-yellow": "#fff9ae",
+      "tag-turquoise": "#41f4d4",
+      "tag-sky": "#95e5ff",
+      "tag-pink": "#fec0e8",
+    },
+    fontSize: {
+      sm: ["0.875rem", { lineHeight: "1.225rem" }],
+      base: ["1rem", { lineHeight: "1.5rem" }],
+      lg: ["1.5rem", { lineHeight: "1.75rem" }],
+      h4: ["1.5rem", { lineHeight: "1.8rem", letterSpacing: "-0.015rem" }],
+      h3: ["2rem", { lineHeight: "2.4rem", letterSpacing: "-0.02rem" }],
+      h2: ["2.5rem", { lineHeight: "3rem", letterSpacing: "-0.025rem" }],
+      h1: ["4rem", { lineHeight: "4.4rem", letterSpacing: "-0.08rem" }],
+    },
+    fontFamily: {
+      "tt-hoves": "TT Hoves, sans-serif",
     },
     extend: {
       colors: {
@@ -73,4 +101,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

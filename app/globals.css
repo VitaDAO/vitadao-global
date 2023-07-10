@@ -1,73 +1,73 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
- 
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
- 
+
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
- 
+
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
- 
+
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
- 
+
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
- 
+
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
- 
+
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
- 
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
- 
+
     --ring: 215 20.2% 65.1%;
- 
+
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
- 
+
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
- 
+
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
- 
+
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
- 
+
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
- 
+
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
- 
+
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
- 
+
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
- 
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
- 
+
     --ring: 217.2 32.6% 17.5%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
@@ -75,4 +75,76 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer base {
+  @font-face {
+    font-family: "TT Hoves";
+    font-weight: 400;
+    src: url("/fonts/TTHovesRegular/font.woff2") format("woff2"),
+      url("/fonts/TTHovesRegular/font.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "TT Hoves";
+    font-weight: 500;
+    src: url("/fonts/TTHovesMedium/font.woff2") format("woff2"),
+      url("/fonts/TTHovesMedium/font.woff") format("woff");
+  }
+
+  @font-face {
+    font-family: "TT Hoves";
+    font-weight: 600;
+    src: url("/fonts/TTHovesDemiBold/font.woff2") format("woff2"),
+      url("/fonts/TTHovesDemiBold/font.woff") format("woff");
+  }
+}
+
+.icon--vita {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.icon--vita--bro {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath fill='black' stroke='black' stroke-miterlimit='10' stroke-width='.944' d='M11.328 8.871a2.415 2.416 0 100-4.831 2.415 2.416 0 000 4.832zm3.241 5.407a.958.959 0 00.701-1.614 5.421 5.424 0 00-7.884 0 .958.959 0 00.7 1.614zM3.765 5.518a1.897 1.898 0 100-3.796 1.897 1.898 0 000 3.797zm2.547 4.45a.756.756 0 00.551-1.269 4.263 4.265 0 00-6.193 0 .756.756 0 00.55 1.269z'/%3E%3C/svg%3E");
+}
+
+.icon--vita--chevron {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath fill='black' fill-rule='evenodd' d='M0 11.008 8 2.7l8 8.308-2.369 2.292L8 7.452 2.369 13.3Z' clip-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.icon--vita--cog {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath fill='black' fill-rule='evenodd' d='M6.992 0h2.039a.41.41 0 01.302.253l.246 1.786c.124.673.989 1.05 1.545.618L12.55 1.6a.278.278 0 01.37 0l1.483 1.482a.278.278 0 010 .37l-1.05 1.423c-.432.556-.061 1.42.619 1.545l1.78.252c.124.063.247.125.247.31v2.04a.408.408 0 01-.248.31l-1.786.246c-.673.124-1.05.989-.618 1.545l1.056 1.428a.278.278 0 010 .37l-1.49 1.483a.278.278 0 01-.363 0l-1.422-1.05c-.556-.432-1.42-.061-1.544.619l-.253 1.78a.409.409 0 01-.31.247h-2.03c-.187 0-.249-.123-.31-.248l-.256-1.786c-.124-.673-.989-1.05-1.545-.618l-1.428 1.056a.278.278 0 01-.37 0L1.6 12.916a.278.278 0 010-.364l1.05-1.422c.432-.556.061-1.42-.62-1.544L.254 9.333A.41.41 0 010 9.023v-2.03c0-.187.123-.249.248-.31l1.79-.256c.674-.124 1.052-.989.62-1.545L1.6 3.454a.278.278 0 010-.37L3.083 1.6a.278.278 0 01.37 0l1.423 1.05c.556.432 1.42.061 1.545-.62L6.673.254A.41.41 0 016.993 0Zm.98 4.633a3.37 3.37 0 11-3.339 3.4 3.35 3.35 0 013.34-3.4Z' clip-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.icon--vita--gavel {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cg fill='black'%3E%3Cpath d='M12.092 6.452 6.97 1.315 3.712 4.584 8.834 9.72z'/%3E%3Cpath d='M8.054 1.259 7.03.23a.787.79 0 00-1.114 0L2.628 3.528a.787.79 0 000 1.117l1.026 1.028a.787.79 0 001.113 0l3.287-3.296a.787.79 0 000-1.118zm5.121 5.135-1.026-1.028a.787.79 0 00-1.113 0L7.749 8.662a.787.79 0 000 1.117l1.025 1.029a.787.79 0 001.114 0l3.287-3.297a.787.79 0 000-1.117zM5.41 8.42l-.4-.401a1.23 1.234 0 00-1.738 0L.61 10.688a1.23 1.234 0 000 1.745l.4.4a1.23 1.234 0 001.74 0l2.66-2.668a1.23 1.234 0 000-1.745z'/%3E%3Cpath d='M7.258 7.378a.86.862 0 10-1.215-1.217L2.86 9.354a.86.862 0 101.215 1.217zm7.707 5.125H7.537a.788.788 0 00-.787.79v1.918c0 .436.353.789.787.789h7.426a.788.788 0 00.787-.79v-1.917a.788.788 0 00-.787-.79z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.icon--vita--home {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath fill='black' d='M14.768 15.999h-4.024a.724.724 0 01-.732-.712v-3.553c0-1.084-.897-1.956-2.013-1.956-1.114 0-2.01.872-2.01 1.956v3.556c0 .39-.33.71-.734.71H1.233a.724.724 0 01-.733-.713V8.55c0-.533.202-1.03.568-1.421L7.45.23A.804.804 0 017.999 0a.8.8 0 01.55.231l6.383 6.88c.367.392.568.906.568 1.422v6.754a.723.723 0 01-.732.712z'/%3E%3C/svg%3E");
+}
+
+.icon--vita--logo {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath fill='black' d='m3.747 2.042.139.092a7.353 7.353 0 008.355-.013c2.068-1.438 4.69.874 3.43 3.03L11.374 12.5c-1.48 2.533-5.216 2.533-6.702 0L.33 5.073C-.93 2.93 1.677.61 3.747 2.042Z'/%3E%3C/svg%3E");
+}
+
+.icon--vita--piechart {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cg fill='black'%3E%3Cpath d='M9.899.01C9.302-.08 8.81.418 8.81 1.02v5.076a1.092 1.092 0 001.092 1.092h5.076c.603 0 1.101-.491 1.01-1.087A7.264 7.259 0 009.9.01Z'/%3E%3Cpath d='M8.343 8.745A1.092 1.092 0 017.25 7.653V2.582c0-.604-.491-1.1-1.089-1.01a7.26 7.256 0 108.278 8.261c.09-.596-.407-1.088-1.01-1.088Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.icon--vita--shapes {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cg fill='black' transform='matrix(1.04735 0 0 1.04667 -.758 .15)'%3E%3Crect width='6' height='6' x='1' rx='1'/%3E%3Crect width='6' height='6' x='10' y='9' rx='1'/%3E%3Crect width='6' height='6' x='10' rx='3'/%3E%3Cpath d='m.855 13.504 2.277-3.985a1 1 0 011.736 0l2.277 3.985A1 1 0 016.277 15H1.723a1 1 0 01-.868-1.496Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.icon--vita--star {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath fill='black' d='M7.514.327a.526.526 0 01.973 0l1.97 4.448a.538.538 0 00.424.321l4.646.59c.454.058.635.645.302.97l-3.43 3.34a.58.58 0 00-.16.52l.899 4.812c.088.469-.389.832-.787.6l-4.09-2.385a.515.515 0 00-.521 0l-4.092 2.385c-.399.232-.874-.13-.786-.6l.9-4.812a.58.58 0 00-.16-.52l-3.43-3.34c-.335-.325-.153-.912.3-.97l4.648-.59a.54.54 0 00.422-.32L7.514.326Z'/%3E%3C/svg%3E");
 }
