@@ -1,21 +1,22 @@
 "use client";
 
+import * as Popover from "@radix-ui/react-popover";
 import Image from "next/image";
+import { useState } from "react";
 
 import { Providers } from "@/components/providers";
 import { AuthControls } from "@/components/ui/auth-controls";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
 import { cn } from "@/lib/utils";
-import * as Popover from "@radix-ui/react-popover";
 
-interface MenuCardProps {
+interface MenuCardProps extends React.ComponentPropsWithoutRef<"div"> {
   href?: string;
   children: React.ReactNode;
   className?: string;
 }
 
-function MenuCard({ href, children, className }: MenuCardProps) {
+function MenuCard({ href, children, className, ...rest }: MenuCardProps) {
   const finalClassName = cn(
     "flex h-full flex-col justify-between rounded-xl bg-gray-400 p-6 sm:text-lg",
     className
@@ -24,15 +25,22 @@ function MenuCard({ href, children, className }: MenuCardProps) {
   if (href) {
     return (
       <Link href={href}>
-        <div className={finalClassName}>{children}</div>
+        <div className={finalClassName} {...rest}>
+          {children}
+        </div>
       </Link>
     );
   }
 
-  return <div className={finalClassName}>{children}</div>;
+  return (
+    <div className={finalClassName} {...rest}>
+      {children}
+    </div>
+  );
 }
 
 export function Navigation() {
+  const [open, setOpen] = useState(false);
   return (
     <>
       <nav className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-2 md:hidden">
@@ -44,7 +52,7 @@ export function Navigation() {
           priority
           className="inline"
         />
-        <Popover.Root>
+        <Popover.Root open={open} onOpenChange={(newOpen) => setOpen(newOpen)}>
           <Popover.Trigger asChild>
             <Button intent="tertiary">
               <span className="icon--vita icon--vita--shapes" />
@@ -53,9 +61,13 @@ export function Navigation() {
           <Popover.Portal>
             <Popover.Content className="w-screen shadow-none">
               <menu className="grid h-[calc(100vh_-_60px)] grid-cols-2 grid-rows-4 gap-2 bg-white p-4 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-10 data-[side=left]:slide-in-from-right-10 data-[side=right]:slide-in-from-left-10 data-[side=top]:slide-in-from-bottom-10">
-                <MenuCard href="/">
+                <MenuCard href="/" onClick={() => setOpen(false)}>
                   <span className="icon--vita icon--vita--home mr-3 text-lg text-gray-600" />
                   Home
+                </MenuCard>
+                <MenuCard>
+                  <span className="icon--vita icon--vita--star mr-3 text-lg text-gray-600" />
+                  Services
                 </MenuCard>
                 <MenuCard>
                   <span className="icon--vita icon--vita--logo mr-3 text-lg text-gray-600" />
@@ -72,9 +84,6 @@ export function Navigation() {
                 <MenuCard>
                   <span className="icon--vita icon--vita--piechart mr-3 text-lg text-gray-600" />
                   Treasury
-                </MenuCard>
-                <MenuCard href="/design-system" className="flex justify-end">
-                  Design System
                 </MenuCard>
                 <MenuCard className="col-span-2 flex items-center justify-center">
                   Something goes here

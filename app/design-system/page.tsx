@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export default function DesignSystem() {
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 p-4">
       <div className="space-y-5 rounded-xl bg-white p-5">
         <p className="text-h1 font-semibold">Headline 1</p>
         <p className="text-h2 font-semibold">Headline 2</p>
