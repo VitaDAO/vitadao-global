@@ -85,6 +85,7 @@
     font-weight: 400;
     src: url("/fonts/TTHovesRegular/font.woff2") format("woff2"),
       url("/fonts/TTHovesRegular/font.woff") format("woff");
+    font-display: swap;
   }
 
   @font-face {
@@ -92,6 +93,7 @@
     font-weight: 500;
     src: url("/fonts/TTHovesMedium/font.woff2") format("woff2"),
       url("/fonts/TTHovesMedium/font.woff") format("woff");
+    font-display: swap;
   }
 
   @font-face {
@@ -99,6 +101,7 @@
     font-weight: 600;
     src: url("/fonts/TTHovesDemiBold/font.woff2") format("woff2"),
       url("/fonts/TTHovesDemiBold/font.woff") format("woff");
+    font-display: swap;
   }
 }
 
