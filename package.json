@@ -11,6 +11,7 @@
   "dependencies": {
     "@privy-io/react-auth": "^1.29.0",
     "@radix-ui/react-dropdown-menu": "^2.0.5",
+    "@radix-ui/react-popover": "^1.0.6",
     "@radix-ui/react-slot": "^1.0.2",
     "@tailwindcss/container-queries": "^0.1.1",
     "@types/node": "20.4.0",
