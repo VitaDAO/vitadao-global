@@ -62,36 +62,34 @@ export function Navigation() {
             </Button>
           </Popover.Trigger>
           <Popover.Portal>
-            <Popover.Content className="w-screen shadow-none">
-              <menu className="grid h-[calc(100dvh_-_60px)] grid-cols-2 grid-rows-4 gap-2 bg-white p-4 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-10 data-[side=left]:slide-in-from-right-10 data-[side=right]:slide-in-from-left-10 data-[side=top]:slide-in-from-bottom-10">
-                <MenuCard href="/" onClick={() => setOpen(false)}>
-                  <span className="icon--vita icon--vita--home mr-3 text-lg text-gray-600" />
-                  Home
-                </MenuCard>
-                <MenuCard>
-                  <span className="icon--vita icon--vita--star mr-3 text-lg text-gray-600" />
-                  Services
-                </MenuCard>
-                <MenuCard>
-                  <span className="icon--vita icon--vita--logo mr-3 text-lg text-gray-600" />
-                  My VITA
-                </MenuCard>
-                <MenuCard>
-                  <span className="icon--vita icon--vita--gavel mr-3 text-lg text-gray-600" />
-                  Proposals
-                </MenuCard>
-                <MenuCard>
-                  <span className="icon--vita icon--vita--bro mr-3 text-lg text-gray-600" />
-                  Delegation
-                </MenuCard>
-                <MenuCard>
-                  <span className="icon--vita icon--vita--piechart mr-3 text-lg text-gray-600" />
-                  Treasury
-                </MenuCard>
-                <MenuCard className="col-span-2 flex items-center justify-center">
-                  Something goes here
-                </MenuCard>
-              </menu>
+            <Popover.Content className="grid h-[calc(100dvh_-_60px)] w-screen grid-cols-2 grid-rows-4 gap-2 bg-white p-4 shadow-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-10 data-[side=left]:slide-in-from-right-10 data-[side=right]:slide-in-from-left-10 data-[side=top]:slide-in-from-bottom-10 md:hidden">
+              <MenuCard href="/" onClick={() => setOpen(false)}>
+                <span className="icon--vita icon--vita--home mr-3 text-lg text-gray-600" />
+                Home
+              </MenuCard>
+              <MenuCard className="text-gray-600">
+                <span className="icon--vita icon--vita--star mr-3 text-lg text-gray-600" />
+                Services
+              </MenuCard>
+              <MenuCard href="/my-vita" onClick={() => setOpen(false)}>
+                <span className="icon--vita icon--vita--logo mr-3 text-lg text-gray-600" />
+                My VITA
+              </MenuCard>
+              <MenuCard href="/proposals" onClick={() => setOpen(false)}>
+                <span className="icon--vita icon--vita--gavel mr-3 text-lg text-gray-600" />
+                Proposals
+              </MenuCard>
+              <MenuCard className="text-gray-600">
+                <span className="icon--vita icon--vita--bro mr-3 text-lg text-gray-600" />
+                Delegation
+              </MenuCard>
+              <MenuCard href="/treasury" onClick={() => setOpen(false)}>
+                <span className="icon--vita icon--vita--piechart mr-3 text-lg text-gray-600" />
+                Treasury
+              </MenuCard>
+              <MenuCard className="col-span-2 flex items-center justify-center text-gray-600">
+                Something goes here
+              </MenuCard>
             </Popover.Content>
           </Popover.Portal>
         </Popover.Root>
@@ -116,34 +114,43 @@ export function Navigation() {
               Home
             </Link>
           </li>
-          <li className="block px-6 py-4 text-gray-600">
-            <span className="icon--vita icon--vita--logo mr-3 text-sm" />
-            My VITA
+          <li>
+            <Link
+              href="/my-vita"
+              className="block px-6 py-4"
+              activeClassName="bg-gray-200 text-vita-purple"
+            >
+              <span className="icon--vita icon--vita--logo mr-3 text-sm" />
+              My VITA
+            </Link>
           </li>
-          <li className="block px-6 py-4 text-gray-600">
-            <span className="icon--vita icon--vita--gavel mr-3 text-sm" />
-            Proposals
+          <li>
+            <Link
+              href="/proposals"
+              className="block px-6 py-4"
+              activeClassName="bg-gray-200 text-vita-purple"
+            >
+              <span className="icon--vita icon--vita--gavel mr-3 text-sm" />
+              Proposals
+            </Link>
           </li>
           <li className="flex items-center justify-between px-6 py-4 text-gray-600">
             <span>
               <span className="icon--vita icon--vita--bro mr-3 text-sm" />
               Delegation
             </span>
-            <span className="rounded-lg bg-gray-600 px-2 py-1 text-sm uppercase leading-none text-white">
+            <span className="rounded-lg bg-gray-200 px-2 py-1 text-sm uppercase leading-none">
               coming soon
             </span>
           </li>
-          <li className="block px-6 py-4 text-gray-600">
-            <span className="icon--vita icon--vita--piechart mr-3 text-sm" />
-            Treasury
-          </li>
           <li>
             <Link
-              href="/design-system"
+              href="/treasury"
               className="block px-6 py-4"
               activeClassName="bg-gray-200 text-vita-purple"
             >
-              Design System
+              <span className="icon--vita icon--vita--piechart mr-3 text-sm" />
+              Treasury
             </Link>
           </li>
         </menu>
