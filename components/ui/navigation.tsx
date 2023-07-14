@@ -39,6 +39,9 @@ function MenuCard({ href, children, className, ...rest }: MenuCardProps) {
   );
 }
 
+// TODO figure out what to do with scroll on page transitions, currently seems
+// weird
+
 export function Navigation() {
   const [open, setOpen] = useState(false);
   return (
@@ -60,7 +63,7 @@ export function Navigation() {
           </Popover.Trigger>
           <Popover.Portal>
             <Popover.Content className="w-screen shadow-none">
-              <menu className="grid h-[calc(100vh_-_60px)] grid-cols-2 grid-rows-4 gap-2 bg-white p-4 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-10 data-[side=left]:slide-in-from-right-10 data-[side=right]:slide-in-from-left-10 data-[side=top]:slide-in-from-bottom-10">
+              <menu className="grid h-[calc(100dvh_-_60px)] grid-cols-2 grid-rows-4 gap-2 bg-white p-4 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-10 data-[side=left]:slide-in-from-right-10 data-[side=right]:slide-in-from-left-10 data-[side=top]:slide-in-from-bottom-10">
                 <MenuCard href="/" onClick={() => setOpen(false)}>
                   <span className="icon--vita icon--vita--home mr-3 text-lg text-gray-600" />
                   Home

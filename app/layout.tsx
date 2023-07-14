@@ -16,9 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="h-screen bg-gray-200 font-tt-hoves">
+      <body className="flex h-[100dvh] flex-col overflow-hidden bg-gray-200 font-tt-hoves md:flex-row">
         <Navigation />
-        <main className="h-full overflow-auto bg-gray-200 md:p-6">
+        <main className="flex-grow overflow-auto md:p-4">
           <div className="mx-auto max-w-5xl @container">{children}</div>
         </main>
       </body>
