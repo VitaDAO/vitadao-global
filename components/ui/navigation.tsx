@@ -66,9 +66,9 @@ export function Navigation() {
                 <span className="icon--vita icon--vita--home mr-3 text-lg text-gray-600" />
                 Home
               </MenuCard>
-              <MenuCard href="/services" onClick={() => setOpen(false)}>
+              <MenuCard href="/my-services" onClick={() => setOpen(false)}>
                 <span className="icon--vita icon--vita--star mr-3 text-lg text-gray-600" />
-                Services
+                My Services
               </MenuCard>
               <MenuCard href="/my-vita" onClick={() => setOpen(false)}>
                 <span className="icon--vita icon--vita--logo mr-3 text-lg text-gray-600" />
@@ -78,13 +78,13 @@ export function Navigation() {
                 <span className="icon--vita icon--vita--gavel mr-3 text-lg text-gray-600" />
                 Proposals
               </MenuCard>
-              <MenuCard className="text-gray-600">
-                <span className="icon--vita icon--vita--bro mr-3 text-lg text-gray-600" />
-                Delegation
-              </MenuCard>
               <MenuCard href="/treasury" onClick={() => setOpen(false)}>
                 <span className="icon--vita icon--vita--piechart mr-3 text-lg text-gray-600" />
                 Treasury
+              </MenuCard>
+              <MenuCard className="text-gray-600">
+                <span className="icon--vita icon--vita--bro mr-3 text-lg text-gray-600" />
+                Delegation
               </MenuCard>
               <MenuCard
                 className="col-span-2 flex items-center justify-center"
@@ -118,12 +118,12 @@ export function Navigation() {
           </li>
           <li>
             <Link
-              href="/services"
+              href="/my-services"
               className="block px-6 py-4"
               activeClassName="bg-gray-200 text-vita-purple"
             >
               <span className="icon--vita icon--vita--star mr-3 text-sm" />
-              Services
+              My Services
             </Link>
           </li>
           <li>
@@ -146,15 +146,6 @@ export function Navigation() {
               Proposals
             </Link>
           </li>
-          <li className="flex items-center justify-between px-6 py-4 text-gray-600">
-            <span>
-              <span className="icon--vita icon--vita--bro mr-3 text-sm" />
-              Delegation
-            </span>
-            <span className="rounded-lg bg-gray-200 px-2 py-1 text-sm uppercase leading-none">
-              coming soon
-            </span>
-          </li>
           <li>
             <Link
               href="/treasury"
@@ -164,6 +155,15 @@ export function Navigation() {
               <span className="icon--vita icon--vita--piechart mr-3 text-sm" />
               Treasury
             </Link>
+          </li>
+          <li className="flex items-center justify-between px-6 py-4 text-gray-600">
+            <span>
+              <span className="icon--vita icon--vita--bro mr-3 text-sm" />
+              Delegation
+            </span>
+            <span className="rounded-lg bg-gray-200 px-2 py-1 text-sm uppercase leading-none">
+              coming soon
+            </span>
           </li>
         </menu>
         <div className="border-t border-gray-400 px-6 py-4">
