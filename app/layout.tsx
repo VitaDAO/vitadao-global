@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     "The new home for VitaDAO members, providing exclusive services, portfolio management and governance tools to VITA holders.",
 };
 
-export default function RootLayout({
-  children,
-}: {
+interface LayoutProps {
   children: React.ReactNode;
-}) {
+}
+
+export default function Layout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body className="flex h-[100dvh] flex-col overflow-hidden bg-gray-200 font-tt-hoves md:flex-row">
