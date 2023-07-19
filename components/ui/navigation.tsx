@@ -66,7 +66,7 @@ export function Navigation() {
                 <span className="icon--vita icon--vita--home mr-3 text-lg text-gray-600" />
                 Home
               </MenuCard>
-              <MenuCard className="text-gray-600">
+              <MenuCard href="/services" onClick={() => setOpen(false)}>
                 <span className="icon--vita icon--vita--star mr-3 text-lg text-gray-600" />
                 Services
               </MenuCard>
@@ -114,6 +114,16 @@ export function Navigation() {
             >
               <span className="icon--vita icon--vita--home mr-3 text-sm" />
               Home
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/services"
+              className="block px-6 py-4"
+              activeClassName="bg-gray-200 text-vita-purple"
+            >
+              <span className="icon--vita icon--vita--star mr-3 text-sm" />
+              Services
             </Link>
           </li>
           <li>
