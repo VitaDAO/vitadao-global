@@ -4,7 +4,6 @@ import * as Popover from "@radix-ui/react-popover";
 import Image from "next/image";
 import { useState } from "react";
 
-import { Providers } from "@/components/providers";
 import { AuthControls } from "@/components/ui/auth-controls";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
@@ -87,8 +86,11 @@ export function Navigation() {
                 <span className="icon--vita icon--vita--piechart mr-3 text-lg text-gray-600" />
                 Treasury
               </MenuCard>
-              <MenuCard className="col-span-2 flex items-center justify-center text-gray-600">
-                Something goes here
+              <MenuCard
+                className="col-span-2 flex items-center justify-center"
+                onClick={() => setOpen(false)}
+              >
+                <AuthControls />
               </MenuCard>
             </Popover.Content>
           </Popover.Portal>
@@ -155,9 +157,7 @@ export function Navigation() {
           </li>
         </menu>
         <div className="border-t border-gray-400 px-6 py-4">
-          <Providers>
-            <AuthControls />
-          </Providers>
+          <AuthControls />
         </div>
       </nav>
     </>

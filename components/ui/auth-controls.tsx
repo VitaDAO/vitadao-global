@@ -1,61 +1,17 @@
 "use client";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { usePrivy, type User } from "@privy-io/react-auth";
+import { usePrivy } from "@privy-io/react-auth";
 
 import { Button } from "@/components/ui/button";
-
-function getDisplayName(user: User) {
-  const firstLinkedAccount = user?.linkedAccounts[0];
-
-  if (firstLinkedAccount) {
-    switch (firstLinkedAccount.type) {
-      case "email":
-        return firstLinkedAccount.address;
-      default:
-        return user.id;
-    }
-  }
-}
-
-interface DisplayNameProps {
-  user: User | null;
-}
-
-function DisplayName({ user }: DisplayNameProps) {
-  if (user) {
-    return <span>{getDisplayName(user)}</span>;
-  }
-}
-
-function Menu() {
-  const { logout } = usePrivy();
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button intent="tertiary" variant="thin">
-          <span className="icon--vita icon--vita--cog" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuItem onClick={logout}>Log out</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
+import { getUserHandle } from "@/lib/utils";
+import Link from "next/link";
 
 export function AuthControls() {
   const { login, ready, authenticated, user } = usePrivy();
 
   if (!ready) {
     // TODO better loading state, even better if we could RSC this thing
-    return <></>;
+    return <p>Loading...</p>;
   }
 
   if (ready && !authenticated) {
@@ -66,11 +22,17 @@ export function AuthControls() {
     );
   }
 
-  if (ready && authenticated) {
+  const account = user?.linkedAccounts.at(-1);
+  if (ready && authenticated && account) {
     return (
-      <div className="flex items-center gap-3">
-        <DisplayName user={user} />
-        <Menu />
+      <div className="flex items-center justify-between gap-3">
+        <span>{getUserHandle(account)}</span>
+        <Link
+          href="/manage-accounts"
+          className="flex items-center justify-center"
+        >
+          <span className="icon--vita icon--vita--cog" />
+        </Link>
       </div>
     );
   }

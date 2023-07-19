@@ -77,13 +77,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        {variant === "with-icon" && icon && (
-          <span className={cn("mr-2", icon)} />
-        )}
-        {children}
-        {["with-arrow", "clickthrough"].includes(variant ?? "") && (
-          <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[0.5rem]" />
-        )}
+        <>
+          {variant === "with-icon" && icon && (
+            <span className={cn("mr-2", icon)} />
+          )}
+          {children}
+          {["with-arrow", "clickthrough"].includes(variant ?? "") && (
+            <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[0.5rem]" />
+          )}
+        </>
       </Comp>
     );
   }
