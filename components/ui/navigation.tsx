@@ -47,20 +47,20 @@ export function Navigation() {
     <>
       <Popover.Root open={open} onOpenChange={(newOpen) => setOpen(newOpen)}>
         <Popover.Anchor asChild>
-          <nav className="sticky top-0 z-10 flex items-center justify-between bg-white p-2 pl-3 md:hidden">
+          <nav className="sticky top-0 z-10 flex items-center gap-3 bg-white p-2 pl-3 md:hidden">
             <Image
               src="/vitadao-logo.svg"
               alt="VitaDAO Logo"
               width={192}
               height={31}
               priority
-              className="inline max-h-[28px] w-auto"
+              className="max-h-[28px] min-w-0 flex-1 object-contain object-left"
             />
             <Popover.Trigger asChild>
               <Button
                 intent="tertiary"
                 className={cn(
-                  "h-10 w-10 p-0 hover:bg-transparent",
+                  "h-10 w-10 flex-shrink-0 p-0 hover:bg-transparent",
                   open && " border-vita-purple text-vita-purple"
                 )}
               >
@@ -111,21 +111,21 @@ export function Navigation() {
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>
-      <nav className="float-left hidden h-screen w-80 flex-col justify-between border-r border-gray-400 bg-white md:flex">
+      <nav className="float-left hidden h-screen w-[340px] flex-col justify-between border-r border-gray-400 bg-white md:flex">
         <Image
           src="/vitadao-logo.svg"
           alt="VitaDAO Logo"
           width={192}
           height={31}
           priority
-          className="p-6"
+          className="h-[91px] object-contain p-[30px]"
         />
-        <menu className="flex-shrink flex-grow overflow-scroll">
+        <menu className="flex-shrink flex-grow overflow-scroll border-t border-gray-400">
           <li>
             <Link
               href="/"
-              className="block px-6 py-4"
-              activeClassName="bg-gray-200 text-vita-purple"
+              className="block px-[30px] py-4 hover:bg-gray-200"
+              activeClassName="text-vita-purple"
             >
               <span className="icon--vita icon--vita--home mr-3 text-sm" />
               Home
@@ -134,8 +134,8 @@ export function Navigation() {
           <li>
             <Link
               href="/my-services"
-              className="block px-6 py-4"
-              activeClassName="bg-gray-200 text-vita-purple"
+              className="block px-[30px] py-4 hover:bg-gray-200"
+              activeClassName="text-vita-purple"
             >
               <span className="icon--vita icon--vita--bell mr-3 text-sm" />
               My Services
@@ -144,8 +144,8 @@ export function Navigation() {
           <li>
             <Link
               href="/my-vita"
-              className="block px-6 py-4"
-              activeClassName="bg-gray-200 text-vita-purple"
+              className="block px-[30px] py-4 hover:bg-gray-200"
+              activeClassName="text-vita-purple"
             >
               <span className="icon--vita icon--vita--logo mr-3 text-sm" />
               My VITA
@@ -154,8 +154,8 @@ export function Navigation() {
           <li>
             <Link
               href="/proposals"
-              className="block px-6 py-4"
-              activeClassName="bg-gray-200 text-vita-purple"
+              className="block px-[30px] py-4 hover:bg-gray-200"
+              activeClassName="text-vita-purple"
             >
               <span className="icon--vita icon--vita--gavel mr-3 text-sm" />
               Proposals
@@ -164,14 +164,14 @@ export function Navigation() {
           <li>
             <Link
               href="/treasury"
-              className="block px-6 py-4"
-              activeClassName="bg-gray-200 text-vita-purple"
+              className="block px-[30px] py-4 hover:bg-gray-200"
+              activeClassName="text-vita-purple"
             >
               <span className="icon--vita icon--vita--piechart mr-3 text-sm" />
               Treasury
             </Link>
           </li>
-          <li className="flex items-center justify-between px-6 py-4 text-gray-600">
+          <li className="flex items-center justify-between px-[30px] py-4 text-gray-600">
             <span>
               <span className="icon--vita icon--vita--bro mr-3 text-sm" />
               Delegation
@@ -181,7 +181,7 @@ export function Navigation() {
             </span>
           </li>
         </menu>
-        <div className="border-t border-gray-400 px-6 py-4">
+        <div className="border-t border-gray-400 px-[30px] py-4">
           <AuthControls />
         </div>
       </nav>

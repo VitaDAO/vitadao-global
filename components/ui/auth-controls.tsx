@@ -42,9 +42,11 @@ export function AuthControls() {
   const account = user?.linkedAccounts.at(-1);
   if (ready && authenticated && account) {
     return (
-      <div className="flex h-full w-full items-center justify-between gap-3">
+      <div className="flex h-full w-full items-center gap-3 text-sm">
         <Avatar />
-        <span className="flex-grow">{getUserHandle(account)}</span>
+        <div className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
+          <span>{getUserHandle(account)}</span>
+        </div>
         <Link
           href="/manage-accounts"
           className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-gray-600"
