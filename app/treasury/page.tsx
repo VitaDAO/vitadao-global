@@ -77,7 +77,7 @@ export default async function Page() {
   );
 
   return (
-    <div className="space-y-5 p-4 md:p-0">
+    <div className="mx-auto max-w-5xl space-y-5 p-4 @container">
       <h1 className="text-h2 font-semibold">{`Treasury · $${formatNumber(
         treasury.value
       )}`}</h1>

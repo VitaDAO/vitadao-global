@@ -45,6 +45,7 @@ export function Navigation() {
   const [open, setOpen] = useState(false);
   return (
     <>
+      {/* Narrow viewport navigation */}
       <Popover.Root open={open} onOpenChange={(newOpen) => setOpen(newOpen)}>
         <Popover.Anchor asChild>
           <nav className="sticky top-0 z-10 flex items-center gap-3 bg-white p-2 pl-3 md:hidden">
@@ -111,7 +112,8 @@ export function Navigation() {
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>
-      <nav className="float-left hidden h-screen w-[340px] flex-col justify-between border-r border-gray-400 bg-white md:flex">
+      {/* Wide viewport navigation */}
+      <nav className="hidden h-screen w-[340px] flex-shrink-0 flex-col justify-between border-r border-gray-400 bg-white md:flex">
         <Image
           src="/vitadao-logo.svg"
           alt="VitaDAO Logo"

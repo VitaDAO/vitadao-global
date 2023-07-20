@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils";
 
+// TODO delete this component eventually if it remains unused.
+
 interface MarqueeProps extends React.ComponentPropsWithoutRef<"div"> {
   label: string;
 }

@@ -3,7 +3,7 @@ import NextLink from "next/link";
 
 export default function Page() {
   return (
-    <div className="space-y-5 p-4 md:p-0">
+    <div className="mx-auto max-w-5xl space-y-5 p-4 @container">
       <h1 className="text-h2 font-semibold">My Services</h1>
       <p className="text-xs sm:text-base">
         Esse dolore eiusmod laboris labore non veniam elit consectetur aliquip

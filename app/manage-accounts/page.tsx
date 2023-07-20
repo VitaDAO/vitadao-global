@@ -28,137 +28,127 @@ export default function Page() {
 
   if (ready && authenticated && user) {
     return (
-      <>
-        <div className="space-y-5 p-4 md:p-0">
-          <h1 className="text-h2 font-semibold">Manage Accounts</h1>
-          <div>
-            <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
-              Logout
-            </p>
-            <Button variant="thin" onClick={logout}>
-              Logout
-            </Button>
-          </div>
-          <div>
-            {/* TODO disable unlink button if there's only one linked account, innit. */}
-            <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
-              Your linked accounts
-            </p>
-            <div className="overflow-hidden rounded-xl bg-white">
-              {user?.linkedAccounts.map((account) => (
-                <div
-                  key={account.type + account.verifiedAt}
-                  className="flex items-center justify-between p-5 hover:bg-gray-400"
-                >
-                  <div>
-                    <p>{formatType(account.type)}</p>
-                    <p className="font-bold">{getUserHandle(account)}</p>
-                  </div>
-                  <Button intent="secondary" variant="thin">
-                    Unlink
-                  </Button>
+      <div className="mx-auto max-w-5xl space-y-5 p-4 @container">
+        <h1 className="text-h2 font-semibold">Manage Accounts</h1>
+        <div>
+          <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
+            Logout
+          </p>
+          <Button variant="thin" onClick={logout}>
+            Logout
+          </Button>
+        </div>
+        <div>
+          {/* TODO disable unlink button if there's only one linked account, innit. */}
+          <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
+            Your linked accounts
+          </p>
+          <div className="overflow-hidden rounded-xl bg-white">
+            {user?.linkedAccounts.map((account) => (
+              <div
+                key={account.type + account.verifiedAt}
+                className="flex items-center justify-between p-5 hover:bg-gray-400"
+              >
+                <div>
+                  <p>{formatType(account.type)}</p>
+                  <p className="font-bold">{getUserHandle(account)}</p>
                 </div>
-              ))}
-            </div>
-          </div>
-          <div>
-            <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
-              Link new account
-            </p>
-            <div className="flex flex-wrap gap-5 rounded-xl bg-white p-5">
-              <Button
-                intent="secondary"
-                variant="thin"
-                onClick={privy.linkWallet}
-              >
-                Wallet
-              </Button>
-              {/* TODO maybe notify user that only one linked email is possible, in case they're wondering */}
-              {!user?.email && (
-                <Button
-                  intent="secondary"
-                  variant="thin"
-                  onClick={privy.linkEmail}
-                >
-                  Email
+                <Button intent="secondary" variant="thin">
+                  Unlink
                 </Button>
-              )}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
+            Link new account
+          </p>
+          <div className="flex flex-wrap gap-5 rounded-xl bg-white p-5">
+            <Button
+              intent="secondary"
+              variant="thin"
+              onClick={privy.linkWallet}
+            >
+              Wallet
+            </Button>
+            {/* TODO maybe notify user that only one linked email is possible, in case they're wondering */}
+            {!user?.email && (
               <Button
                 intent="secondary"
                 variant="thin"
-                onClick={privy.linkGoogle}
+                onClick={privy.linkEmail}
               >
-                Google
+                Email
               </Button>
-              {/* TODO re-enable Twitter if the mobile authn problems get fixed */}
-              {/* <Button
+            )}
+            <Button
+              intent="secondary"
+              variant="thin"
+              onClick={privy.linkGoogle}
+            >
+              Google
+            </Button>
+            {/* TODO re-enable Twitter if the mobile authn problems get fixed */}
+            {/* <Button
                 intent="secondary"
                 variant="thin"
                 onClick={privy.linkTwitter}
               >
                 Twitter
               </Button> */}
-              <Button
-                intent="secondary"
-                variant="thin"
-                onClick={privy.linkDiscord}
-              >
-                Discord
-              </Button>
-              <Button
-                intent="secondary"
-                variant="thin"
-                onClick={privy.linkGithub}
-              >
-                Github
-              </Button>
-              <Button
-                intent="secondary"
-                variant="thin"
-                onClick={privy.linkApple}
-              >
-                Apple
-              </Button>
-              <Button
-                intent="secondary"
-                variant="thin"
-                onClick={privy.linkPhone}
-              >
-                Phone
-              </Button>
-            </div>
-          </div>
-          <div>
-            <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
-              Delete your account
-            </p>
-            <DeleteButton userId={user.id} />
-          </div>
-          <div>
-            <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
-              Terms and privacy
-            </p>
-            <ul>
-              <li>
-                <Link
-                  href="/terms-and-conditions"
-                  className="underline underline-offset-4"
-                >
-                  Terms and conditions
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/privacy-policy"
-                  className="underline underline-offset-4"
-                >
-                  Privacy policy
-                </Link>
-              </li>
-            </ul>
+            <Button
+              intent="secondary"
+              variant="thin"
+              onClick={privy.linkDiscord}
+            >
+              Discord
+            </Button>
+            <Button
+              intent="secondary"
+              variant="thin"
+              onClick={privy.linkGithub}
+            >
+              Github
+            </Button>
+            <Button intent="secondary" variant="thin" onClick={privy.linkApple}>
+              Apple
+            </Button>
+            <Button intent="secondary" variant="thin" onClick={privy.linkPhone}>
+              Phone
+            </Button>
           </div>
         </div>
-      </>
+        <div>
+          <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
+            Delete your account
+          </p>
+          <DeleteButton userId={user.id} />
+        </div>
+        <div>
+          <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
+            Terms and privacy
+          </p>
+          <ul>
+            <li>
+              <Link
+                href="/terms-and-conditions"
+                className="underline underline-offset-4"
+              >
+                Terms and conditions
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/privacy-policy"
+                className="underline underline-offset-4"
+              >
+                Privacy policy
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
     );
   }
 }
