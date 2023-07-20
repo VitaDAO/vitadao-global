@@ -118,6 +118,10 @@
   mask-size: 100% 100%;
 }
 
+.icon--vita--bell {
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cg fill='black'%3E%3Cpath d='M15.127 12.114H.873a.813.813 0 00-.873.732v1.277a.813.813 0 00.873.732h14.254a.813.813 0 00.873-.732v-1.277a.813.813 0 00-.873-.732zM2.66 10.19a1.13 1.13 0 01-1.12-1.333 6.594 6.594 0 0112.915 0 1.13 1.13 0 01-1.12 1.333z'/%3E%3Cpath d='M8.957 2.642H7.048V4.55h1.909z'/%3E%3Cpath d='M9.386 1.142H6.609a.626.626 0 00-.626.626v.657c0 .345.28.626.626.626h2.777c.346 0 .626-.28.626-.626v-.657a.626.626 0 00-.626-.626z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
 .icon--vita--bro {
   --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath fill='black' stroke='black' stroke-miterlimit='10' stroke-width='.944' d='M11.328 8.871a2.415 2.416 0 100-4.831 2.415 2.416 0 000 4.832zm3.241 5.407a.958.959 0 00.701-1.614 5.421 5.424 0 00-7.884 0 .958.959 0 00.7 1.614zM3.765 5.518a1.897 1.898 0 100-3.796 1.897 1.898 0 000 3.797zm2.547 4.45a.756.756 0 00.551-1.269 4.263 4.265 0 00-6.193 0 .756.756 0 00.55 1.269z'/%3E%3C/svg%3E");
 }
@@ -150,6 +154,7 @@
   --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cg fill='black' transform='matrix(1.04735 0 0 1.04667 -.758 .15)'%3E%3Crect width='6' height='6' x='1' rx='1'/%3E%3Crect width='6' height='6' x='10' y='9' rx='1'/%3E%3Crect width='6' height='6' x='10' rx='3'/%3E%3Cpath d='m.855 13.504 2.277-3.985a1 1 0 011.736 0l2.277 3.985A1 1 0 016.277 15H1.723a1 1 0 01-.868-1.496Z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-.icon--vita--star {
+/* TODO maybe this one can go if no longer used. Not sure if comments get stripped out, I'd hope so */
+/* .icon--vita--star {
   --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath fill='black' d='M7.514.327a.526.526 0 01.973 0l1.97 4.448a.538.538 0 00.424.321l4.646.59c.454.058.635.645.302.97l-3.43 3.34a.58.58 0 00-.16.52l.899 4.812c.088.469-.389.832-.787.6l-4.09-2.385a.515.515 0 00-.521 0l-4.092 2.385c-.399.232-.874-.13-.786-.6l.9-4.812a.58.58 0 00-.16-.52l-3.43-3.34c-.335-.325-.153-.912.3-.97l4.648-.59a.54.54 0 00.422-.32L7.514.326Z'/%3E%3C/svg%3E");
-}
+} */

@@ -17,7 +17,7 @@ interface MenuCardProps extends React.ComponentPropsWithoutRef<"div"> {
 
 function MenuCard({ href, children, className, ...rest }: MenuCardProps) {
   const finalClassName = cn(
-    "flex h-full flex-col justify-between rounded-xl bg-gray-400 p-6 sm:text-lg",
+    "flex h-full flex-col justify-end gap-2 rounded-3xl border border-[#ECECEC] bg-white p-5 sm:text-lg",
     className
   );
 
@@ -61,37 +61,44 @@ export function Navigation() {
             </Button>
           </Popover.Trigger>
           <Popover.Portal>
-            <Popover.Content className="grid h-[calc(100dvh_-_60px)] w-screen grid-cols-2 grid-rows-4 gap-2 bg-white p-4 shadow-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-10 data-[side=left]:slide-in-from-right-10 data-[side=right]:slide-in-from-left-10 data-[side=top]:slide-in-from-bottom-10 md:hidden">
-              <MenuCard href="/" onClick={() => setOpen(false)}>
-                <span className="icon--vita icon--vita--home mr-3 text-lg text-gray-600" />
-                Home
-              </MenuCard>
-              <MenuCard href="/my-services" onClick={() => setOpen(false)}>
-                <span className="icon--vita icon--vita--star mr-3 text-lg text-gray-600" />
-                My Services
-              </MenuCard>
-              <MenuCard href="/my-vita" onClick={() => setOpen(false)}>
-                <span className="icon--vita icon--vita--logo mr-3 text-lg text-gray-600" />
-                My VITA
-              </MenuCard>
-              <MenuCard href="/proposals" onClick={() => setOpen(false)}>
-                <span className="icon--vita icon--vita--gavel mr-3 text-lg text-gray-600" />
-                Proposals
-              </MenuCard>
-              <MenuCard href="/treasury" onClick={() => setOpen(false)}>
-                <span className="icon--vita icon--vita--piechart mr-3 text-lg text-gray-600" />
-                Treasury
-              </MenuCard>
-              <MenuCard className="text-gray-600">
-                <span className="icon--vita icon--vita--bro mr-3 text-lg text-gray-600" />
-                Delegation
-              </MenuCard>
-              <MenuCard
-                className="col-span-2 flex items-center justify-center"
+            <Popover.Content className="flex h-[calc(100dvh_-_60px)] w-screen flex-col bg-white shadow-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-10 data-[side=left]:slide-in-from-right-10 data-[side=right]:slide-in-from-left-10 data-[side=top]:slide-in-from-bottom-10 md:hidden">
+              <div className="grid flex-grow grid-cols-2 grid-rows-3 gap-2 px-2 py-3">
+                <MenuCard href="/" onClick={() => setOpen(false)}>
+                  <span className="icon--vita icon--vita--home mr-3 text-lg text-vita-purple" />
+                  Home
+                </MenuCard>
+                <MenuCard href="/my-services" onClick={() => setOpen(false)}>
+                  <span className="icon--vita icon--vita--bell mr-3 text-lg text-vita-purple" />
+                  My Services
+                </MenuCard>
+                <MenuCard href="/my-vita" onClick={() => setOpen(false)}>
+                  <span className="icon--vita icon--vita--logo mr-3 text-lg text-vita-purple" />
+                  My VITA
+                </MenuCard>
+                <MenuCard href="/proposals" onClick={() => setOpen(false)}>
+                  <span className="icon--vita icon--vita--gavel mr-3 text-lg text-vita-purple" />
+                  Proposals
+                </MenuCard>
+                <MenuCard href="/treasury" onClick={() => setOpen(false)}>
+                  <span className="icon--vita icon--vita--piechart mr-3 text-lg text-vita-purple" />
+                  Treasury
+                </MenuCard>
+                <MenuCard className="relative overflow-hidden text-gray-600">
+                  <span className="icon--vita icon--vita--bro mr-3 text-lg text-gray-600" />
+                  Delegation
+                  <div className="absolute left-0 top-0 h-full w-full text-sm">
+                    <div className="absolute right-[-38px] top-[28px] rotate-[30deg] transform whitespace-nowrap bg-[#D9D9D9] px-10 text-center uppercase tracking-widest text-white">
+                      Coming soon
+                    </div>
+                  </div>
+                </MenuCard>
+              </div>
+              <div
+                className="flex items-center justify-center border-t border-[#ECECEC] px-2 py-3"
                 onClick={() => setOpen(false)}
               >
                 <AuthControls />
-              </MenuCard>
+              </div>
             </Popover.Content>
           </Popover.Portal>
         </Popover.Root>
@@ -122,7 +129,7 @@ export function Navigation() {
               className="block px-6 py-4"
               activeClassName="bg-gray-200 text-vita-purple"
             >
-              <span className="icon--vita icon--vita--star mr-3 text-sm" />
+              <span className="icon--vita icon--vita--bell mr-3 text-sm" />
               My Services
             </Link>
           </li>

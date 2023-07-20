@@ -16,9 +16,22 @@ export function AuthControls() {
 
   if (ready && !authenticated) {
     return (
-      <Button onClick={login} className="w-full">
-        Log in
-      </Button>
+      <div className="flex w-full justify-stretch gap-2">
+        <Button
+          intent="tertiary"
+          onClick={login}
+          className="w-full text-vita-purple"
+        >
+          Sign up
+        </Button>
+        <Button
+          intent="tertiary"
+          onClick={login}
+          className="w-full text-vita-purple"
+        >
+          Log in
+        </Button>
+      </div>
     );
   }
 
