@@ -15,22 +15,6 @@ module.exports = {
         "2xl": "1400px",
       },
     },
-    colors: {
-      "vita-yellow": "#ffdd35",
-      "vita-purple": "#6256ec",
-      black: "#000000",
-      white: "#ffffff",
-      gray: {
-        200: "#f8f8f8",
-        400: "#f1f1f1",
-        600: "#cdcdcd",
-        800: "#a4a4a4",
-      },
-      "tag-yellow": "#fff9ae",
-      "tag-turquoise": "#41f4d4",
-      "tag-sky": "#95e5ff",
-      "tag-pink": "#fec0e8",
-    },
     fontSize: {
       sm: ["0.875rem", { lineHeight: "1.225rem" }],
       base: ["1rem", { lineHeight: "1.5rem" }],
@@ -47,6 +31,22 @@ module.exports = {
     },
     extend: {
       colors: {
+        // VitaDAO
+        "vita-yellow": "#ffdd35",
+        "vita-purple": "#6256ec",
+        black: "#000000",
+        white: "#ffffff",
+        gray: {
+          200: "#f8f8f8",
+          400: "#f1f1f1",
+          600: "#cdcdcd",
+          800: "#a4a4a4",
+        },
+        "tag-yellow": "#fff9ae",
+        "tag-turquoise": "#41f4d4",
+        "tag-sky": "#95e5ff",
+        "tag-pink": "#fec0e8",
+        // shadcn UI
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

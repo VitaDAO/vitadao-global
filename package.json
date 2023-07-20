@@ -6,10 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "check": "next lint && tsc --noEmit"
+    "check": "next lint && tsc --noEmit && next build"
   },
   "dependencies": {
     "@privy-io/react-auth": "^1.29.0",
+    "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.5",
     "@radix-ui/react-popover": "^1.0.6",
     "@radix-ui/react-slot": "^1.0.2",

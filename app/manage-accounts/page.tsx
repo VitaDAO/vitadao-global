@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { getUserHandle } from "@/lib/utils";
+import { DeleteButton } from "./delete-button";
 
 // TODO would be cool to make this file a RSC if we figure that out.
 
@@ -24,7 +25,7 @@ export default function Page() {
     router.push("/");
   }
 
-  if (ready && authenticated) {
+  if (ready && authenticated && user) {
     return (
       <>
         <div className="space-y-5 p-4 md:p-0">
@@ -38,6 +39,7 @@ export default function Page() {
             </Button>
           </div>
           <div>
+            {/* TODO disable unlink button if there's only one linked account, innit. */}
             <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
               Your linked accounts
             </p>
@@ -70,13 +72,16 @@ export default function Page() {
               >
                 Wallet
               </Button>
-              <Button
-                intent="secondary"
-                variant="thin"
-                onClick={privy.linkEmail}
-              >
-                Email
-              </Button>
+              {/* TODO maybe notify user that only one linked email is possible, in case they're wondering */}
+              {!user?.email && (
+                <Button
+                  intent="secondary"
+                  variant="thin"
+                  onClick={privy.linkEmail}
+                >
+                  Email
+                </Button>
+              )}
               <Button
                 intent="secondary"
                 variant="thin"
@@ -121,6 +126,12 @@ export default function Page() {
                 Phone
               </Button>
             </div>
+          </div>
+          <div className="relative z-10">
+            <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
+              Delete your account
+            </p>
+            <DeleteButton userId={user.id} />
           </div>
         </div>
       </>

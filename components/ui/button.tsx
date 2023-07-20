@@ -12,6 +12,7 @@ const buttonVariants = cva(
         primary: "",
         secondary: "",
         tertiary: "",
+        danger: "border border-red-600 text-red-600",
       },
       variant: {
         default: "h-[52px]",
