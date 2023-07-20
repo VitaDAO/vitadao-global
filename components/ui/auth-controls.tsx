@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button";
 import { getUserHandle } from "@/lib/utils";
 import Link from "next/link";
 
+function Avatar() {
+  return <div className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-400" />;
+}
+
 export function AuthControls() {
   const { login, ready, authenticated, user } = usePrivy();
 
@@ -38,11 +42,12 @@ export function AuthControls() {
   const account = user?.linkedAccounts.at(-1);
   if (ready && authenticated && account) {
     return (
-      <div className="flex items-center justify-between gap-3">
-        <span>{getUserHandle(account)}</span>
+      <div className="flex h-full w-full items-center justify-between gap-3">
+        <Avatar />
+        <span className="flex-grow">{getUserHandle(account)}</span>
         <Link
           href="/manage-accounts"
-          className="flex items-center justify-center"
+          className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-gray-600"
         >
           <span className="icon--vita icon--vita--cog" />
         </Link>
