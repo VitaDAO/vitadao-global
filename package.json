@@ -9,6 +9,7 @@
     "check": "next lint && tsc --noEmit && next build"
   },
   "dependencies": {
+    "@lottiefiles/lottie-player": "^2.0.2",
     "@privy-io/react-auth": "^1.29.0",
     "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.5",
