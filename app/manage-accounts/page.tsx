@@ -40,9 +40,7 @@ export default function Page() {
         </div>
         <div>
           {/* TODO disable unlink button if there's only one linked account, innit. */}
-          <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
-            Your linked accounts
-          </p>
+          <p className="mb-4 mt-6 uppercase tracking-wide">Linked accounts</p>
           <div className="overflow-hidden rounded-xl bg-white">
             {user?.linkedAccounts.map((account) => (
               <div
@@ -61,60 +59,54 @@ export default function Page() {
           </div>
         </div>
         <div>
-          <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
-            Link new account
+          <p className="mb-4 mt-6 uppercase tracking-wide">
+            Link a new account
           </p>
           <div className="flex flex-wrap gap-5 rounded-xl bg-white p-5">
-            <Button
-              intent="secondary"
-              variant="thin"
-              onClick={privy.linkWallet}
-            >
+            <Button intent="tertiary" variant="thin" onClick={privy.linkWallet}>
+              <span className="icon--vita icon--vita--wallet mr-2" />
               Wallet
             </Button>
             {/* TODO maybe notify user that only one linked email is possible, in case they're wondering */}
             {!user?.email && (
               <Button
-                intent="secondary"
+                intent="tertiary"
                 variant="thin"
                 onClick={privy.linkEmail}
               >
                 Email
               </Button>
             )}
-            <Button
-              intent="secondary"
-              variant="thin"
-              onClick={privy.linkGoogle}
-            >
+            <Button intent="tertiary" variant="thin" onClick={privy.linkGoogle}>
+              <span className="i-logos-google-icon mr-2" />
               Google
             </Button>
             {/* TODO re-enable Twitter if the mobile authn problems get fixed */}
             {/* <Button
-                intent="secondary"
+                intent="tertiary"
                 variant="thin"
                 onClick={privy.linkTwitter}
               >
                 Twitter
               </Button> */}
             <Button
-              intent="secondary"
+              intent="tertiary"
               variant="thin"
               onClick={privy.linkDiscord}
             >
+              <span className="i-logos-discord-icon mr-2" />
               Discord
             </Button>
-            <Button
-              intent="secondary"
-              variant="thin"
-              onClick={privy.linkGithub}
-            >
+            <Button intent="tertiary" variant="thin" onClick={privy.linkGithub}>
+              <span className="i-logos-github-icon mr-2" />
               Github
             </Button>
-            <Button intent="secondary" variant="thin" onClick={privy.linkApple}>
+            <Button intent="tertiary" variant="thin" onClick={privy.linkApple}>
+              <span className="i-logos-apple mr-2" />
               Apple
             </Button>
-            <Button intent="secondary" variant="thin" onClick={privy.linkPhone}>
+            <Button intent="tertiary" variant="thin" onClick={privy.linkPhone}>
+              <span className="icon--vita icon--vita--phone mr-2" />
               Phone
             </Button>
           </div>
