@@ -39,8 +39,8 @@ export default async function Page() {
         </div>
         <Image
           src="/my-services/landscape.jpg"
-          height={640}
-          width={427}
+          height={427}
+          width={640}
           alt=""
           className="row-start-1 h-full max-h-60 w-full object-cover @2xl:col-start-2 @2xl:max-h-none"
         />
