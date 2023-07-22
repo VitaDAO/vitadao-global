@@ -4,7 +4,7 @@ import { usePrivy, type User } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { getUserHandle } from "@/lib/utils";
+import { cn, getUserHandle } from "@/lib/utils";
 import Link from "next/link";
 import { DeleteButton } from "./delete-button";
 
@@ -19,7 +19,11 @@ export default function Page() {
 
   if (!ready) {
     // TODO better loading UI, maybe improve with RSC, maybe Suspense
-    return <>Loading...</>;
+    return (
+      <div className="mx-auto max-w-5xl space-y-8 p-4 @container">
+        Loading...
+      </div>
+    );
   }
 
   if (ready && !authenticated) {
@@ -28,38 +32,47 @@ export default function Page() {
 
   if (ready && authenticated && user) {
     return (
-      <div className="mx-auto max-w-5xl space-y-5 p-4 @container">
-        <h1 className="text-h2 font-semibold">Manage Accounts</h1>
-        <div>
-          <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
-            Logout
-          </p>
-          <Button variant="thin" onClick={logout}>
-            Logout
-          </Button>
+      <div className="mx-auto max-w-5xl space-y-8 p-4 @container">
+        <div className="mb-12 grid grid-cols-1 items-center gap-x-5 gap-y-3 @xl:grid-cols-[1fr_max-content_max-content]">
+          <h1 className="flex-grow text-h2 font-semibold">Manage Accounts</h1>
+          <div>Avatar and name</div>
+          <div>
+            <button
+              onClick={logout}
+              className="flex items-center gap-1 text-vita-purple underline underline-offset-4"
+            >
+              <span className="icon--vita icon--vita--exit" />
+              Logout
+            </button>
+          </div>
         </div>
         <div>
           {/* TODO disable unlink button if there's only one linked account, innit. */}
-          <p className="mb-4 mt-6 uppercase tracking-wide">Linked accounts</p>
-          <div className="overflow-hidden rounded-xl bg-white">
+          <p className="mb-4 mt-6 text-sm uppercase tracking-wide">
+            Linked accounts
+          </p>
+          <div className="divide-y divide-[#ECECEC] overflow-hidden rounded-xl bg-white px-7 py-1 @container">
             {user?.linkedAccounts.map((account) => (
               <div
                 key={account.type + account.verifiedAt}
-                className="flex items-center justify-between p-5 hover:bg-gray-400"
+                className="grid grid-cols-2 gap-y-3 py-7 @lg:grid-cols-[160px_1fr_max-content]"
               >
-                <div>
-                  <p>{formatType(account.type)}</p>
-                  <p className="font-bold">{getUserHandle(account)}</p>
-                </div>
-                <Button intent="secondary" variant="thin">
+                <p className="flex items-center font-bold">
+                  <span className={cn(iconClassName[account.type], "mr-2")} />
+                  {formatType(account.type)}
+                </p>
+                <p className="row-start-2 @lg:row-start-auto">
+                  {getUserHandle(account)}
+                </p>
+                <button className="w-max justify-self-end text-vita-purple underline underline-offset-4">
                   Unlink
-                </Button>
+                </button>
               </div>
             ))}
           </div>
         </div>
         <div>
-          <p className="mb-4 mt-6 uppercase tracking-wide">
+          <p className="mb-4 mt-6 text-sm uppercase tracking-wide">
             Link a new account
           </p>
           <div className="flex flex-wrap gap-5 rounded-xl bg-white p-5">
@@ -78,31 +91,32 @@ export default function Page() {
               </Button>
             )}
             <Button intent="tertiary" variant="thin" onClick={privy.linkGoogle}>
-              <span className="i-logos-google-icon mr-2" />
+              <span className="icon--logos--google mr-2" />
               Google
             </Button>
             {/* TODO re-enable Twitter if the mobile authn problems get fixed */}
             {/* <Button
-                intent="tertiary"
-                variant="thin"
-                onClick={privy.linkTwitter}
-              >
-                Twitter
-              </Button> */}
+              intent="tertiary"
+              variant="thin"
+              onClick={privy.linkTwitter}
+            >
+              <span className="icon--logos--twitter mr-2" />
+              Twitter
+            </Button> */}
             <Button
               intent="tertiary"
               variant="thin"
               onClick={privy.linkDiscord}
             >
-              <span className="i-logos-discord-icon mr-2" />
+              <span className="icon--logos--discord mr-2" />
               Discord
             </Button>
             <Button intent="tertiary" variant="thin" onClick={privy.linkGithub}>
-              <span className="i-logos-github-icon mr-2" />
+              <span className="icon--logos--github mr-2" />
               Github
             </Button>
             <Button intent="tertiary" variant="thin" onClick={privy.linkApple}>
-              <span className="i-logos-apple mr-2" />
+              <span className="icon--logos--apple mr-2" />
               Apple
             </Button>
             <Button intent="tertiary" variant="thin" onClick={privy.linkPhone}>
@@ -112,13 +126,13 @@ export default function Page() {
           </div>
         </div>
         <div>
-          <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
+          <p className="mb-4 mt-6 text-sm uppercase tracking-wide">
             Delete your account
           </p>
           <DeleteButton userId={user.id} />
         </div>
         <div>
-          <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
+          <p className="mb-4 mt-6 text-sm uppercase tracking-wide">
             Terms and privacy
           </p>
           <ul>
@@ -149,7 +163,20 @@ function capitalize(text: string) {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-function formatType(rawType: User["linkedAccounts"][number]["type"]) {
+type AccountType = User["linkedAccounts"][number]["type"];
+
+function formatType(rawType: AccountType) {
   const [label] = rawType.split("_");
   return capitalize(label);
 }
+
+const iconClassName: Record<AccountType, string> = {
+  apple_oauth: "icon--logos--apple",
+  discord_oauth: "icon--logos--discord",
+  email: "icon--vita icon--vita--email",
+  github_oauth: "icon--logos--github",
+  google_oauth: "icon--logos--google",
+  phone: "icon--vita icon--vita--phone",
+  twitter_oauth: "icon--logos--twitter",
+  wallet: "icon--vita icon--vita--wallet",
+};
