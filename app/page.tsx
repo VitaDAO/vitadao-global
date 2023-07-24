@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Proposals } from "@/components/server/proposals";
 import { VitaStatsCard } from "@/components/server/vita-stats";
 
 export default async function Page() {
@@ -55,15 +56,7 @@ export default async function Page() {
         </p>
       </div>
       <div className="grid grid-cols-1 gap-5 @2xl:grid-cols-3">
-        <div className="flex h-[200px] items-center justify-center rounded-xl bg-white">
-          Placeholder
-        </div>
-        <div className="flex h-[200px] items-center justify-center rounded-xl bg-white">
-          Placeholder
-        </div>
-        <div className="flex h-[200px] items-center justify-center rounded-xl bg-white">
-          Placeholder
-        </div>
+        <Proposals first={3} />
       </div>
     </div>
   );
