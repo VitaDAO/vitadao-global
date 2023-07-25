@@ -31,6 +31,8 @@ export default function Page() {
   }
 
   if (ready && authenticated && user) {
+    const linkedAccountsCount = user.linkedAccounts.length;
+
     return (
       <div className="mx-auto max-w-5xl space-y-8 p-4 @container">
         <div className="mb-12 grid grid-cols-1 items-center gap-x-5 gap-y-3 @xl:grid-cols-[1fr_max-content_max-content]">
@@ -47,7 +49,6 @@ export default function Page() {
           </div>
         </div>
         <div>
-          {/* TODO disable unlink button if there's only one linked account, innit. */}
           <p className="mb-4 mt-6 text-sm uppercase tracking-wide">
             Linked accounts
           </p>
@@ -64,9 +65,10 @@ export default function Page() {
                 <p className="row-start-2 @lg:row-start-auto">
                   {getUserHandle(account)}
                 </p>
-                <button className="w-max justify-self-end text-vita-purple underline underline-offset-4">
-                  Unlink
-                </button>
+                <UnlinkButton
+                  account={account}
+                  disabled={linkedAccountsCount <= 1}
+                />
               </div>
             ))}
           </div>
@@ -87,6 +89,7 @@ export default function Page() {
                 variant="thin"
                 onClick={privy.linkEmail}
               >
+                <span className="icon--vita icon--vita--email mr-2" />
                 Email
               </Button>
             )}
@@ -180,3 +183,70 @@ const iconClassName: Record<AccountType, string> = {
   twitter_oauth: "icon--logos--twitter",
   wallet: "icon--vita icon--vita--wallet",
 };
+
+interface UnlinkButtonProps {
+  account: User["linkedAccounts"][number];
+  disabled?: boolean;
+}
+
+function UnlinkButton({ account, disabled = false }: UnlinkButtonProps) {
+  const {
+    ready,
+    authenticated,
+    unlinkApple,
+    unlinkDiscord,
+    unlinkEmail,
+    unlinkGithub,
+    unlinkGoogle,
+    unlinkPhone,
+    unlinkTwitter,
+    unlinkWallet,
+  } = usePrivy();
+
+  if (ready && authenticated) {
+    let onClick = () => {};
+
+    if (!disabled) {
+      switch (account.type) {
+        case "apple_oauth":
+          onClick = () => unlinkApple(account.subject);
+          break;
+        case "discord_oauth":
+          onClick = () => unlinkDiscord(account.subject);
+          break;
+        case "email":
+          onClick = () => unlinkEmail(account.address);
+          break;
+        case "github_oauth":
+          onClick = () => unlinkGithub(account.subject);
+          break;
+        case "google_oauth":
+          onClick = () => unlinkGoogle(account.subject);
+          break;
+        case "phone":
+          onClick = () => unlinkPhone(account.number);
+          break;
+        case "twitter_oauth":
+          onClick = () => unlinkTwitter(account.subject);
+          break;
+        case "wallet":
+          onClick = () => unlinkWallet(account.address);
+          break;
+      }
+    }
+
+    return (
+      <button
+        className={cn(
+          "w-max justify-self-end text-vita-purple underline underline-offset-4",
+          disabled && "cursor-not-allowed text-gray-800 no-underline"
+        )}
+        onClick={onClick}
+      >
+        Unlink
+      </button>
+    );
+  }
+
+  return null;
+}
