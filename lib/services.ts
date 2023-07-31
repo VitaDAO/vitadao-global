@@ -30,7 +30,7 @@ const Service = z.object({
 
 async function fetchSupabase(queryString: string) {
   return fetch(
-    `https://${process.env.SUPABASE_ID}.supabase.co/rest/v1/services_view?${queryString}`,
+    `https://${process.env.SUPABASE_ID}.supabase.co/rest/v1/services?${queryString}`,
     {
       headers: {
         apikey: z.string().parse(process.env.SUPABASE_KEY),
