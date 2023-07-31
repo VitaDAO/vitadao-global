@@ -25,7 +25,7 @@ export default async function Page() {
           <div
             key={s.id}
             className={cn(
-              "grid grid-cols-1 overflow-hidden rounded-xl bg-white",
+              "grid grid-cols-1 overflow-clip rounded-xl bg-white",
               s.image_path &&
                 "@2xl:col-start-1 @2xl:col-end-[-1] @2xl:grid-cols-2"
             )}

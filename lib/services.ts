@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+// TODO gate these functions with read access logic
+
 const Service = z.object({
   id: z.string().uuid(),
   title: z.string().nullable(),
@@ -48,5 +50,23 @@ export async function getServiceBySlug(slug: string) {
   return Service.array()
     .length(1)
     .transform((s) => s[0])
-    .parse(await fetchSupabase(`slug=eq.${slug}&select=*`));
+    .parse(await fetchSupabase(`slug=eq.${slug}`));
+}
+
+// TODO confirm with product that we'd want this behaviour; we're currently not
+// enforcing that only one service in the DB be is_featured true, although we're
+// expecting to only feature one single service on the homepage. In the future,
+// as different users will have different read access, it might make sense to
+// afford featuring different services for each, although then we'll have to
+// figure out how to encode the service to feature for highest priviledge users.
+// TBD.
+export async function getFeaturedService() {
+  return Service.array()
+    .transform((s) => (s.length > 0 ? s[0] : null))
+    .parse(
+      await fetchSupabase(`is_featured=is.true`).then((json) => {
+        console.log(json);
+        return json;
+      })
+    );
 }
