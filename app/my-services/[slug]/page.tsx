@@ -9,8 +9,8 @@ export default async function Page({ params }: PageProps) {
   const service = await getServiceBySlug(slug);
   return (
     <>
-      <h1 className="text-h2 font-semibold">Service Page 🚧</h1>
-      <p>{service.description}</p>
+      <h1 className="text-h2 font-semibold">{service.title}</h1>
+      <div>{service.body}</div>
     </>
   );
 }

@@ -7,13 +7,14 @@ import { z } from "zod";
 
 const Service = z.object({
   id: z.string().uuid(),
-  title: z.string().nullable(),
-  description: z.string(),
+  title: z.string(),
+  summary: z.string(),
   vita_required: z.number(),
   read_access: z.union([
     z.literal("public"),
     z.literal("private"),
-    z.literal("vip"),
+    z.literal("holder"),
+    z.literal("redeemer"),
   ]),
   logo_path: z
     .string()
@@ -31,6 +32,7 @@ const Service = z.object({
     ),
   slug: z.string(),
   is_featured: z.boolean(),
+  body: z.string(),
 });
 
 async function fetchSupabase(queryString: string) {

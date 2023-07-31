@@ -51,8 +51,8 @@ export default async function Page() {
                 alt=""
                 className="max-h-[25px] object-contain object-left"
               />
-              {s.title && <p className="text-h4">{s.title}</p>}
-              <p>{s.description}</p>
+              <p className="text-h4">{s.title}</p>
+              <p>{s.summary}</p>
               <p className="flex flex-grow items-end justify-between">
                 <Link
                   href={`/my-services/${s.slug}`}

@@ -55,7 +55,7 @@ export default async function Page() {
             {featuredService.title && (
               <p className="text-h4">{featuredService.title}</p>
             )}
-            <p>{featuredService.description}</p>
+            <p>{featuredService.summary}</p>
             <p className="flex flex-grow flex-col justify-end">
               <Link
                 href={`/my-services/${featuredService.slug}`}
