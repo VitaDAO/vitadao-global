@@ -2,6 +2,9 @@ import { z } from "zod";
 
 // TODO gate these functions with read access logic
 
+// TODO possible optimisation:
+// https://nextjs.org/docs/app/building-your-application/data-fetching/caching#combining-cache-preload-and-server-only
+
 const Service = z.object({
   id: z.string().uuid(),
   title: z.string().nullable(),
@@ -38,6 +41,9 @@ async function fetchSupabase(queryString: string) {
         apikey: z.string().parse(process.env.SUPABASE_KEY),
         Authorization: `Bearer ${process.env.SUPABASE_KEY}`,
       },
+      next: {
+        revalidate: 60,
+      },
     }
   ).then((res) => res.json());
 }
@@ -63,10 +69,5 @@ export async function getServiceBySlug(slug: string) {
 export async function getFeaturedService() {
   return Service.array()
     .transform((s) => (s.length > 0 ? s[0] : null))
-    .parse(
-      await fetchSupabase(`is_featured=is.true`).then((json) => {
-        console.log(json);
-        return json;
-      })
-    );
+    .parse(await fetchSupabase(`is_featured=is.true`));
 }
