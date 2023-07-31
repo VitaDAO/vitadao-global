@@ -13,12 +13,10 @@ export default async function Page() {
   return (
     <div className="mx-auto max-w-5xl space-y-5 p-4 @container">
       <h1 className="text-h2 font-semibold">My Services</h1>
-      <p>
-        Esse dolore eiusmod laboris labore non veniam elit consectetur aliquip
-        qui. Cupidatat ipsum anim consequat duis in consectetur aliquip sint
-        nostrud deserunt ut. Duis excepteur ea ullamco cupidatat duis sunt quis
-        tempor commodo enim ullamco sit labore incididunt occaecat. Ad
-        reprehenderit in quis veniam tempor laboris do laborum consectetur id.
+      <p className="max-w-[770px]">
+        Enjoy a suite of member services exclusive to VitaDAO members. VITA
+        holders qualify for member services based on the amount of VITA in their
+        connected wallet/s.
       </p>
       <div className="grid grid-cols-1 gap-5 @2xl:grid-cols-2">
         {services.map((s) => (
