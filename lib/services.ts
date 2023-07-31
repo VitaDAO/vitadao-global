@@ -14,7 +14,7 @@ const Service = z.object({
     .string()
     .transform(
       (p) =>
-        `https://unemqgjvxuwbbbgrusxp.supabase.co/storage/v1/object/public/services/${p}`
+        `https://${process.env.SUPABASE_ID}.supabase.co/storage/v1/object/public/services/${p}`
     ),
   image_path: z
     .string()
@@ -22,14 +22,14 @@ const Service = z.object({
     .transform(
       (p) =>
         p &&
-        `https://unemqgjvxuwbbbgrusxp.supabase.co/storage/v1/object/public/services/${p}`
+        `https://${process.env.SUPABASE_ID}.supabase.co/storage/v1/object/public/services/${p}`
     ),
   slug: z.string(),
 });
 
 async function fetchSupabase(queryString: string) {
   return fetch(
-    `https://unemqgjvxuwbbbgrusxp.supabase.co/rest/v1/services_view?${queryString}`,
+    `https://${process.env.SUPABASE_ID}.supabase.co/rest/v1/services_view?${queryString}`,
     {
       headers: {
         apikey: z.string().parse(process.env.SUPABASE_KEY),
