@@ -25,6 +25,7 @@ const Service = z.object({
         `https://${process.env.SUPABASE_ID}.supabase.co/storage/v1/object/public/services/${p}`
     ),
   slug: z.string(),
+  is_featured: z.boolean(),
 });
 
 async function fetchSupabase(queryString: string) {

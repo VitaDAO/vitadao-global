@@ -41,7 +41,12 @@ export default async function Page() {
                 />
               </div>
             )}
-            <div className="flex flex-col gap-5 p-5">
+            <div className="flex flex-col gap-5 p-[30px]">
+              {s.is_featured && (
+                <p className="text-sm uppercase tracking-[0.56px] text-[#606060]">
+                  Featured service
+                </p>
+              )}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={s.logo_path}
