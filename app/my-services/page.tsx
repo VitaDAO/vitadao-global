@@ -55,13 +55,17 @@ export default async function Page() {
               />
               {s.title && <p className="text-h4">{s.title}</p>}
               <p>{s.description}</p>
-              <p className="flex flex-grow flex-col justify-end">
+              <p className="flex flex-grow items-end justify-between">
                 <Link
                   href={`/my-services/${s.slug}`}
                   className="text-vita-purple underline"
                 >
                   View this service
                 </Link>
+                <span className="inline-flex items-center font-medium">
+                  <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
+                  {s.vita_required} VITA +
+                </span>
               </p>
             </div>
           </div>
