@@ -71,9 +71,9 @@ function AssetRow({ asset }: AssetRowProps) {
 
 export default async function Page() {
   const treasury = treasuryGroupSchema.parse(
-    await fetch("https://api.bio.xyz/v1/treasury/vitadao").then((res) =>
-      res.json()
-    )
+    await fetch("https://api.bio.xyz/v1/treasury/vitadao", {
+      next: { revalidate: 60 },
+    }).then((res) => res.json())
   );
 
   return (

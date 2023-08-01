@@ -20,7 +20,9 @@ const vitaStatsSchema = z.object({
 async function fetchVitaSats() {
   try {
     const vitaStats = vitaStatsSchema.parse(
-      await fetch("https://api.bio.xyz/v1/token/vita").then((res) => res.json())
+      await fetch("https://api.bio.xyz/v1/token/vita", {
+        next: { revalidate: 60 },
+      }).then((res) => res.json())
     );
     return vitaStats.results[0];
   } catch {
