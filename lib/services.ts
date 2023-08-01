@@ -24,16 +24,16 @@ const Service = z.object({
     ),
   image_path: z
     .string()
-    .nullable()
     .transform(
       (p) =>
-        p &&
         `https://${process.env.SUPABASE_ID}.supabase.co/storage/v1/object/public/services/${p}`
     ),
   slug: z.string(),
   is_featured: z.boolean(),
   body: z.string(),
 });
+
+export type Service = z.infer<typeof Service>;
 
 async function fetchSupabase(queryString: string) {
   return fetch(
