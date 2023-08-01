@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { z } from "zod";
 
 import { Proposals, fetchSnapshot } from "@/components/server/proposals";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 // Query and schema for total number of proposals
 const proposalsCountQuery = `query {
@@ -32,7 +32,7 @@ export default async function Page({ searchParams = {} }: PageProps) {
   );
 
   // Parse valid page value from search params
-  const pageSize = 9;
+  const pageSize = 36;
   const maxPage = Math.ceil(proposalsCount / pageSize);
 
   const searchParamsSchema = z
@@ -47,51 +47,67 @@ export default async function Page({ searchParams = {} }: PageProps) {
   const page = searchParamsSchema.parse(searchParams);
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8 px-4 py-8 @container">
-      <h1 className="text-h2 font-semibold">Proposals</h1>
-      <div className="flex justify-center text-vita-purple">
-        {page > 1 && (
-          <Link
-            href={`/proposals?page=${Number(page) - 1}`}
-            className="rounded-l-full border border-[#CCCCCC] px-4 py-2"
-          >
-            Prev
-          </Link>
-        )}
-        {getPaginationList(page, maxPage).map((cur, idx) =>
-          cur === "..." ? (
-            <span
-              key={`oh-god-i-hate-keys-${idx}`}
-              className="border-b border-r border-t border-[#CCCCCC] px-4 py-2"
-            >
-              ...
-            </span>
-          ) : (
-            <Link
-              key={cur}
-              href={`/proposals?page=${Number(cur)}`}
-              className={cn(
-                "border-b border-r border-t border-[#CCCCCC] px-4 py-2 first:rounded-l-full first:border-l last:rounded-r-full",
-                page === cur && "border-vita-purple",
-                page - 1 === cur && "border-r-vita-purple"
-              )}
-            >
-              {cur}
-            </Link>
-          )
-        )}
-        {page < maxPage && (
-          <Link
-            href={`/proposals?page=${Number(page) + 1}`}
-            className="rounded-r-full border-b border-r border-t border-[#CCCCCC] px-4 py-2"
-          >
-            Next
-          </Link>
-        )}
+    <div className="mx-auto max-w-[1260px] @container">
+      <div className="px-[20px] py-[30px] @xl:px-[30px] @xl:pt-[90px]">
+        <div className="mb-[30px] flex flex-wrap items-center justify-between gap-[30px]">
+          <h1 className="text-h2 font-medium">Proposals</h1>
+          <Pagination page={page} maxPage={maxPage} />
+        </div>
+        <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-[20px] @xl:gap-[30px]">
+          <Proposals first={pageSize} skip={pageSize * (page - 1)} />
+        </div>
+        <Pagination page={page} maxPage={maxPage} className="justify-end" />
       </div>
-      <div className="grid auto-rows-[1fr] grid-cols-1 gap-5 @md:grid-cols-2 @xl:grid-cols-3">
-        <Proposals first={pageSize} skip={pageSize * (page - 1)} />
-      </div>
+    </div>
+  );
+}
+
+interface PaginationProps {
+  page: number;
+  maxPage: number;
+  className?: string;
+}
+
+function Pagination({ page, maxPage, className }: PaginationProps) {
+  return (
+    <div className={cn("flex gap-[10px] text-vita-purple", className)}>
+      {page > 1 && (
+        <Link
+          href={`/proposals?page=${Number(page) - 1}`}
+          className="flex h-[42px] items-center rounded-full border border-[#CCCCCC] px-4"
+        >
+          Prev
+        </Link>
+      )}
+      {getPaginationList(page, maxPage).map((cur, idx) =>
+        cur === "..." ? (
+          <span
+            key={`oh-god-i-hate-keys-${idx}`}
+            className="flex h-[42px] items-center justify-center text-[#CCCCCC]"
+          >
+            ...
+          </span>
+        ) : (
+          <Link
+            key={cur}
+            href={`/proposals?page=${Number(cur)}`}
+            className={cn(
+              "flex h-[42px] w-[42px] items-center justify-center rounded-full border border-[#CCCCCC] px-4 py-2",
+              page === cur && "border-vita-purple"
+            )}
+          >
+            {cur}
+          </Link>
+        )
+      )}
+      {page < maxPage && (
+        <Link
+          href={`/proposals?page=${Number(page) + 1}`}
+          className="flex h-[42px] items-center rounded-full border border-[#CCCCCC] px-4"
+        >
+          Next
+        </Link>
+      )}
     </div>
   );
 }

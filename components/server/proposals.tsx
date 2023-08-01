@@ -107,7 +107,7 @@ export async function Proposals({ first, skip = 0 }: ProposalsProps) {
       {proposals.map((p) => (
         <div
           key={p.id}
-          className="flex h-full flex-col items-start gap-3 rounded-xl bg-white p-5"
+          className="flex h-full flex-col items-start gap-3 rounded-xl bg-white p-[20px] @xl:p-[30px]"
         >
           <Category title={p.title} />
           <p className="line-clamp-3 text-h4">{p.title}</p>
