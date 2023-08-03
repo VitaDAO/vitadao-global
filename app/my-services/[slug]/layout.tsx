@@ -6,11 +6,18 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="mx-auto max-w-5xl space-y-5 p-4 @container">
-      <p className="mb-4 mt-6 text-sm font-medium uppercase text-gray-800">
-        <Link href="/my-services">&lt; My Services</Link>
-      </p>
-      <div className="space-y-5 rounded-xl bg-white p-5">{children}</div>
+    <div className="mx-auto max-w-[1260px] @container">
+      <div className="px-0 pt-[30px] sm:px-[30px] sm:pt-[90px]">
+        <p className="mx-[20px] mb-[30px] text-base/none font-medium sm:mx-0">
+          <Link href="/my-services" className="underline underline-offset-4">
+            <span className="icon--vita icon--vita--chevron mr-3 -rotate-90 text-[9px]" />
+            All Member Services
+          </Link>
+        </p>
+        <div className="rounded-[20px] bg-white p-[20px] pb-[30px] @xl:p-[30px]">
+          {children}
+        </div>
+      </div>
     </div>
   );
 }

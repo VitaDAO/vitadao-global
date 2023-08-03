@@ -78,7 +78,7 @@ export function ServiceCard({ service, className }: ServiceCardProps) {
               </Link>
               <span className="inline-flex items-center font-medium">
                 <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
-                {service.vita_required} VITA +
+                {service.vita_required.toLocaleString()} VITA +
               </span>
             </div>
           </div>
@@ -111,7 +111,7 @@ export function ServiceCard({ service, className }: ServiceCardProps) {
         </Link>
         <span className="inline-flex items-center font-medium">
           <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
-          {service.vita_required} VITA +
+          {service.vita_required.toLocaleString()} VITA +
         </span>
       </div>
     </div>

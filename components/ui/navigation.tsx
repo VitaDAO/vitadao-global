@@ -113,7 +113,7 @@ export function Navigation() {
         </Popover.Portal>
       </Popover.Root>
       {/* Wide viewport navigation */}
-      <nav className="hidden h-screen w-[340px] flex-shrink-0 flex-col justify-between border-r border-gray-400 bg-white md:flex">
+      <nav className="hidden h-screen w-[clamp(300px,30vw,340px)] flex-shrink-0 flex-col justify-between border-r border-gray-400 bg-white md:flex">
         <Image
           src="/vitadao-logo.svg"
           alt="VitaDAO Logo"
