@@ -12,7 +12,7 @@ const vitaStatsSchema = z.object({
         circulating: z.number(),
         market_cap: z.number(),
         price: z.number(),
-      })
+      }),
     )
     .nonempty(),
 });
@@ -22,7 +22,7 @@ async function fetchVitaSats() {
     const vitaStats = vitaStatsSchema.parse(
       await fetch("https://api.bio.xyz/v1/token/vita", {
         next: { revalidate: 60 },
-      }).then((res) => res.json())
+      }).then((res) => res.json()),
     );
     return vitaStats.results[0];
   } catch {
@@ -39,38 +39,57 @@ export async function VitaStatsCard() {
 
   if (vitaStats) {
     return (
-      <div className="flex flex-wrap justify-between gap-5 rounded-xl bg-white p-8">
-        <div>
-          <p className="text-h2 font-semibold">
-            <span className="mr-1 text-lg">$</span>
-            {formatNumber(vitaStats.price)}
-          </p>
-          <p className="uppercase">Token Price</p>
-        </div>
-        <div>
-          <p className="text-h2 font-semibold">
-            {formatNumber(vitaStats.circulating)}
-          </p>
-          <p className="uppercase">Circulating Supply</p>
-        </div>
-        <div>
-          <p className="text-h2 font-semibold">
-            <span className="mr-1 text-lg">$</span>
-            {formatNumber(vitaStats.market_cap)}
-          </p>
-          <p className="uppercase">Market Cap</p>
-        </div>
-        <div className="flex flex-col justify-around text-right">
-          <p>
-            <Link href="/my-vita" className="underline underline-offset-4">
-              My VITA &gt;
-            </Link>
-          </p>
-          <p>
-            <Link href="/treasury" className="underline underline-offset-4">
-              View the Treasury &gt;
-            </Link>
-          </p>
+      <div className="rounded-xl bg-white p-[20px] md:p-[30px]">
+        <p className="pb-[20px] text-sm uppercase leading-[16.8px] tracking-[0.56px] text-[#606060]">
+          VITA at a glance
+        </p>
+        <div className="flex flex-wrap justify-between gap-x-[60px] gap-y-[20px]">
+          <div>
+            <p className="mb-[9px] text-h2 font-medium leading-[44px]">
+              <span className="mr-1 text-lg">$</span>
+              {formatNumber(vitaStats.price)}
+            </p>
+            <p className="text-sm uppercase leading-[16.8px] tracking-[0.56px] text-[#606060]">
+              Token Price
+            </p>
+          </div>
+          <div>
+            <p className="mb-[9px] text-h2 font-medium leading-[44px]">
+              {formatNumber(vitaStats.circulating)}
+            </p>
+            <p className="text-sm uppercase leading-[16.8px] tracking-[0.56px] text-[#606060]">
+              Circulating Supply
+            </p>
+          </div>
+          <div>
+            <p className="mb-[9px] text-h2 font-medium leading-[44px]">
+              <span className="mr-1 text-lg">$</span>
+              {formatNumber(vitaStats.market_cap)}
+            </p>
+            <p className="text-sm uppercase leading-[16.8px] tracking-[0.56px] text-[#606060]">
+              Market Cap
+            </p>
+          </div>
+          <div className="flex flex-grow flex-col items-end justify-around space-y-[16px] self-end text-right">
+            <p>
+              <Link
+                href="/my-vita"
+                className="text-base font-medium text-vita-purple underline underline-offset-4"
+              >
+                My VITA
+                <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
+              </Link>
+            </p>
+            <p>
+              <Link
+                href="/treasury"
+                className="text-base font-medium text-vita-purple underline underline-offset-4"
+              >
+                View the Treasury
+                <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     );
