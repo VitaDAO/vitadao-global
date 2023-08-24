@@ -239,11 +239,11 @@ function UnlinkButton({ account, disabled = false }: UnlinkButtonProps) {
       <button
         className={cn(
           "w-max justify-self-end text-vita-purple underline underline-offset-4",
-          disabled && "cursor-not-allowed text-gray-800 no-underline"
+          disabled && "cursor-not-allowed text-gray-800 no-underline",
         )}
         onClick={onClick}
       >
-        Unlink
+        Disconnect
       </button>
     );
   }

@@ -2,7 +2,7 @@ import Link from "next/link";
 import "server-only";
 import { z } from "zod";
 
-import { formatNumber } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 
 const vitaStatsSchema = z.object({
   status: z.literal("success"),
@@ -34,12 +34,17 @@ async function fetchVitaSats() {
   }
 }
 
-export async function VitaStatsCard() {
+interface VitaStatsCardProps extends React.ComponentPropsWithoutRef<"div"> {}
+
+export async function VitaStatsCard({
+  className,
+  ...rest
+}: VitaStatsCardProps) {
   const vitaStats = await fetchVitaSats();
 
   if (vitaStats) {
     return (
-      <div className="rounded-xl bg-white p-[20px] md:p-[30px]">
+      <div className={cn("rounded-xl bg-white p-[30px]", className)} {...rest}>
         <p className="pb-[20px] text-sm uppercase leading-[16.8px] tracking-[0.56px] text-[#606060]">
           VITA at a glance
         </p>

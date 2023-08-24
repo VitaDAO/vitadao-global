@@ -33,7 +33,7 @@ function truncateEmail(address: string, maxLength: number = 28) {
 }
 
 // TODO I'm sure we can use something more robust
-function truncateWallet(address: string, digits: number = 4) {
+export function truncateWallet(address: string, digits: number = 4) {
   return [address.slice(0, digits + 2), address.slice(-digits)].join("...");
 }
 
