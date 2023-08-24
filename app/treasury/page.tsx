@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 import { MediaElement } from "@/components/ui/media-element";
 import { formatNumber } from "@/lib/utils";
 import type { Asset, TreasuryGroup } from "./schemas";
@@ -73,7 +75,7 @@ export default async function Page() {
   const treasury = treasuryGroupSchema.parse(
     await fetch("https://api.bio.xyz/v1/treasury/vitadao", {
       next: { revalidate: 60 },
-    }).then((res) => res.json())
+    }).then((res) => res.json()),
   );
 
   return (
@@ -110,7 +112,7 @@ export default async function Page() {
           >
             <div className="flex items-center justify-between">
               <h2 className="text-lg">{`${s.label} · $${formatNumber(
-                s.value
+                s.value,
               )}`}</h2>
               {s.percent && (
                 <span className="rounded-lg bg-gray-400 px-2 py-1 text-sm uppercase leading-none">
@@ -122,10 +124,8 @@ export default async function Page() {
               {s.type === "group" &&
                 typeOfChildren(s) === "group" &&
                 s.children.map((t) => (
-                  <>
-                    <h3 key={s.label + t.label} className="mb-3 font-semibold">
-                      {t.label}
-                    </h3>
+                  <Fragment key={s.label + t.label}>
+                    <h3 className="mb-3 font-semibold">{t.label}</h3>
                     {t.type === "group" &&
                       t.children.map(
                         (a) =>
@@ -135,9 +135,9 @@ export default async function Page() {
                               key={s.label + t.label + a.label}
                               asset={a}
                             />
-                          )
+                          ),
                       )}
-                  </>
+                  </Fragment>
                 ))}
               {s.type === "group" &&
                 typeOfChildren(s) !== "unknown" &&
@@ -146,7 +146,7 @@ export default async function Page() {
                     (a.type === "fungible-asset" ||
                       a.type === "generic-asset") && (
                       <AssetRow key={s.label + a.label} asset={a} />
-                    )
+                    ),
                 )}
             </div>
           </div>
