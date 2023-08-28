@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Providers } from "@/components/providers";
-import { Navigation } from "@/components/ui/navigation";
+import { ClientLayout } from "@/components/ui/client-layout";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,10 +17,9 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <html lang="en">
-      <body className="flex h-[100dvh] flex-col overflow-hidden bg-gray-200 font-tt-hoves md:flex-row">
+      <body className="h-[100dvh] overflow-hidden bg-gray-200 font-tt-hoves">
         <Providers>
-          <Navigation />
-          <main className="flex-grow overflow-auto">{children}</main>
+          <ClientLayout>{children}</ClientLayout>
         </Providers>
       </body>
     </html>
