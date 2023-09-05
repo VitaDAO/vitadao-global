@@ -19,10 +19,14 @@ const proposalsSchema = z
         z.object({
           id: z.string(),
           title: z.string(),
-          state: z.union([z.literal("active"), z.literal("closed")]),
+          state: z.union([
+            z.literal("active"),
+            z.literal("closed"),
+            z.literal("pending"),
+          ]),
           link: z.string().url(),
           scores_total: z.number(),
-        })
+        }),
       ),
     }),
   })
@@ -99,7 +103,7 @@ export async function Proposals({ first, skip = 0 }: ProposalsProps) {
     await fetchSnapshot({
       query: proposalsQuery,
       variables: { first, skip },
-    })
+    }),
   );
 
   return (
@@ -113,6 +117,8 @@ export async function Proposals({ first, skip = 0 }: ProposalsProps) {
           <p className="line-clamp-3 text-h4">{p.title}</p>
           {p.state === "active" ? (
             <p className="flex-grow text-green-500">Voting is active</p>
+          ) : p.state === "pending" ? (
+            <p className="flex-grow text-orange-500">Voting is pending</p>
           ) : (
             <p className="flex-grow">
               Voting closed | {formatNumber(p.scores_total)} Total Votes
