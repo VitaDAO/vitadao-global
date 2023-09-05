@@ -7,9 +7,9 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: `${process.env.SUPABASE_ID}.supabase.co`,
+        hostname: process.env.PB_HOSTNAME,
         port: "",
-        pathname: "/storage/v1/object/public/services/**",
+        pathname: "/api/files/**",
       },
     ],
   },

@@ -1,19 +1,25 @@
-import { Button } from "@/components/ui/button";
-import { getServiceBySlug } from "@/lib/services";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
+import { Button } from "@/components/ui/button";
+import { getServiceBySlug } from "@/lib/services";
 interface PageProps {
   params: { slug: string };
 }
 
+// TODO authz this page. I assume redirect to home if the user doesn't have read
+// permissions on this service
+
 export default async function Page({ params }: PageProps) {
   const { slug } = params;
-  const service = await getServiceBySlug(slug);
+  // TODO fix any
+  const service = (await getServiceBySlug(slug)) as any;
+  if (service === null) redirect("/");
   return (
     <>
       <Image
-        src={service.image_path}
+        src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.image}`}
         width={1140}
         height={320}
         alt=""
@@ -23,7 +29,7 @@ export default async function Page({ params }: PageProps) {
         <div className="flex-grow @3xl:order-1 @3xl:w-[380px]">
           <div className="flex h-[120px] items-center justify-center rounded-[20px] border border-[#CCCCCC] px-[20px]">
             <Image
-              src={service.logo_path}
+              src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.logo}`}
               width={280}
               height={32}
               alt=""
@@ -54,7 +60,7 @@ export default async function Page({ params }: PageProps) {
             <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
             {service.vita_required.toLocaleString()} VITA +
           </p>
-          <div>
+          {/* <div>
             {plainTextToParagraphs(service.body).map((p) => (
               <p
                 key={simpleHash(p)}
@@ -63,7 +69,11 @@ export default async function Page({ params }: PageProps) {
                 {p}
               </p>
             ))}
-          </div>
+          </div> */}
+          <div
+            dangerouslySetInnerHTML={{ __html: service.body }}
+            className="[&>p:first-of-type]:mt-[22px] [&>p:last-of-type]:mb-[30px] [&>p]:mt-[1em]"
+          />
           <p className="pb-[20px] text-right @3xl:hidden">
             <Link
               href="#"

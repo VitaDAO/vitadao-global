@@ -53,12 +53,18 @@ dependencies:
   eslint-config-next:
     specifier: 13.4.19
     version: 13.4.19(eslint@8.47.0)(typescript@5.1.6)
+  jose:
+    specifier: ^4.14.6
+    version: 4.14.6
   lucide-react:
     specifier: ^0.268.0
     version: 0.268.0(react@18.2.0)
   next:
     specifier: 13.4.19
     version: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
+  pocketbase:
+    specifier: ^0.18.0
+    version: 0.18.0
   postcss:
     specifier: 8.4.28
     version: 8.4.28
@@ -1004,7 +1010,7 @@ packages:
       dotenv: 16.3.1
       encoding: 0.1.13
       eventemitter3: 5.0.1
-      jose: 4.14.4
+      jose: 4.14.6
       js-cookie: 3.0.5
       libphonenumber-js: 1.10.41
       lokijs: 1.5.12
@@ -4783,8 +4789,8 @@ packages:
     hasBin: true
     dev: false
 
-  /jose@4.14.4:
-    resolution: {integrity: sha512-j8GhLiKmUAh+dsFXlX1aJCbt5KMibuKb+d7j1JaOJG6s2UjX1PQlW+OKB/sD4a/5ZYF4RcmYmLSndOoU3Lt/3g==}
+  /jose@4.14.6:
+    resolution: {integrity: sha512-EqJPEUlZD0/CSUMubKtMaYUOtWe91tZXTWMJZoKSbLk+KtdhNdcvppH8lA9XwVu2V4Ailvsj0GBZJ2ZwDjfesQ==}
     dev: false
 
   /joycon@3.1.1:
@@ -5505,6 +5511,10 @@ packages:
   /pngjs@5.0.0:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
     engines: {node: '>=10.13.0'}
+    dev: false
+
+  /pocketbase@0.18.0:
+    resolution: {integrity: sha512-09ri0Rnm4JjboU4OJeibd6pgvKi4DPg/r/Uu/QI3mKSZsrROoMT75zyiOldbBBMWZUDG1TRlv6BjQj30SFsrVw==}
     dev: false
 
   /postcss-import@15.1.0(postcss@8.4.28):

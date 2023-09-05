@@ -1,75 +1,47 @@
 import { z } from "zod";
 
-// TODO gate these functions with read access logic
-
-// TODO possible optimisation:
-// https://nextjs.org/docs/app/building-your-application/data-fetching/caching#combining-cache-preload-and-server-only
+import { getFirstListItem, getFullList } from "@/lib/pocketbase";
 
 const Service = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
+  collectionID: z.string(),
+  collectionName: z.string(),
+  created: z.string().datetime(),
+  updated: z.string().datetime(),
   title: z.string(),
   summary: z.string(),
+  body: z.string(),
   vita_required: z.number(),
+  slug: z.string(),
+  is_featured: z.boolean(),
+  order: z.number(),
+  logo: z.string(),
+  image: z.string(),
   read_access: z.union([
     z.literal("public"),
     z.literal("private"),
     z.literal("holder"),
     z.literal("redeemer"),
   ]),
-  logo_path: z
-    .string()
-    .transform(
-      (p) =>
-        `https://${process.env.SUPABASE_ID}.supabase.co/storage/v1/object/public/services/${p}`
-    ),
-  image_path: z
-    .string()
-    .transform(
-      (p) =>
-        `https://${process.env.SUPABASE_ID}.supabase.co/storage/v1/object/public/services/${p}`
-    ),
-  slug: z.string(),
-  is_featured: z.boolean(),
-  body: z.string(),
 });
 
 export type Service = z.infer<typeof Service>;
 
-async function fetchSupabase(queryString: string) {
-  return fetch(
-    `https://${process.env.SUPABASE_ID}.supabase.co/rest/v1/services?${queryString}`,
-    {
-      headers: {
-        apikey: z.string().parse(process.env.SUPABASE_KEY),
-        Authorization: `Bearer ${process.env.SUPABASE_KEY}`,
-      },
-      next: {
-        revalidate: 60,
-      },
-    }
-  ).then((res) => res.json());
+interface Options {
+  sort?: string;
+  filter?: string;
 }
 
-export async function getServices() {
-  return Service.array().parse(await fetchSupabase(""));
-}
+// TODO gate these functions with read access logic
 
-export async function getServiceBySlug(slug: string) {
-  return Service.array()
-    .length(1)
-    .transform((s) => s[0])
-    .parse(await fetchSupabase(`slug=eq.${slug}`));
-}
+// TODO possible optimisation:
+// https://nextjs.org/docs/app/building-your-application/data-fetching/caching#combining-cache-preload-and-server-only
 
-// TODO confirm with product that we'd want this behaviour; we're currently not
-// enforcing that only one service in the DB be is_featured true, although we're
-// expecting to only feature one single service on the homepage. In the future,
-// as different users will have different read access, it might make sense to
-// afford featuring different services for each, although then we'll have to
-// figure out how to encode the service to feature for highest priviledge users.
-// TBD.
-export async function getFeaturedService() {
-  return Service.array()
-    .transform((s) => (s.length > 0 ? s[0] : null))
-    .parse(await fetchSupabase(`is_featured=is.true`));
-}
+export const getServices = (options: Options = {}) =>
+  getFullList("services", options);
+
+export const getServiceBySlug = (slug: string) =>
+  getFirstListItem("services", `slug = "${slug}"`);
+
+export const getFeaturedService = () =>
+  getFirstListItem("services", `is_featured = true`);

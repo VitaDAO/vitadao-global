@@ -2,11 +2,12 @@ import Link from "next/link";
 
 import { Proposals } from "@/components/server/proposals";
 import { VitaStatsCard } from "@/components/server/vita-stats";
+import { ServiceCard } from "@/components/ui/service-card";
 import { getFeaturedService } from "@/lib/services";
-import { ServiceCard } from "./my-services/page";
 
 export default async function Page() {
-  const featuredService = await getFeaturedService();
+  // TODO fix any
+  const featuredService = (await getFeaturedService()) as any;
 
   return (
     <div className="mx-auto max-w-[1260px] @container">
