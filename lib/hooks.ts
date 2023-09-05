@@ -4,9 +4,9 @@
 // modules. Will do for now.
 
 import type { User, WalletWithMetadata } from "@privy-io/react-auth";
+import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { useQuery } from "react-query";
 import { fetchBalance } from "wagmi/actions";
 import { z } from "zod";
 

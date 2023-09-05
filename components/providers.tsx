@@ -1,7 +1,7 @@
 "use client";
 
 import { PrivyProvider } from "@privy-io/react-auth";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiConfig, configureChains, createConfig, mainnet } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 
@@ -13,7 +13,7 @@ import { publicProvider } from "wagmi/providers/public";
 // Wagmi
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
-  [publicProvider()]
+  [publicProvider()],
 );
 
 const config = createConfig({
