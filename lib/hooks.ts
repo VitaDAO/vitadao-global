@@ -80,14 +80,12 @@ export function useScrollDirectionY(
         (direction === "up" || direction === null) &&
         scrollValue - scrollOrigin.current > triggerOffset
       ) {
-        console.log("down!");
         setDirection("down");
         scrollOrigin.current = scrollValue;
       } else if (
         (direction === "down" || direction === null) &&
         scrollValue - scrollOrigin.current < -triggerOffset
       ) {
-        console.log("up!");
         setDirection("up");
         scrollOrigin.current = scrollValue;
       }

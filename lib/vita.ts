@@ -39,7 +39,6 @@ export async function getWalletsBalance(addresses: Array<string>) {
 
   // TODO improve this with a bit of concurrency and retries. Effect, looking at you 👀
   for (const address of addresses) {
-    console.log(`Checking address ${address}`);
     const addressBalance = Number(
       formatUnits(
         await publicClient.readContract({
@@ -51,7 +50,6 @@ export async function getWalletsBalance(addresses: Array<string>) {
         vitaDecimals,
       ),
     );
-    console.log({ address, addressBalance });
 
     balance.total += addressBalance;
     balance.addresses[address] = addressBalance;
