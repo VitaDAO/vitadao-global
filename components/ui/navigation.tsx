@@ -50,7 +50,7 @@ export function TopNavigation({ hide = false }: TopNavigationProps) {
         <nav
           className={cn(
             "fixed left-0 right-0 top-0 z-10 flex items-center gap-3 bg-white px-[20px] py-[10px] transition-transform duration-300 md:hidden",
-            hide && "-translate-y-full",
+            hide && !open && "-translate-y-full",
           )}
         >
           <Image
