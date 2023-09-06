@@ -132,7 +132,7 @@ export function SidebarNavigation() {
         priority
         className="h-[91px] object-contain p-[30px]"
       />
-      <menu className="flex-shrink flex-grow overflow-scroll border-t border-gray-400">
+      <menu className="flex-shrink flex-grow overflow-auto border-t border-gray-400">
         <li>
           <Link
             href="/"
