@@ -6,8 +6,7 @@ import { ServiceCard } from "@/components/ui/service-card";
 import { getFeaturedService } from "@/lib/services";
 
 export default async function Page() {
-  // TODO fix any
-  const featuredService = (await getFeaturedService()) as any;
+  const featuredService = await getFeaturedService();
 
   return (
     <div className="mx-auto max-w-[1260px] @container">

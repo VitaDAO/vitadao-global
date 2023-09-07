@@ -121,19 +121,16 @@ const PocketbaseUser = z.object({
   updated: z.string(),
   vita_offset: z.number(),
 });
-export async function getUserBalance(did: string | null) {
-  if (did) {
-    const privyUser = await getUser(did);
-    const wallets = privyUser.linked_accounts
-      .filter((a) => a.type === "wallet")
-      .map((a) => a.address);
-    const walletsBalance = await getWalletsBalance(wallets);
-    const offsetBalance =
-      PocketbaseUser.nullable().parse(
-        await getFirstListItem("users", `did = "${did}"`),
-      )?.vita_offset ?? 0;
-    return walletsBalance + offsetBalance;
-  }
 
-  return null;
+export async function getUserBalance(did: string) {
+  const privyUser = await getUser(did);
+  const wallets = privyUser.linked_accounts
+    .filter((a) => a.type === "wallet")
+    .map((a) => a.address);
+  const walletsBalance = await getWalletsBalance(wallets);
+  const offsetBalance =
+    PocketbaseUser.nullable().parse(
+      await getFirstListItem("users", `did = "${did}"`),
+    )?.vita_offset ?? 0;
+  return walletsBalance + offsetBalance;
 }

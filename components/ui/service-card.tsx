@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { type Service } from "@/lib/services";
+import { type ServiceCard } from "@/lib/services";
 import { cn } from "@/lib/utils";
 
 interface ServiceCardProps {
-  service: Service;
+  service: ServiceCard;
   className?: string;
 }
 

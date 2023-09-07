@@ -30,6 +30,7 @@ function withAuth<
 interface Options {
   sort?: string;
   filter?: string;
+  fields?: string;
 }
 
 export const getFullList = withAuth(

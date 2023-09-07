@@ -13,8 +13,7 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const { slug } = params;
-  // TODO fix any
-  const service = (await getServiceBySlug(slug)) as any;
+  const service = await getServiceBySlug(slug);
   if (service === null) redirect("/");
   return (
     <>
