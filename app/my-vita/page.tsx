@@ -34,7 +34,10 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <VitaStatsCard className="p-[20px] @xl:p-[30px]" />
+        <VitaStatsCard
+          className="p-[20px] @xl:p-[30px]"
+          showMyVitaLink={false}
+        />
       </div>
     </div>
   );

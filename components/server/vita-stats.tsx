@@ -34,10 +34,15 @@ async function fetchVitaSats() {
   }
 }
 
-interface VitaStatsCardProps extends React.ComponentPropsWithoutRef<"div"> {}
+interface VitaStatsCardProps extends React.ComponentPropsWithoutRef<"div"> {
+  showMyVitaLink?: boolean;
+  showTreasuryLink?: boolean;
+}
 
 export async function VitaStatsCard({
   className,
+  showMyVitaLink = true,
+  showTreasuryLink = true,
   ...rest
 }: VitaStatsCardProps) {
   const vitaStats = await fetchVitaSats();
@@ -76,24 +81,28 @@ export async function VitaStatsCard({
             </p>
           </div>
           <div className="flex flex-grow flex-col items-end justify-around space-y-[16px] self-end text-right">
-            <p>
-              <Link
-                href="/my-vita"
-                className="text-base font-medium text-vita-purple underline underline-offset-4"
-              >
-                My VITA
-                <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
-              </Link>
-            </p>
-            <p>
-              <Link
-                href="/treasury"
-                className="text-base font-medium text-vita-purple underline underline-offset-4"
-              >
-                View the Treasury
-                <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
-              </Link>
-            </p>
+            {showMyVitaLink && (
+              <p>
+                <Link
+                  href="/my-vita"
+                  className="text-base font-medium text-vita-purple underline underline-offset-4"
+                >
+                  My VITA
+                  <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
+                </Link>
+              </p>
+            )}
+            {showTreasuryLink && (
+              <p>
+                <Link
+                  href="/treasury"
+                  className="text-base font-medium text-vita-purple underline underline-offset-4"
+                >
+                  View the Treasury
+                  <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
+                </Link>
+              </p>
+            )}
           </div>
         </div>
       </div>
