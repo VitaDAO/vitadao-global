@@ -15,7 +15,7 @@ export default function MyVitaStats() {
   if (!ready || isInitialLoading) {
     // TODO better loading UI, maybe improve with RSC, maybe Suspense
     return (
-      <div className="flex h-full w-full items-center justify-center">
+      <div className="flex h-full w-full items-center justify-center py-[20px] @xl/main:py-[30px]">
         <VitadaoSpinner />
       </div>
     );
@@ -23,7 +23,7 @@ export default function MyVitaStats() {
 
   if (ready && !authenticated) {
     return (
-      <div className="flex h-full w-full flex-col items-center justify-center gap-[20px] @xl:gap-[30px]">
+      <div className="flex h-full w-full flex-col items-center justify-center gap-[20px] py-[20px]  @xl/main:gap-[30px] @xl/main:py-[30px]">
         <p className="text-center text-[20px] font-medium leading-[24px] tracking-[-0.2px]">
           Please log in and connect a wallet to view your balances.
         </p>
@@ -53,22 +53,25 @@ export default function MyVitaStats() {
     return (
       <>
         {data.balances.length > 0 ? (
-          <div className="flex h-full w-full flex-col">
-            <div className="grid grid-cols-2 gap-y-3 pb-[18px] text-sm uppercase leading-[16.8px] tracking-[0.56px] text-[#606060] @lg:grid-cols-[160px_1fr_max-content]">
-              <span>Linked wallet</span>
-              <span>Balance</span>
-              <span>Manage</span>
+          <div className="flex h-full w-full flex-col @container/card [&>div:first-child]:pb-[10px] [&>div]:py-[20px] @xl/main:[&>div]:py-[30px]">
+            <div className="grid gap-y-[9px] text-sm uppercase leading-[16.8px] tracking-[0.56px] text-[#606060] @xl/card:grid-cols-[160px_1fr_max-content]">
+              <span className="@xl/card:hidden">Linked wallets</span>
+              <span className="hidden @xl/card:block">Linked wallet</span>
+              <span className="hidden @xl/card:block">Balance</span>
+              <span className="hidden @xl/card:block">Manage</span>
             </div>
             {data.balances.map((b) => (
               <div
                 key={b.address}
-                className="grid grid-cols-2 gap-y-3 border-b border-[#ECECEC] py-[30px] @lg:grid-cols-[160px_1fr_max-content]"
+                className="grid grid-cols-2 gap-y-[9px] border-b border-[#ECECEC] leading-none @xl/card:grid-cols-[160px_1fr_max-content]"
               >
                 <span className="font-medium">{truncateWallet(b.address)}</span>
-                <span>{b.balance} VITA</span>
+                <span className="text-right @xl/card:text-left">
+                  {b.balance} VITA
+                </span>
                 <button
                   className={cn(
-                    "font-semibold text-vita-purple underline underline-offset-4",
+                    "text-left font-semibold text-vita-purple underline underline-offset-4 @xl/card:text-right",
                     disabled &&
                       "cursor-not-allowed font-normal text-gray-800 no-underline",
                   )}
@@ -78,9 +81,21 @@ export default function MyVitaStats() {
                 </button>
               </div>
             ))}
-            <div className="flex flex-grow items-end justify-end pt-[30px] text-base leading-none">
+            <div className="grid grid-cols-2 gap-y-[9px] border-b border-[#ECECEC] @xl/card:grid-cols-[160px_1fr_max-content] @xl/card:border-none @xl/card:pb-0">
+              <span className="font-medium">Total VITA</span>
+              <span className="text-right font-semibold @xl/card:text-left">
+                {data.totalBalance} VITA
+              </span>
               <button
-                className="text-vita-purple underline underline-offset-4"
+                className="hidden font-semibold text-vita-purple underline underline-offset-4 @xl/card:block"
+                onClick={linkWallet}
+              >
+                Connect another wallet
+              </button>
+            </div>
+            <div className="flex items-center justify-center @xl/card:hidden">
+              <button
+                className="font-semibold text-vita-purple underline underline-offset-4"
                 onClick={linkWallet}
               >
                 Connect another wallet
@@ -88,7 +103,7 @@ export default function MyVitaStats() {
             </div>
           </div>
         ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-[20px] @xl:gap-[30px]">
+          <div className="flex h-full w-full flex-col items-center justify-center gap-[20px] @xl/main:gap-[30px]">
             <p className="text-center text-[20px] font-medium leading-[24px] tracking-[-0.2px]">
               Please connect a wallet to view your balances.
             </p>

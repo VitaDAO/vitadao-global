@@ -3,14 +3,14 @@ import MyVitaStats from "./my-vita-stats";
 
 export default function Page() {
   return (
-    <div className="mx-auto max-w-[1260px] @container">
-      <div className="px-[20px] py-[30px] @xl:px-[30px] @xl:pt-[90px]">
+    <div className="mx-auto max-w-[1260px] @container/main">
+      <div className="px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
         <h1 className="mb-[30px] text-h2 font-medium">My VITA</h1>
-        <div className="mb-[20px] grid gap-[20px] @xl:mb-[30px] @xl:gap-[30px] @3xl:grid-cols-3">
-          <div className="rounded-xl bg-white p-[20px] @xl:p-[30px] @3xl:col-span-2">
+        <div className="mb-[20px] grid gap-[20px] @xl/main:mb-[30px] @xl/main:gap-[30px] @3xl/main:grid-cols-[1fr_300px] @4xl/main:grid-cols-[1fr_340px] @5xl/main:grid-cols-[1fr_380px]">
+          <div className="rounded-xl bg-white px-[20px] @xl/main:px-[30px]">
             <MyVitaStats />
           </div>
-          <div className="space-y-5 rounded-xl bg-white p-[20px] @xl:p-[30px]">
+          <div className="space-y-5 rounded-xl bg-white p-[20px] @xl/main:p-[30px]">
             <p className="text-lg font-medium">Buy more VITA</p>
             <p>
               We recommend using CoW Swap or Uniswap to buy VITA for ease of use
@@ -35,7 +35,7 @@ export default function Page() {
           </div>
         </div>
         <VitaStatsCard
-          className="p-[20px] @xl:p-[30px]"
+          className="p-[20px] @xl/main:p-[30px]"
           showMyVitaLink={false}
         />
       </div>
