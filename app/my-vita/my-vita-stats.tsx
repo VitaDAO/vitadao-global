@@ -10,9 +10,9 @@ import { cn, truncateWallet } from "@/lib/utils";
 export default function MyVitaStats() {
   const { ready, authenticated, user, linkWallet, login, unlinkWallet } =
     usePrivy();
-  const { status, data } = useVitaBalance(user);
+  const { data, isInitialLoading } = useVitaBalance(user);
 
-  if (!ready || status === "loading") {
+  if (!ready || isInitialLoading) {
     // TODO better loading UI, maybe improve with RSC, maybe Suspense
     return (
       <div className="flex h-full w-full items-center justify-center">
