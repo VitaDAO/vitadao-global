@@ -2,14 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
 import { getServiceBySlug } from "@/lib/services";
+import { Redemption } from "./redemption";
+
 interface PageProps {
   params: { slug: string };
 }
-
-// TODO authz this page. I assume redirect to home if the user doesn't have read
-// permissions on this service
 
 export default async function Page({ params }: PageProps) {
   const { slug } = params;
@@ -42,7 +40,7 @@ export default async function Page({ params }: PageProps) {
             <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
             {service.vita_required.toLocaleString()} VITA +
           </p>
-          <Button className="mt-[20px] w-full">Redeem This Offer</Button>
+          <Redemption service={service} />
           <p className="mt-[12px] hidden text-center text-sm text-[#989898] @3xl:block">
             Available to members with{" "}
             <span className="whitespace-nowrap">
@@ -59,16 +57,6 @@ export default async function Page({ params }: PageProps) {
             <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
             {service.vita_required.toLocaleString()} VITA +
           </p>
-          {/* <div>
-            {plainTextToParagraphs(service.body).map((p) => (
-              <p
-                key={simpleHash(p)}
-                className="mt-[1em] first:mt-[22px] last:mb-[30px]"
-              >
-                {p}
-              </p>
-            ))}
-          </div> */}
           <div
             dangerouslySetInnerHTML={{ __html: service.body }}
             className="[&>p:first-of-type]:mt-[22px] [&>p:last-of-type]:mb-[30px] [&>p]:mt-[1em]"
@@ -90,19 +78,4 @@ export default async function Page({ params }: PageProps) {
       </div>
     </>
   );
-}
-
-function plainTextToParagraphs(str: string) {
-  return str.split(/\n{2,}/).map((p) => p.trim());
-}
-
-// https://gist.github.com/jlevy/c246006675becc446360a798e2b2d781
-function simpleHash(str: string) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash &= hash; // Convert to 32bit integer
-  }
-  return new Uint32Array([hash])[0].toString(36);
 }

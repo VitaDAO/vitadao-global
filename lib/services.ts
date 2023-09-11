@@ -24,6 +24,12 @@ const ServiceSchema = z.object({
     z.literal("holder"),
     z.literal("redeemer"),
   ]),
+  redemption_details: z
+    .object({
+      type: z.literal("promo-code"),
+      payload: z.string(),
+    })
+    .nullable(),
 });
 
 export type Service = z.infer<typeof ServiceSchema>;
@@ -52,22 +58,43 @@ export const ServiceStandaloneSchema = ServiceSchema.pick({
   vita_required: true,
   logo: true,
   image: true,
+  redemption_details: true,
 });
 
-const serviceStandaloneFields = "id,title,body,vita_required,logo,image";
+const serviceStandaloneFields =
+  "id,title,body,vita_required,logo,image,redemption_details";
 
 export type ServiceStandalone = z.infer<typeof ServiceStandaloneSchema>;
 
-// TODO gate these functions with authz and make them more robust against
-// missing data or throws.
+function or(...args: Array<undefined | null | boolean | string>) {
+  return "(" + args.filter(Boolean).join(") || (") + ")";
+}
 
-async function buildAuthzFilter() {
+function and(...args: Array<undefined | null | boolean | string>) {
+  return "(" + args.filter(Boolean).join(") && (") + ")";
+}
+
+interface User {
+  did: string | null;
+  balance: number;
+}
+
+async function getUserAuthzProperties() {
   const did = await getUserDid();
+
   let balance = 0;
   if (did !== null) {
     balance = await getUserBalance(did);
   }
 
+  return {
+    did,
+    balance,
+  };
+}
+
+function buildFilter({ user, filter }: { user: User; filter?: string }) {
+  const { did, balance } = user;
   // The read permissions are as follows:
   // - "public" services are readable by everyone.
   // - "private" services are readable by logged in users, irrespective of VITA
@@ -76,18 +103,20 @@ async function buildAuthzFilter() {
   //   than zero.
   // - "redeemer" services are readable only by those with enough VITA to actually
   //   redeem the service.
-  return [
-    `read_access = "public"`,
-    did && `read_access = "private"`,
-    did && balance > 0 && `read_access = "holder"`,
-    did && `read_access = "redeemer" && vita_required <= ${balance}`,
-  ]
-    .filter(Boolean)
-    .join(" || ");
+  return and(
+    filter,
+    or(
+      `read_access = "public"`,
+      did && `read_access = "private"`,
+      did && balance > 0 && `read_access = "holder"`,
+      did && `read_access = "redeemer" && vita_required <= ${balance}`,
+    ),
+  );
 }
 
 export async function getServices() {
-  const filter = await buildAuthzFilter();
+  const user = await getUserAuthzProperties();
+  const filter = buildFilter({ user });
   const fields = serviceCardFields;
 
   const services = ServiceCardSchema.array().parse(
@@ -98,18 +127,26 @@ export async function getServices() {
 }
 
 export async function getServiceBySlug(slug: string) {
-  const filter = `slug = "${slug}" && (${await buildAuthzFilter()})`;
+  const user = await getUserAuthzProperties();
+  const filter = buildFilter({ user, filter: `slug = "${slug}"` });
   const fields = serviceStandaloneFields;
 
   const service = ServiceStandaloneSchema.nullable().parse(
     await getFirstListItem("services", filter, { fields }),
   );
 
+  if (service === null) return null;
+
+  if (user.did === null || user.balance < service.vita_required) {
+    service.redemption_details = null;
+  }
+
   return service;
 }
 
 export async function getFeaturedService() {
-  const filter = `is_featured = true && (${await buildAuthzFilter()})`;
+  const user = await getUserAuthzProperties();
+  const filter = buildFilter({ user, filter: "is_featured = true" });
   const fields = serviceCardFields;
 
   const service = ServiceCardSchema.nullable().parse(
