@@ -3,6 +3,7 @@
 import { usePrivy, type User } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 
+import { AvatarAndHandle } from "@/components/ui/avatar-and-handle";
 import { Button } from "@/components/ui/button";
 import { cn, getUserHandle } from "@/lib/utils";
 import Link from "next/link";
@@ -38,7 +39,7 @@ export default function Page() {
         <div className="px-[20px] py-[30px] @xl:px-[30px] @xl:pt-[90px]">
           <div className="mb-12 grid grid-cols-1 items-center gap-x-[30px] gap-y-[20px] @3xl:grid-cols-[1fr_max-content_max-content]">
             <h1 className="mb-[10px] text-h2 font-medium">Manage accounts</h1>
-            <div>Avatar and name</div>
+            <AvatarAndHandle user={user} avatarClassName="h-8 w-8" />
             <div>
               <button
                 onClick={logout}
