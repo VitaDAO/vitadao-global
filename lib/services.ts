@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { getFirstListItem, getFullList } from "@/lib/pocketbase";
-import { getUserBalance, getUserDid } from "@/lib/users";
+import { getUserBalance, getUserDidFromCookie } from "@/lib/users";
 
 const ServiceSchema = z.object({
   id: z.string(),
@@ -80,7 +80,7 @@ interface User {
 }
 
 async function getUserAuthzProperties() {
-  const did = await getUserDid();
+  const did = await getUserDidFromCookie();
 
   let balance = 0;
   if (did !== null) {
