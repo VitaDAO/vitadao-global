@@ -79,7 +79,7 @@ export default async function Page() {
   );
 
   return (
-    <div className="max-w mx-auto max-w-[1260px] @container">
+    <div className="mx-auto max-w-[1260px] @container">
       <div className="px-[20px] py-[30px] @xl:px-[30px] @xl:pt-[90px]">
         <div className="mb-[20px] flex flex-col justify-between gap-[30px] @xl:mb-[30px] @4xl:flex-row">
           <div>
