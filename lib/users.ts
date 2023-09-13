@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 
 import { getFirstListItem } from "@/lib/pocketbase";
+import { PrivyUserSchema, isWallet } from "@/lib/privy";
 import { getWalletsBalance } from "@/lib/vita";
 
 export async function getUserDidFromCookie() {
@@ -43,24 +44,6 @@ export async function getUserDidFromCookie() {
   return null;
 }
 
-const LinkedAccount = z.discriminatedUnion("type", [
-  z.object({
-    type: z.literal("email"),
-    address: z.string(),
-  }),
-  z.object({
-    type: z.literal("wallet"),
-    address: z.string(),
-  }),
-]);
-
-// TODO verify and fix if this breaks when user has linked accounts other than
-// email and wallet, as those will have type different from "email" or "wallet".
-const PrivyUserSchema = z.object({
-  id: z.string(),
-  linked_accounts: z.array(LinkedAccount),
-});
-
 async function getPrivyUser(did: string) {
   const privyAppId = z
     .string({ required_error: "Missing Privy app ID env var." })
@@ -99,7 +82,7 @@ async function getPocketbaseUser(did: string) {
 export async function getUserBalance(did: string) {
   const privyUser = await getPrivyUser(did);
   const wallets = privyUser.linked_accounts
-    .filter((a) => a.type === "wallet")
+    .filter(isWallet)
     .map((a) => a.address);
   const walletsBalance = await getWalletsBalance(wallets);
 
