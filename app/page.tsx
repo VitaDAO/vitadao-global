@@ -29,8 +29,12 @@ export default async function Page() {
         <div className="flex justify-between">
           <p className="uppercase">Recent Proposals</p>
           <p>
-            <Link href="/proposals" className="underline underline-offset-4">
-              View All &gt;
+            <Link
+              href="/proposals"
+              className="font-semibold leading-[22px] underline underline-offset-4"
+            >
+              View All
+              <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
             </Link>
           </p>
         </div>

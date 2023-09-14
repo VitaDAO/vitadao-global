@@ -85,7 +85,7 @@ export async function VitaStatsCard({
               <p>
                 <Link
                   href="/my-vita"
-                  className="text-base font-medium text-vita-purple underline underline-offset-4"
+                  className="text-base font-semibold text-vita-purple underline underline-offset-4"
                 >
                   My VITA
                   <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
@@ -96,7 +96,7 @@ export async function VitaStatsCard({
               <p>
                 <Link
                   href="/treasury"
-                  className="text-base font-medium text-vita-purple underline underline-offset-4"
+                  className="text-base font-semibold text-vita-purple underline underline-offset-4"
                 >
                   View the Treasury
                   <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />

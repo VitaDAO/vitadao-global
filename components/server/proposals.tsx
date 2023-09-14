@@ -54,25 +54,25 @@ function Category({ title }: CategoryProps) {
   switch (category) {
     case "Funding":
       return (
-        <span className="rounded-md bg-vita-yellow px-2 py-1 text-xs uppercase">
+        <span className="rounded-md bg-vita-yellow px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px]">
           {category}
         </span>
       );
     case "Project":
       return (
-        <span className="rounded-md bg-vita-yellow px-2 py-1 text-xs uppercase">
+        <span className="rounded-md bg-vita-yellow px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px]">
           {category}
         </span>
       );
     case "Governance":
       return (
-        <span className="rounded-md bg-vita-purple px-2 py-1 text-xs uppercase text-white">
+        <span className="rounded-md bg-vita-purple px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px] text-white">
           {category}
         </span>
       );
     case "IP":
       return (
-        <span className="rounded-md bg-vita-yellow px-2 py-1 text-xs uppercase">
+        <span className="rounded-md bg-vita-yellow px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px]">
           {category}
         </span>
       );
@@ -111,30 +111,37 @@ export async function Proposals({ first, skip = 0 }: ProposalsProps) {
       {proposals.map((p) => (
         <div
           key={p.id}
-          className="flex h-full flex-col items-start gap-3 rounded-xl bg-white p-[20px] @xl:p-[30px]"
+          className="flex min-h-[300px] flex-col items-start gap-[10px] rounded-xl bg-white p-[20px] @xl:p-[30px]"
         >
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-[10px]">
             <Category title={p.title} />
             {p.state === "active" && (
-              <span className="rounded-md bg-green-500 px-2 py-1 text-xs uppercase text-white">
+              <span className="rounded-md bg-[#00AA8E] px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px] text-white">
                 VOTING ACTIVE
               </span>
             )}
           </div>
-          <p className="line-clamp-3 text-h4">{p.title}</p>
+          <p className="line-clamp-3 text-h4 font-medium leading-[120%]">
+            {p.title}
+          </p>
           <div className="flex-grow">
             {p.state === "pending" ? (
-              <p className="text-orange-500">Voting is pending</p>
+              <p className="leading-[140%] text-orange-500">
+                Voting is pending
+              </p>
             ) : p.state === "closed" ? (
-              <p>Voting closed | {formatNumber(p.scores_total)} Total Votes</p>
+              <p className="leading-[140%] ">
+                Voting closed | {formatNumber(p.scores_total)} Total Votes
+              </p>
             ) : null}
           </div>
           <a
             href={p.link}
             target="_blank"
-            className="text-vita-purple underline underline-offset-4"
+            className="font-semibold leading-[22px] text-vita-purple underline underline-offset-4"
           >
-            {p.state === "active" ? "Review & Vote" : "Review"} &gt;
+            {p.state === "active" ? "Review & Vote" : "Review"}
+            <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
           </a>
         </div>
       ))}
