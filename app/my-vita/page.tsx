@@ -19,6 +19,7 @@ export default function Page() {
             <div className="flex flex-col gap-5">
               <a
                 href="https://cowswap.exchange/#/swap?referral=0xF5307a74d1550739ef81c6488DC5C7a6a53e5Ac2&inputCurrency=ETH&outputCurrency=0x81f8f0bb1cb2a06649e51913a151f0e7ef6fa321&chain=mainnet"
+                target="_blank"
                 className="inline-flex h-[52px] w-full items-center justify-center rounded-full bg-[#042B64] px-3 py-2 text-center text-[#CAE9FE]"
               >
                 <span className="icon--vita icon--vita--cow-swap mr-2 text-lg" />
@@ -26,6 +27,7 @@ export default function Page() {
               </a>
               <a
                 href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x81f8f0bb1cb2a06649e51913a151f0e7ef6fa321&chain=mainnet"
+                target="_blank"
                 className="inline-flex h-[52px] w-full items-center justify-center rounded-full bg-[#FF007A] px-3 py-2 text-center text-white"
               >
                 <span className="icon--vita icon--vita--uniswap mr-2 text-lg" />
