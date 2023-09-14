@@ -124,14 +124,15 @@ export function TopNavigation({ hide = false }: TopNavigationProps) {
 export function SidebarNavigation() {
   return (
     <nav className="hidden h-screen w-[clamp(300px,30vw,340px)] flex-shrink-0 flex-col justify-between border-r border-gray-400 bg-white md:flex">
-      <Image
-        src="/vitadao-logo.svg"
-        alt="VitaDAO Logo"
-        width={192}
-        height={31}
-        priority
-        className="h-[91px] object-contain p-[30px]"
-      />
+      <div className="p-[30px]">
+        <Image
+          src="/vitadao-logo.svg"
+          alt="VitaDAO Logo"
+          width={192}
+          height={31}
+          priority
+        />
+      </div>
       <menu className="flex-shrink flex-grow overflow-auto border-t border-gray-400 font-medium tracking-[0.48px]">
         <li>
           <Link
