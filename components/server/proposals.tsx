@@ -113,17 +113,22 @@ export async function Proposals({ first, skip = 0 }: ProposalsProps) {
           key={p.id}
           className="flex h-full flex-col items-start gap-3 rounded-xl bg-white p-[20px] @xl:p-[30px]"
         >
-          <Category title={p.title} />
+          <div className="flex gap-3">
+            <Category title={p.title} />
+            {p.state === "active" && (
+              <span className="rounded-md bg-green-500 px-2 py-1 text-xs uppercase text-white">
+                VOTING ACTIVE
+              </span>
+            )}
+          </div>
           <p className="line-clamp-3 text-h4">{p.title}</p>
-          {p.state === "active" ? (
-            <p className="flex-grow text-green-500">Voting is active</p>
-          ) : p.state === "pending" ? (
-            <p className="flex-grow text-orange-500">Voting is pending</p>
-          ) : (
-            <p className="flex-grow">
-              Voting closed | {formatNumber(p.scores_total)} Total Votes
-            </p>
-          )}
+          <div className="flex-grow">
+            {p.state === "pending" ? (
+              <p className="text-orange-500">Voting is pending</p>
+            ) : p.state === "closed" ? (
+              <p>Voting closed | {formatNumber(p.scores_total)} Total Votes</p>
+            ) : null}
+          </div>
           <a
             href={p.link}
             target="_blank"
