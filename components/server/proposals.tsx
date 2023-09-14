@@ -126,9 +126,7 @@ export async function Proposals({ first, skip = 0 }: ProposalsProps) {
           </p>
           <div className="flex-grow">
             {p.state === "pending" ? (
-              <p className="leading-[140%] text-orange-500">
-                Voting is pending
-              </p>
+              <p className="leading-[140%] text-[#FF6C5C]">Voting is pending</p>
             ) : p.state === "closed" ? (
               <p className="leading-[140%] ">
                 Voting closed | {formatNumber(p.scores_total)} Total Votes
