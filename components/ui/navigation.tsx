@@ -132,14 +132,14 @@ export function SidebarNavigation() {
         priority
         className="h-[91px] object-contain p-[30px]"
       />
-      <menu className="flex-shrink flex-grow overflow-auto border-t border-gray-400">
+      <menu className="flex-shrink flex-grow overflow-auto border-t border-gray-400 font-medium tracking-[0.48px]">
         <li>
           <Link
             href="/"
             className="block px-[30px] py-4 hover:bg-gray-200"
             activeClassName="text-vita-purple"
           >
-            <span className="icon--vita icon--vita--home mr-3 text-sm" />
+            <span className="icon--vita icon--vita--home mr-[17px] text-sm" />
             Home
           </Link>
         </li>
@@ -149,7 +149,7 @@ export function SidebarNavigation() {
             className="block px-[30px] py-4 hover:bg-gray-200"
             activeClassName="text-vita-purple"
           >
-            <span className="icon--vita icon--vita--bell mr-3 text-sm" />
+            <span className="icon--vita icon--vita--bell mr-[17px] text-sm" />
             My Services
           </Link>
         </li>
@@ -159,7 +159,7 @@ export function SidebarNavigation() {
             className="block px-[30px] py-4 hover:bg-gray-200"
             activeClassName="text-vita-purple"
           >
-            <span className="icon--vita icon--vita--logo mr-3 text-sm" />
+            <span className="icon--vita icon--vita--logo mr-[17px] text-sm" />
             My VITA
           </Link>
         </li>
@@ -169,7 +169,7 @@ export function SidebarNavigation() {
             className="block px-[30px] py-4 hover:bg-gray-200"
             activeClassName="text-vita-purple"
           >
-            <span className="icon--vita icon--vita--gavel mr-3 text-sm" />
+            <span className="icon--vita icon--vita--gavel mr-[17px] text-sm" />
             Proposals
           </Link>
         </li>
@@ -179,16 +179,16 @@ export function SidebarNavigation() {
             className="block px-[30px] py-4 hover:bg-gray-200"
             activeClassName="text-vita-purple"
           >
-            <span className="icon--vita icon--vita--piechart mr-3 text-sm" />
+            <span className="icon--vita icon--vita--piechart mr-[17px] text-sm" />
             Treasury
           </Link>
         </li>
         <li className="flex items-center justify-between px-[30px] py-4 text-gray-600">
           <span>
-            <span className="icon--vita icon--vita--bro mr-3 text-sm" />
+            <span className="icon--vita icon--vita--bro mr-[17px] text-sm" />
             Delegation
           </span>
-          <span className="rounded-lg bg-gray-200 px-2 py-1 text-sm uppercase leading-none">
+          <span className="rounded-lg bg-gray-200 px-[6px] py-[3px] text-xs uppercase leading-none tracking-[0.36px]">
             coming soon
           </span>
         </li>
