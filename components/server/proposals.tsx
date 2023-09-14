@@ -116,7 +116,7 @@ export async function Proposals({ first, skip = 0 }: ProposalsProps) {
           <div className="flex flex-wrap gap-[10px]">
             <Category title={p.title} />
             {p.state === "active" && (
-              <span className="rounded-md bg-[#00AA8E] px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px] text-white">
+              <span className="rounded-md bg-[#41F4D4] px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px]">
                 VOTING ACTIVE
               </span>
             )}
