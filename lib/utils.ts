@@ -6,7 +6,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatNumber(n: number, decimals?: number) {
+interface FormatNumberOptions {
+  decimals?: number;
+  cutoff?: number;
+}
+
+export function formatNumber(
+  n: number,
+  { decimals, cutoff = 1000 }: FormatNumberOptions = {},
+) {
   if (decimals || decimals == 0) {
     return n?.toLocaleString(undefined, {
       minimumFractionDigits: decimals,
@@ -14,7 +22,7 @@ export function formatNumber(n: number, decimals?: number) {
     });
   }
 
-  if (n >= 1000) {
+  if (n >= cutoff) {
     return n.toLocaleString(undefined, {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,

@@ -54,7 +54,7 @@ function AssetRow({ asset }: AssetRowProps) {
         </div>
       </div>
       <div className="flex flex-shrink-0 flex-col px-2 py-3 text-right">
-        <span>${formatNumber(asset.value, 0)}</span>
+        <span>${formatNumber(asset.value, { cutoff: 10 })}</span>
         {asset.type === "fungible-asset" ? (
           <span>{`${formatNumber(asset.balance)} ${asset.symbol}`}</span>
         ) : (
@@ -123,22 +123,25 @@ export default async function Page() {
             <div>
               {s.type === "group" &&
                 typeOfChildren(s) === "group" &&
-                s.children.map((t) => (
-                  <Fragment key={s.label + t.label}>
-                    <h3 className="mb-3 font-semibold">{t.label}</h3>
-                    {t.type === "group" &&
-                      t.children.map(
-                        (a) =>
-                          (a.type === "fungible-asset" ||
-                            a.type === "generic-asset") && (
-                            <AssetRow
-                              key={s.label + t.label + a.label}
-                              asset={a}
-                            />
-                          ),
-                      )}
-                  </Fragment>
-                ))}
+                s.children.map(
+                  (t) =>
+                    t.value >= 100 && (
+                      <Fragment key={s.label + t.label}>
+                        <h3 className="mb-3 font-semibold">{t.label}</h3>
+                        {t.type === "group" &&
+                          t.children.map(
+                            (a) =>
+                              (a.type === "fungible-asset" ||
+                                a.type === "generic-asset") && (
+                                <AssetRow
+                                  key={s.label + t.label + a.label}
+                                  asset={a}
+                                />
+                              ),
+                          )}
+                      </Fragment>
+                    ),
+                )}
               {s.type === "group" &&
                 typeOfChildren(s) !== "unknown" &&
                 s.children.map(
