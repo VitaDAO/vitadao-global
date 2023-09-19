@@ -20,10 +20,10 @@ export default async function Page({ params }: PageProps) {
         width={1140}
         height={320}
         alt=""
-        className="mb-[10px] h-[120px] rounded-[20px] object-cover @3xl:mb-[30px] @3xl:h-[320px]"
+        className="mb-[10px] h-[120px] rounded-[20px] object-cover @3xl/main:mb-[30px] @3xl/main:h-[320px]"
       />
-      <div className="flex flex-col gap-[20px] @3xl:flex-row @3xl:gap-[30px]">
-        <div className="flex-grow @3xl:order-1 @3xl:w-[380px]">
+      <div className="flex flex-col gap-[20px] @3xl/main:flex-row @3xl/main:gap-[30px]">
+        <div className="flex-grow @3xl/main:order-1 @3xl/main:w-[380px]">
           <div className="flex h-[120px] items-center justify-center rounded-[20px] border border-[#CCCCCC] px-[20px]">
             <Image
               src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.logo}`}
@@ -33,15 +33,15 @@ export default async function Page({ params }: PageProps) {
               className="max-h-[32px] w-auto"
             />
           </div>
-          <h1 className="mt-[20px] text-lg/[26.4px] font-medium tracking-[-0.24px] @3xl:hidden">
+          <h1 className="mt-[20px] text-lg/[26.4px] font-medium tracking-[-0.24px] @3xl/main:hidden">
             {service.title}
           </h1>
-          <p className="mt-[20px] text-base/[22.4px] font-medium @3xl:hidden">
+          <p className="mt-[20px] text-base/[22.4px] font-medium @3xl/main:hidden">
             <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
             {service.vita_required.toLocaleString()} VITA +
           </p>
           <Redemption service={service} />
-          <p className="mt-[12px] hidden text-center text-sm text-[#989898] @3xl:block">
+          <p className="mt-[12px] hidden text-center text-sm text-[#989898] @3xl/main:block">
             Available to members with{" "}
             <span className="whitespace-nowrap">
               {service.vita_required.toLocaleString()} VITA
@@ -49,11 +49,11 @@ export default async function Page({ params }: PageProps) {
             or more
           </p>
         </div>
-        <div className="flex-grow @3xl:w-[730px]">
-          <h1 className="hidden text-h2 font-medium @3xl:block">
+        <div className="flex-grow @3xl/main:w-[730px]">
+          <h1 className="hidden text-h2 font-medium @3xl/main:block">
             {service.title}
           </h1>
-          <p className="mt-[20px] hidden text-base/[22.4px] font-medium @3xl:block">
+          <p className="mt-[20px] hidden text-base/[22.4px] font-medium @3xl/main:block">
             <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
             {service.vita_required.toLocaleString()} VITA +
           </p>
@@ -61,7 +61,7 @@ export default async function Page({ params }: PageProps) {
             dangerouslySetInnerHTML={{ __html: service.body }}
             className="[&>p:first-of-type]:mt-[22px] [&>p:last-of-type]:mb-[30px] [&>p]:mt-[1em]"
           />
-          <p className="pb-[20px] text-right @3xl:hidden">
+          <p className="pb-[20px] text-right @3xl/main:hidden">
             <Link
               href="#"
               className="font-semibold text-vita-purple underline underline-offset-4"
@@ -70,7 +70,7 @@ export default async function Page({ params }: PageProps) {
               <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
             </Link>
           </p>
-          <p className="text-right text-sm text-[#989898] @3xl:hidden">
+          <p className="text-right text-sm text-[#989898] @3xl/main:hidden">
             Available to members with {service.vita_required.toLocaleString()}{" "}
             VITA or more
           </p>

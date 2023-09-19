@@ -79,82 +79,80 @@ export default async function Page() {
   );
 
   return (
-    <div className="mx-auto max-w-[1260px] @container">
-      <div className="px-[20px] py-[30px] @xl:px-[30px] @xl:pt-[90px]">
-        <div className="mb-[20px] flex flex-col justify-between gap-[30px] @xl:mb-[30px] @4xl:flex-row">
-          <div>
-            <h1 className="mb-[10px] text-h2 font-medium">VitaDAO Treasury</h1>
-            <p className="max-w-[770px] text-base">
-              The data presented on this page is obtained through manual updates
-              or collected from third-party APIs, and is provided solely for
-              informational purposes. While we strive to maintain the highest
-              level of accuracy, some data may be incomplete or outdated. If you
-              identify any errors, please notify us via our{" "}
-              <a
-                href="https://discord.com/invite/3S3ftnmZYD"
-                className="underline underline-offset-4"
-              >
-                Discord
-              </a>
-              .
-            </p>
+    <div className="px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
+      <div className="mb-[20px] flex flex-col justify-between gap-[30px] @xl/main:mb-[30px] @4xl:flex-row">
+        <div>
+          <h1 className="mb-[10px] text-h2 font-medium">VitaDAO Treasury</h1>
+          <p className="max-w-[770px] text-base">
+            The data presented on this page is obtained through manual updates
+            or collected from third-party APIs, and is provided solely for
+            informational purposes. While we strive to maintain the highest
+            level of accuracy, some data may be incomplete or outdated. If you
+            identify any errors, please notify us via our{" "}
+            <a
+              href="https://discord.com/invite/3S3ftnmZYD"
+              className="underline underline-offset-4"
+            >
+              Discord
+            </a>
+            .
+          </p>
+        </div>
+        <div className="flex flex-grow items-center justify-center rounded-xl bg-white p-[20px] @xl/main:p-[30px]">
+          <span className="whitespace-nowrap text-h2 font-medium">
+            <span className="text-h3">$</span> {formatNumber(treasury.value)}
+          </span>
+        </div>
+      </div>
+      {treasury.children.map((s) => (
+        <div
+          key={s.label + s.value}
+          className="mb-[20px] space-y-[30px] rounded-xl bg-white p-[20px] last:mb-0 @xl/main:mb-[30px] @xl/main:p-[30px]"
+        >
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg">{`${s.label} · $${formatNumber(
+              s.value,
+            )}`}</h2>
+            {s.percent && (
+              <span className="rounded-lg bg-gray-400 px-2 py-1 text-sm uppercase leading-none">
+                {`${formatNumber(s.percent)}%`}
+              </span>
+            )}
           </div>
-          <div className="flex flex-grow items-center justify-center rounded-xl bg-white p-[20px] @xl:p-[30px]">
-            <span className="whitespace-nowrap text-h2 font-medium">
-              <span className="text-h3">$</span> {formatNumber(treasury.value)}
-            </span>
+          <div>
+            {s.type === "group" &&
+              typeOfChildren(s) === "group" &&
+              s.children.map(
+                (t) =>
+                  t.value >= 100 && (
+                    <Fragment key={s.label + t.label}>
+                      <h3 className="mb-3 font-semibold">{t.label}</h3>
+                      {t.type === "group" &&
+                        t.children.map(
+                          (a) =>
+                            (a.type === "fungible-asset" ||
+                              a.type === "generic-asset") && (
+                              <AssetRow
+                                key={s.label + t.label + a.label}
+                                asset={a}
+                              />
+                            ),
+                        )}
+                    </Fragment>
+                  ),
+              )}
+            {s.type === "group" &&
+              typeOfChildren(s) !== "unknown" &&
+              s.children.map(
+                (a) =>
+                  (a.type === "fungible-asset" ||
+                    a.type === "generic-asset") && (
+                    <AssetRow key={s.label + a.label} asset={a} />
+                  ),
+              )}
           </div>
         </div>
-        {treasury.children.map((s) => (
-          <div
-            key={s.label + s.value}
-            className="mb-[20px] space-y-[30px] rounded-xl bg-white p-[20px] last:mb-0 @xl:mb-[30px] @xl:p-[30px]"
-          >
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg">{`${s.label} · $${formatNumber(
-                s.value,
-              )}`}</h2>
-              {s.percent && (
-                <span className="rounded-lg bg-gray-400 px-2 py-1 text-sm uppercase leading-none">
-                  {`${formatNumber(s.percent)}%`}
-                </span>
-              )}
-            </div>
-            <div>
-              {s.type === "group" &&
-                typeOfChildren(s) === "group" &&
-                s.children.map(
-                  (t) =>
-                    t.value >= 100 && (
-                      <Fragment key={s.label + t.label}>
-                        <h3 className="mb-3 font-semibold">{t.label}</h3>
-                        {t.type === "group" &&
-                          t.children.map(
-                            (a) =>
-                              (a.type === "fungible-asset" ||
-                                a.type === "generic-asset") && (
-                                <AssetRow
-                                  key={s.label + t.label + a.label}
-                                  asset={a}
-                                />
-                              ),
-                          )}
-                      </Fragment>
-                    ),
-                )}
-              {s.type === "group" &&
-                typeOfChildren(s) !== "unknown" &&
-                s.children.map(
-                  (a) =>
-                    (a.type === "fungible-asset" ||
-                      a.type === "generic-asset") && (
-                      <AssetRow key={s.label + a.label} asset={a} />
-                    ),
-                )}
-            </div>
-          </div>
-        ))}
-      </div>
+      ))}
     </div>
   );
 }

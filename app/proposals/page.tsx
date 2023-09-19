@@ -28,7 +28,7 @@ interface PageProps {
 export default async function Page({ searchParams = {} }: PageProps) {
   // Get the total number of proposals
   const proposalsCount = proposalsCountSchema.parse(
-    await fetchSnapshot({ query: proposalsCountQuery })
+    await fetchSnapshot({ query: proposalsCountQuery }),
   );
 
   // Parse valid page value from search params
@@ -47,17 +47,15 @@ export default async function Page({ searchParams = {} }: PageProps) {
   const page = searchParamsSchema.parse(searchParams);
 
   return (
-    <div className="mx-auto max-w-[1260px] @container">
-      <div className="px-[20px] py-[30px] @xl:px-[30px] @xl:pt-[90px]">
-        <div className="mb-[30px] flex flex-wrap items-center justify-between gap-[30px]">
-          <h1 className="text-h2 font-medium">Proposals</h1>
-          <Pagination page={page} maxPage={maxPage} />
-        </div>
-        <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-[20px] @xl:gap-[30px]">
-          <Proposals first={pageSize} skip={pageSize * (page - 1)} />
-        </div>
-        <Pagination page={page} maxPage={maxPage} className="justify-end" />
+    <div className="px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
+      <div className="mb-[30px] flex flex-wrap items-center justify-between gap-[30px]">
+        <h1 className="text-h2 font-medium">Proposals</h1>
+        <Pagination page={page} maxPage={maxPage} />
       </div>
+      <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-[20px] @xl/main:gap-[30px]">
+        <Proposals first={pageSize} skip={pageSize * (page - 1)} />
+      </div>
+      <Pagination page={page} maxPage={maxPage} className="justify-end" />
     </div>
   );
 }
@@ -93,12 +91,12 @@ function Pagination({ page, maxPage, className }: PaginationProps) {
             href={`/proposals?page=${Number(cur)}`}
             className={cn(
               "flex h-[42px] w-[42px] items-center justify-center rounded-full border border-[#CCCCCC] px-4 py-2",
-              page === cur && "border-vita-purple"
+              page === cur && "border-vita-purple",
             )}
           >
             {cur}
           </Link>
-        )
+        ),
       )}
       {page < maxPage && (
         <Link
@@ -114,11 +112,11 @@ function Pagination({ page, maxPage, className }: PaginationProps) {
 
 function getPaginationList(page: number, maxPage: number) {
   const middleRange = [page - 1, page, page + 1].filter(
-    (p) => p > 1 && p < maxPage
+    (p) => p > 1 && p < maxPage,
   );
 
   const pages = Array.from(
-    new Set([1, 2, ...middleRange, maxPage - 1, maxPage])
+    new Set([1, 2, ...middleRange, maxPage - 1, maxPage]),
   );
 
   const paginationList = pages.reduce<(number | "...")[]>((acc, cur) => {
