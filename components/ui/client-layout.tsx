@@ -19,8 +19,8 @@ export function ClientLayout({ children }: ClientLayoutProps) {
           onScroll={onScroll}
           className="flex-grow overflow-auto pt-[60px] md:pt-0"
         >
-          <div className="mx-auto max-w-[1260px] @container/main">
-            {children}
+          <div className="mx-auto flex min-h-screen max-w-[1260px] flex-col @container/main">
+            <div className="flex-grow">{children}</div>
             <footer className="px-[20px] py-[30px] text-center text-sm leading-[140%] text-[#BCBCBC] @xl/main:px-[30px] @xl/main:text-right">
               &copy; VitaDAO. All rights reserved.{" "}
               <a
