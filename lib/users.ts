@@ -2,8 +2,8 @@ import { importSPKI, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { z } from "zod";
 
-import { getFirstListItem } from "@/lib/pocketbase";
-import { PrivyUserSchema, isWallet } from "@/lib/privy";
+import { deletePocketbaseUser, getPocketbaseUser } from "@/lib/pocketbase";
+import { deletePrivyUser, getPrivyUser, isWallet } from "@/lib/privy";
 import { getWalletsBalance } from "@/lib/vita";
 
 export async function getUserDidFromCookie() {
@@ -44,41 +44,10 @@ export async function getUserDidFromCookie() {
   return null;
 }
 
-async function getPrivyUser(did: string) {
-  const privyAppId = z
-    .string({ required_error: "Missing Privy app ID env var." })
-    .parse(process.env.NEXT_PUBLIC_PRIVY_APP_ID);
-  const privyAppSecret = z
-    .string({ required_error: "Missing Privy app ID env var." })
-    .parse(process.env.PRIVY_APP_SECRET);
-
-  const res = await fetch("https://auth.privy.io/api/v1/users/" + did, {
-    headers: {
-      "privy-app-id": privyAppId,
-      Authorization: "Basic " + btoa(`${privyAppId}:${privyAppSecret}`),
-    },
-  });
-  const json = await res.json();
-  const user = PrivyUserSchema.parse(json);
-  return user;
-}
-
-const PocketbaseUserSchema = z.object({
-  collectionId: z.string(),
-  collectionName: z.string(),
-  created: z.string(),
-  did: z.string(),
-  id: z.string(),
-  updated: z.string(),
-  vita_offset: z.number(),
-});
-
-async function getPocketbaseUser(did: string) {
-  return PocketbaseUserSchema.nullable().parse(
-    await getFirstListItem("users", `did = "${did}"`),
-  );
-}
-
+// TODO maybe make this getAuthenticatedUserBalance and pick did from cookies
+// (requiring verification of valid session) to mitigate risk that this ends up
+// used somewhere where someone could query someone else's balance from their
+// DID.
 export async function getUserBalance(did: string) {
   const privyUser = await getPrivyUser(did);
   const wallets = privyUser.linked_accounts
@@ -90,4 +59,13 @@ export async function getUserBalance(did: string) {
   const offsetBalance = pocketbaseUser?.vita_offset ?? 0;
 
   return walletsBalance + offsetBalance;
+}
+
+export async function deleteAuthenticatedUser() {
+  const did = await getUserDidFromCookie();
+
+  if (did) {
+    await deletePocketbaseUser(did);
+    await deletePrivyUser(did);
+  }
 }

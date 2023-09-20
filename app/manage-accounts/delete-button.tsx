@@ -12,11 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { deleteUser } from "@/lib/actions";
 
-interface DeleteButtonProps {
-  userId: string;
-}
-
-export function DeleteButton({ userId }: DeleteButtonProps) {
+export function DeleteButton() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -39,7 +35,6 @@ export function DeleteButton({ userId }: DeleteButtonProps) {
             className="w-auto bg-transparent hover:bg-transparent"
           >
             <form action={deleteUser}>
-              <input type="text" value={userId} name="userId" hidden readOnly />
               <Button className="border border-red-600 bg-transparent text-red-600 hover:bg-transparent">
                 Delete
               </Button>

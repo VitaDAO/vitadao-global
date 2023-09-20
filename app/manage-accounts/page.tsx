@@ -129,7 +129,7 @@ export default function Page() {
           <p className="mb-4 mt-6 text-sm uppercase tracking-wide">
             Delete your account
           </p>
-          <DeleteButton userId={user.id} />
+          <DeleteButton />
         </div>
         <div>
           <p className="mb-4 mt-6 text-sm uppercase tracking-wide">

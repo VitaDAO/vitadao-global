@@ -6,6 +6,12 @@ const Apple = z.object({
 
 type Apple = z.infer<typeof Apple>;
 
+const Custom = z.object({
+  type: z.literal("custom_oauth"),
+});
+
+type Custom = z.infer<typeof Custom>;
+
 const Discord = z.object({
   type: z.literal("discord_oauth"),
 });
@@ -53,6 +59,7 @@ type Wallet = z.infer<typeof Wallet>;
 // requirements at the moment.
 const LinkedAccount = z.discriminatedUnion("type", [
   Apple,
+  Custom,
   Discord,
   Email,
   Github,
@@ -71,4 +78,39 @@ export const PrivyUserSchema = z.object({
 
 export function isWallet(account: LinkedAccount): account is Wallet {
   return account.type === "wallet";
+}
+
+export async function fetchPrivy(url: string, options: RequestInit = {}) {
+  const privyAppId = z
+    .string({ required_error: "Missing Privy app ID env var." })
+    .parse(process.env.NEXT_PUBLIC_PRIVY_APP_ID);
+  const privyAppSecret = z
+    .string({ required_error: "Missing Privy app secret env var." })
+    .parse(process.env.PRIVY_APP_SECRET);
+
+  return fetch(url, {
+    ...options,
+    headers: {
+      "privy-app-id": privyAppId,
+      Authorization: "Basic " + btoa(`${privyAppId}:${privyAppSecret}`),
+      ...options.headers,
+    },
+  });
+}
+
+export async function getPrivyUser(did: string) {
+  const res = await fetchPrivy("https://auth.privy.io/api/v1/users/" + did);
+  const json = await res.json();
+  const user = PrivyUserSchema.parse(json);
+  return user;
+}
+
+export async function deletePrivyUser(did: string) {
+  const res = await fetchPrivy("https://auth.privy.io/api/v1/users/" + did, {
+    method: "DELETE",
+  });
+
+  if (res.status !== 204) {
+    throw new Error("Something failed when attempting to delete user.");
+  }
 }
