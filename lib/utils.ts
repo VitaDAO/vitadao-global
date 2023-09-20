@@ -50,6 +50,8 @@ export function getUserHandle(account: User["linkedAccounts"][number]): string {
   switch (account.type) {
     case "apple_oauth":
       return truncateEmail(account.email);
+    case "custom_auth":
+      return "custom auth";
     case "discord_oauth":
       // @ts-expect-error
       return account.username;

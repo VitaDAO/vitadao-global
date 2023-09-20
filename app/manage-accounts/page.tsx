@@ -172,6 +172,7 @@ function formatType(rawType: AccountType) {
 
 const iconClassName: Record<AccountType, string> = {
   apple_oauth: "icon--logos--apple",
+  custom_auth: "icon--vita--asterisk",
   discord_oauth: "icon--logos--discord",
   email: "icon--vita icon--vita--email",
   github_oauth: "icon--logos--github",
