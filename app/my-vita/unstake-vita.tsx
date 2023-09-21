@@ -25,19 +25,13 @@ export async function UnstakeVita({ className, ...rest }: UnstakeVitaProps) {
             Un-Stake your VITA
           </p>
           <p className="mb-[20px] max-w-[770px] text-base leading-[140%]">
-            If you have some VITA staked in the old Raphael{" "}
-            <a
-              href="https://gov.vitadao.com/t/how-to-unstake-vita-to-use-your-tokens-on-snapshot/491"
-              target="_blank"
-              className="underline underline-offset-4"
-            >
-              staking contract
-            </a>{" "}
+            If you have some VITA staked in the old Raphael staking contract
             (used for governance before we moved to Snapshot), you can unstake
             and link your VITA to your account to get access to more services.
           </p>
           <a
-            href="https://dao.vitadao.com/#/wallet"
+            href="https://gov.vitadao.com/t/how-to-unstake-vita-to-use-your-tokens-on-snapshot/491"
+            target="_blank"
             className="text-base font-semibold leading-normal text-vita-purple underline underline-offset-4"
           >
             Un-Stake My VITA
