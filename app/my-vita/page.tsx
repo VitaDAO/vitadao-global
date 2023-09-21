@@ -1,5 +1,6 @@
 import { VitaStatsCard } from "@/components/server/vita-stats";
 import MyVitaStats from "./my-vita-stats";
+import { UnstakeVita } from "./unstake-vita";
 
 export default function Page() {
   return (
@@ -35,6 +36,7 @@ export default function Page() {
           </div>
         </div>
       </div>
+      <UnstakeVita className="mb-[20px] @xl/main:mb-[30px]" />
       <VitaStatsCard
         className="p-[20px] @xl/main:p-[30px]"
         showMyVitaLink={false}
