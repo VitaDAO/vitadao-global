@@ -27,7 +27,7 @@ export async function UnstakeVita({ className, ...rest }: UnstakeVitaProps) {
           <p className="mb-[20px] max-w-[770px] text-base leading-[140%]">
             If you have some VITA staked in the old Raphael{" "}
             <a
-              href="https://etherscan.io/address/0x711F2ac9E39615e07B4fe4548154D698B517a66D"
+              href="https://gov.vitadao.com/t/how-to-unstake-vita-to-use-your-tokens-on-snapshot/491"
               target="_blank"
               className="underline underline-offset-4"
             >
