@@ -1,12 +1,11 @@
-import type { Metadata } from "next";
-
 import { VitaStatsCard } from "@/components/server/vita-stats";
+import { buildMetadata } from "@/lib/metadata";
 import MyVitaStats from "./my-vita-stats";
 import { UnstakeVita } from "./unstake-vita";
 
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: "My VITA",
-};
+});
 
 export default function Page() {
   return (

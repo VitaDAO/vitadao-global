@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: "Manage accounts",
-};
+});
 
 interface LayoutProps {
   children: React.ReactNode;

@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
-
 import { ServiceCard } from "@/components/ui/service-card";
+import { buildMetadata } from "@/lib/metadata";
 import { getServices } from "@/lib/services";
 
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: "My Services",
-};
+});
 
 export default async function Page() {
   const services = await getServices();

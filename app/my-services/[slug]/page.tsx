@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { buildMetadata } from "@/lib/metadata";
 import { getServiceBySlug } from "@/lib/services";
 import { Redemption } from "./redemption";
 
@@ -23,9 +24,9 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const service = await getService(params);
 
-  return {
+  return buildMetadata({
     title: service.title,
-  };
+  });
 }
 
 export default async function Page({ params }: PageProps) {
