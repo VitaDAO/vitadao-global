@@ -1,7 +1,6 @@
 "use client";
 
 import { usePrivy, type User } from "@privy-io/react-auth";
-import type { Metadata } from "next";
 import { useRouter } from "next/navigation";
 
 import { AvatarAndHandle } from "@/components/ui/avatar-and-handle";
@@ -9,10 +8,6 @@ import { Button } from "@/components/ui/button";
 import { cn, getUserHandle } from "@/lib/utils";
 import Link from "next/link";
 import { DeleteButton } from "./delete-button";
-
-export const metadata: Metadata = {
-  title: "Manage accounts",
-};
 
 // TODO would be cool to make this file a RSC if we figure that out.
 
