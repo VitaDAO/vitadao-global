@@ -1,9 +1,14 @@
+import type { Metadata } from "next";
 import { Fragment } from "react";
 
 import { MediaElement } from "@/components/ui/media-element";
 import { formatNumber } from "@/lib/utils";
 import type { Asset, TreasuryGroup } from "./schemas";
 import { treasuryGroupSchema } from "./schemas";
+
+export const metadata: Metadata = {
+  title: "Treasury",
+};
 
 const typeOfChildren = (node: TreasuryGroup) => {
   return node.type === "group" &&

@@ -17,7 +17,7 @@ export default async function Page() {
             Welcome to VitaDAO.Global
           </h1>
           <p className="text-base/[22.4px]">
-            The new home for VitaDAO members, providing exclusive services,
+            The home for VitaDAO members, providing exclusive services,
             portfolio management and governance tools to VITA holders.
           </p>
         </div>

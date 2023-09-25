@@ -1,3 +1,9 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy policy",
+};
+
 export default function Page() {
   return (
     <div className="px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px] [&>h2]:mt-9 [&>h2]:text-lg [&>h2]:font-medium [&>p]:mt-5 [&_a]:text-vita-purple [&_a]:underline [&_a]:underline-offset-4 [&_ul>li>*]:mt-3 [&_ul>li>p:first-of-type]:font-medium [&_ul>li]:mt-3 [&_ul]:ml-5 [&_ul_ul_li]:list-disc">

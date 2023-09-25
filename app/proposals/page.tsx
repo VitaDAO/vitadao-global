@@ -1,8 +1,13 @@
+import type { Metadata } from "next";
 import { z } from "zod";
 
 import { Proposals, fetchSnapshot } from "@/components/server/proposals";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Proposals",
+};
 
 // Query and schema for total number of proposals
 const proposalsCountQuery = `query {

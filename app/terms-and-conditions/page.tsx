@@ -1,3 +1,9 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms and conditions",
+};
+
 export default function Page() {
   return (
     <div className="px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
