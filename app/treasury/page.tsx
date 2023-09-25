@@ -91,6 +91,7 @@ export default async function Page() {
             identify any errors, please notify us via our{" "}
             <a
               href="https://discord.com/invite/3S3ftnmZYD"
+              target="_blank"
               className="underline underline-offset-4"
             >
               Discord
