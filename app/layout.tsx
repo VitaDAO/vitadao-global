@@ -5,7 +5,7 @@ import { ClientLayout } from "@/components/ui/client-layout";
 import "./globals.css";
 
 // TODO adjust base URL for metas based on deploy target environment detection
-const baseUrl = "https://www.vitadao.com/";
+const baseUrl = "https://www.vitadao.global/";
 const title = "VitaDAO.Global";
 const description =
   "The home for VitaDAO members, providing exclusive services, portfolio management and governance tools to VITA holders.";
