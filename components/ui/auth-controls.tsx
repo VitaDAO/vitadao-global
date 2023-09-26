@@ -6,10 +6,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AvatarAndHandle } from "./avatar-and-handle";
 
-function Avatar() {
-  return <div className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-400" />;
-}
-
 export function AuthControls() {
   const { login, ready, authenticated, user } = usePrivy();
 

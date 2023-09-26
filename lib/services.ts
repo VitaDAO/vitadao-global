@@ -24,12 +24,8 @@ const ServiceSchema = z.object({
     z.literal("holder"),
     z.literal("redeemer"),
   ]),
-  redemption_details: z
-    .object({
-      type: z.literal("promo-code"),
-      payload: z.string(),
-    })
-    .nullable(),
+  redemption_instructions: z.string(),
+  published: z.boolean(),
 });
 
 export type Service = z.infer<typeof ServiceSchema>;
@@ -58,11 +54,11 @@ export const ServiceStandaloneSchema = ServiceSchema.pick({
   vita_required: true,
   logo: true,
   image: true,
-  redemption_details: true,
+  redemption_instructions: true,
 });
 
 const serviceStandaloneFields =
-  "id,title,body,vita_required,logo,image,redemption_details";
+  "id,title,body,vita_required,logo,image,redemption_instructions";
 
 export type ServiceStandalone = z.infer<typeof ServiceStandaloneSchema>;
 
@@ -105,6 +101,7 @@ function buildFilter({ user, filter }: { user: User; filter?: string }) {
   //   redeem the service.
   return and(
     filter,
+    "published = true",
     or(
       `read_access = "public"`,
       did && `read_access = "private"`,
@@ -138,7 +135,7 @@ export async function getServiceBySlug(slug: string) {
   if (service === null) return null;
 
   if (user.did === null || user.balance < service.vita_required) {
-    service.redemption_details = null;
+    service.redemption_instructions = "";
   }
 
   return service;

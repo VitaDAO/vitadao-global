@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 import { buildMetadata } from "@/lib/metadata";
 import { getServiceBySlug } from "@/lib/services";
-import { Redemption } from "./redemption";
+import { RedemptionButton } from "./redemption-button";
 
 interface PageProps {
   params: { slug: string };
@@ -59,7 +59,7 @@ export default async function Page({ params }: PageProps) {
             <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
             {service.vita_required.toLocaleString()} VITA +
           </p>
-          <Redemption service={service} />
+          <RedemptionButton service={service} className="mt-[20px] w-full" />
           <p className="mt-[12px] hidden text-center text-sm text-[#989898] @3xl/main:block">
             Available to members with{" "}
             <span className="whitespace-nowrap">
@@ -78,7 +78,7 @@ export default async function Page({ params }: PageProps) {
           </p>
           <div
             dangerouslySetInnerHTML={{ __html: service.body }}
-            className="[&>p:first-of-type]:mt-[22px] [&>p:last-of-type]:mb-[30px] [&>p]:mt-[1em]"
+            className="prose"
           />
           <p className="pb-[20px] text-right @3xl/main:hidden">
             <Link
