@@ -117,7 +117,7 @@ export async function getServices() {
   const fields = serviceCardFields;
 
   const services = ServiceCardSchema.array().parse(
-    await getFullList("services", { filter, fields }),
+    await getFullList("services", { filter, fields, sort: "order" }),
   );
 
   return services;
@@ -147,7 +147,7 @@ export async function getFeaturedService() {
   const fields = serviceCardFields;
 
   const service = ServiceCardSchema.nullable().parse(
-    await getFirstListItem("services", filter, { fields }),
+    await getFirstListItem("services", filter, { fields, sort: "order" }),
   );
 
   return service;
