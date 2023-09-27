@@ -1,8 +1,8 @@
 "use client";
 
+import { useLogin } from "@privy-io/react-auth";
 import { useState } from "react";
 
-import { AuthControls } from "@/components/ui/auth-controls";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { type ServiceStandalone } from "@/lib/services";
@@ -23,6 +23,7 @@ export function RedemptionButton({
   ...rest
 }: RedemptionButtonProps) {
   const [open, setOpen] = useState(false);
+  const { login } = useLogin();
 
   let content;
 
@@ -35,7 +36,28 @@ export function RedemptionButton({
           Register, log in and link your existing VITA or buy some more to gain
           access.
         </p>
-        <AuthControls />
+        <div className="flex w-full justify-stretch gap-2">
+          <Button
+            intent="tertiary"
+            onClick={() => {
+              setOpen(false);
+              login();
+            }}
+            className="w-full text-vita-purple"
+          >
+            Sign up
+          </Button>
+          <Button
+            intent="tertiary"
+            onClick={() => {
+              setOpen(false);
+              login();
+            }}
+            className="w-full text-vita-purple"
+          >
+            Log in
+          </Button>
+        </div>
       </div>
     );
   } else {
