@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import { buildMetadata } from "@/lib/metadata";
 import { getServiceBySlug } from "@/lib/services";
+import { getUserBalance, getUserDidFromCookie } from "@/lib/users";
 import { RedemptionButton } from "./redemption-button";
 
 interface PageProps {
@@ -30,6 +31,8 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: PageProps) {
+  const did = await getUserDidFromCookie();
+  const balance = did ? await getUserBalance(did) : 0;
   const service = await getService(params);
 
   return (
@@ -59,7 +62,12 @@ export default async function Page({ params }: PageProps) {
             <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
             {service.vita_required.toLocaleString()} VITA +
           </p>
-          <RedemptionButton service={service} className="mt-[20px] w-full" />
+          <RedemptionButton
+            did={did}
+            balance={balance}
+            service={service}
+            className="mt-[20px] w-full"
+          />
           <p className="mt-[12px] hidden text-center text-sm text-[#989898] @3xl/main:block">
             Available to members with{" "}
             <span className="whitespace-nowrap">
