@@ -1,6 +1,7 @@
 "use client";
 
 import { useLogin } from "@privy-io/react-auth";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -23,7 +24,8 @@ export function RedemptionButton({
   ...rest
 }: RedemptionButtonProps) {
   const [open, setOpen] = useState(false);
-  const { login } = useLogin();
+  const router = useRouter();
+  const { login } = useLogin({ onComplete: router.refresh });
 
   let content;
 

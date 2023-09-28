@@ -1,6 +1,7 @@
 "use client";
 
-import { usePrivy } from "@privy-io/react-auth";
+import { useLogin, usePrivy } from "@privy-io/react-auth";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { VitadaoSpinner } from "@/components/ui/vitadao-spinner";
@@ -8,8 +9,9 @@ import { useVitaBalance } from "@/lib/hooks";
 import { cn, truncateWallet } from "@/lib/utils";
 
 export default function MyVitaStats() {
-  const { ready, authenticated, user, linkWallet, login, unlinkWallet } =
-    usePrivy();
+  const router = useRouter();
+  const { login } = useLogin({ onComplete: router.refresh });
+  const { ready, authenticated, user, linkWallet, unlinkWallet } = usePrivy();
   const { data, isInitialLoading } = useVitaBalance(user);
 
   if (!ready || isInitialLoading) {

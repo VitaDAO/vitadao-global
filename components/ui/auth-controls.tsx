@@ -1,13 +1,16 @@
 "use client";
 
-import { usePrivy } from "@privy-io/react-auth";
+import { useLogin, usePrivy } from "@privy-io/react-auth";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AvatarAndHandle } from "./avatar-and-handle";
 
 export function AuthControls() {
-  const { login, ready, authenticated, user } = usePrivy();
+  const router = useRouter();
+  const { login } = useLogin({ onComplete: router.refresh });
+  const { ready, authenticated, user } = usePrivy();
 
   if (!ready) {
     // TODO better loading state, even better if we could RSC this thing

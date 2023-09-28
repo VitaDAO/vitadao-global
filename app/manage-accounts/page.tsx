@@ -1,6 +1,6 @@
 "use client";
 
-import { usePrivy, type User } from "@privy-io/react-auth";
+import { useLogout, usePrivy, type User } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 
 import { AvatarAndHandle } from "@/components/ui/avatar-and-handle";
@@ -16,7 +16,8 @@ import { DeleteButton } from "./delete-button";
 
 export default function Page() {
   const router = useRouter();
-  const { ready, authenticated, user, logout, ...privy } = usePrivy();
+  const { logout } = useLogout({ onSuccess: router.refresh });
+  const { ready, authenticated, user, ...privy } = usePrivy();
 
   if (!ready) {
     // TODO better loading UI, maybe improve with RSC, maybe Suspense
