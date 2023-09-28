@@ -13,7 +13,7 @@ export default async function Page() {
       <div className="flex min-h-[220px] flex-col overflow-clip rounded-xl bg-black text-white @xl/main:flex-row">
         <div className="h-[240px] [background:url(/fresh-3d-bg.jpg)left/cover_no-repeat,lightgray_50%/cover_no-repeat] @xl/main:hidden" />
         <div className="flex-1 p-[20px] pb-[35px] text-center @xl/main:max-w-[515px] @xl/main:p-[30px] @xl/main:pb-[30px] @xl/main:pr-0 @xl/main:text-left">
-          <h1 className="mb-[10px] text-h2/[38.4px] font-medium tracking-[-0.025rem] @xl/main:mb-[15px] @xl/main:text-h2/[2.75rem]">
+          <h1 className="mb-[10px] text-h3/[38.4px] font-medium tracking-[-0.025rem] @xl/main:mb-[15px] @xl/main:text-h2/[2.75rem] sm:text-h2/[38.4px]">
             Welcome to VitaDAO.Global
           </h1>
           <p className="text-base/[22.4px]">
