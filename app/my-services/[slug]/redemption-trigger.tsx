@@ -7,22 +7,20 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { type ServiceStandalone } from "@/lib/services";
-import { cn } from "@/lib/utils";
 
-interface RedemptionButtonProps
+interface RedemptionTriggerProps
   extends React.ComponentPropsWithoutRef<"button"> {
   did: string | null;
   balance: number;
   service: ServiceStandalone;
 }
 
-export function RedemptionButton({
+export function RedemptionTrigger({
   did,
   balance,
   service,
-  className,
-  ...rest
-}: RedemptionButtonProps) {
+  children,
+}: RedemptionTriggerProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { login } = useLogin({ onComplete: router.refresh });
@@ -108,11 +106,7 @@ export function RedemptionButton({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className={cn(className)} {...rest}>
-          Redeem This Offer
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">{content}</DialogContent>
     </Dialog>
   );

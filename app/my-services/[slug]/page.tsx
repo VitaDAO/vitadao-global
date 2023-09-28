@@ -1,12 +1,12 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { Button } from "@/components/ui/button";
 import { buildMetadata } from "@/lib/metadata";
 import { getServiceBySlug } from "@/lib/services";
 import { getUserBalance, getUserDidFromCookie } from "@/lib/users";
-import { RedemptionButton } from "./redemption-button";
+import { RedemptionTrigger } from "./redemption-trigger";
 
 interface PageProps {
   params: { slug: string };
@@ -62,12 +62,9 @@ export default async function Page({ params }: PageProps) {
             <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
             {service.vita_required.toLocaleString()} VITA +
           </p>
-          <RedemptionButton
-            did={did}
-            balance={balance}
-            service={service}
-            className="mt-[20px] w-full"
-          />
+          <RedemptionTrigger did={did} balance={balance} service={service}>
+            <Button className="mt-[20px] w-full">Redeem This Offer</Button>
+          </RedemptionTrigger>
           <p className="mt-[12px] hidden text-center text-sm text-[#989898] @3xl/main:block">
             Available to members with{" "}
             <span className="whitespace-nowrap">
@@ -89,13 +86,12 @@ export default async function Page({ params }: PageProps) {
             className="prose"
           />
           <p className="pb-[20px] text-right @3xl/main:hidden">
-            <Link
-              href="#"
-              className="font-semibold text-vita-purple underline underline-offset-4"
-            >
-              Redeem This Offer
-              <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
-            </Link>
+            <RedemptionTrigger did={did} balance={balance} service={service}>
+              <button className="font-semibold text-vita-purple underline underline-offset-4">
+                Redeem This Offer
+                <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
+              </button>
+            </RedemptionTrigger>
           </p>
           <p className="text-right text-sm text-[#989898] @3xl/main:hidden">
             Available to members with {service.vita_required.toLocaleString()}{" "}
