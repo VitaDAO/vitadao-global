@@ -60,6 +60,9 @@ export default async function Page({ searchParams = {} }: PageProps) {
       <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-[20px] @xl/main:gap-[30px]">
         <Proposals first={pageSize} skip={pageSize * (page - 1)} />
       </div>
+      <span className="text-sm text-gray-300">
+        {JSON.stringify(searchParams)}
+      </span>
       <Pagination page={page} maxPage={maxPage} className="justify-end" />
     </div>
   );
