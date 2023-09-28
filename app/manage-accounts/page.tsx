@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { AvatarAndHandle } from "@/components/ui/avatar-and-handle";
 import { Button } from "@/components/ui/button";
 import { cn, getUserHandle } from "@/lib/utils";
-import Link from "next/link";
 import { DeleteButton } from "./delete-button";
 
 // TODO would be cool to make this file a RSC if we figure that out.
@@ -131,29 +130,6 @@ export default function Page() {
             Delete your account
           </p>
           <DeleteButton />
-        </div>
-        <div>
-          <p className="mb-4 mt-6 text-sm uppercase tracking-wide">
-            Terms and privacy
-          </p>
-          <ul>
-            <li>
-              <Link
-                href="/terms-and-conditions"
-                className="underline underline-offset-4"
-              >
-                Terms and conditions
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/privacy-policy"
-                className="underline underline-offset-4"
-              >
-                Privacy policy
-              </Link>
-            </li>
-          </ul>
         </div>
       </div>
     );
