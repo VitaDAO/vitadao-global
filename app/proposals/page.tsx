@@ -31,7 +31,6 @@ interface PageProps {
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  console.log("page", searchParams);
   // Get the total number of proposals
   const proposalsCount = proposalsCountSchema.parse(
     await fetchSnapshot({ query: proposalsCountQuery }),

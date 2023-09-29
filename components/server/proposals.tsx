@@ -99,7 +99,6 @@ interface ProposalsProps {
 }
 
 export async function Proposals({ first, skip = 0 }: ProposalsProps) {
-  console.log("proposals", first, skip);
   const proposals = proposalsSchema.parse(
     await fetchSnapshot({
       query: proposalsQuery,
