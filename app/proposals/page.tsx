@@ -57,7 +57,7 @@ export default async function Page({ searchParams }: PageProps) {
         <h1 className="text-h2 font-medium">Proposals</h1>
         <Pagination page={page} maxPage={maxPage} />
       </div>
-      <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-[20px] @xl/main:gap-[30px]">
+      <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-1 gap-[20px] @xl/main:gap-[30px] sm:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
         <Proposals first={pageSize} skip={pageSize * (page - 1)} />
       </div>
       <Pagination page={page} maxPage={maxPage} className="justify-end" />

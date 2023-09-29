@@ -37,7 +37,7 @@ export default async function Page() {
           </Link>
         </p>
       </div>
-      <div className="grid auto-rows-[1fr] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-[20px] @xl/main:gap-[30px]">
+      <div className="grid auto-rows-[1fr] grid-cols-1 gap-[20px] @xl/main:gap-[30px] sm:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
         <Proposals first={3} />
       </div>
     </div>
