@@ -30,7 +30,8 @@ interface PageProps {
   searchParams?: { page?: number };
 }
 
-export default async function Page({ searchParams = {} }: PageProps) {
+export default async function Page({ searchParams }: PageProps) {
+  console.log("page", searchParams);
   // Get the total number of proposals
   const proposalsCount = proposalsCountSchema.parse(
     await fetchSnapshot({ query: proposalsCountQuery }),
@@ -60,9 +61,6 @@ export default async function Page({ searchParams = {} }: PageProps) {
       <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-[20px] @xl/main:gap-[30px]">
         <Proposals first={pageSize} skip={pageSize * (page - 1)} />
       </div>
-      <span className="text-sm text-gray-300">
-        {JSON.stringify(searchParams)}
-      </span>
       <Pagination page={page} maxPage={maxPage} className="justify-end" />
     </div>
   );
@@ -80,6 +78,7 @@ function Pagination({ page, maxPage, className }: PaginationProps) {
       {page > 1 && (
         <Link
           href={`/proposals?page=${Number(page) - 1}`}
+          prefetch={false}
           className="flex h-[42px] items-center rounded-full border border-[#CCCCCC] px-4"
         >
           Prev
@@ -97,6 +96,7 @@ function Pagination({ page, maxPage, className }: PaginationProps) {
           <Link
             key={cur}
             href={`/proposals?page=${Number(cur)}`}
+            prefetch={false}
             className={cn(
               "flex h-[42px] w-[42px] items-center justify-center rounded-full border border-[#CCCCCC] px-4 py-2",
               page === cur && "border-vita-purple",
@@ -109,6 +109,7 @@ function Pagination({ page, maxPage, className }: PaginationProps) {
       {page < maxPage && (
         <Link
           href={`/proposals?page=${Number(page) + 1}`}
+          prefetch={false}
           className="flex h-[42px] items-center rounded-full border border-[#CCCCCC] px-4"
         >
           Next
