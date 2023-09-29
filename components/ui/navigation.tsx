@@ -17,7 +17,7 @@ interface MenuCardProps extends React.ComponentPropsWithoutRef<"div"> {
 
 function MenuCard({ href, children, className, ...rest }: MenuCardProps) {
   const finalClassName = cn(
-    "flex h-full flex-col justify-end gap-2 rounded-3xl border border-[#ECECEC] bg-white p-5 sm:text-lg",
+    "flex h-full flex-col justify-end gap-2 rounded-3xl border border-[#ECECEC] bg-white px-5 py-2 sm:text-lg",
     className,
   );
 
@@ -76,7 +76,7 @@ export function TopNavigation({ hide = false }: TopNavigationProps) {
       </Popover.Anchor>
       <Popover.Portal>
         <Popover.Content className="flex h-[calc(100dvh_-_56px)] w-screen flex-col bg-white shadow-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-10 data-[side=left]:slide-in-from-right-10 data-[side=right]:slide-in-from-left-10 data-[side=top]:slide-in-from-bottom-10 md:hidden">
-          <div className="grid flex-grow grid-cols-2 grid-rows-3 gap-2 px-2 py-3">
+          <div className="grid flex-grow grid-cols-2 gap-2 px-[20px] pb-3 landscape:grid-cols-3">
             <MenuCard href="/" onClick={() => setOpen(false)}>
               <span className="icon--vita icon--vita--home mr-3 text-lg text-vita-purple" />
               Home
@@ -108,7 +108,7 @@ export function TopNavigation({ hide = false }: TopNavigationProps) {
             </MenuCard>
           </div>
           <div
-            className="min-h-[81px] border-t border-[#ECECEC] px-2 py-3"
+            className="min-h-[81px] border-t border-[#ECECEC] px-[20px] py-3 landscape:min-h-0"
             onClick={() => setOpen(false)}
           >
             <AuthControls />
