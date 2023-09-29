@@ -90,6 +90,7 @@ export async function fetchSnapshot(body: FetchSnapshotProps) {
     headers: {
       "Content-Type": "application/json",
     },
+    next: { revalidate: 60 },
   }).then((res) => res.json());
 }
 
