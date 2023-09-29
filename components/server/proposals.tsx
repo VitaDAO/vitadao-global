@@ -7,7 +7,6 @@ const proposalsQuery = `query Query($first: Int!, $skip: Int!) {
     id
     title
     state
-    link
     scores_total
   }
 }`;
@@ -24,7 +23,6 @@ const proposalsSchema = z
             z.literal("closed"),
             z.literal("pending"),
           ]),
-          link: z.string().url(),
           scores_total: z.number(),
         }),
       ),
@@ -135,7 +133,7 @@ export async function Proposals({ first, skip = 0 }: ProposalsProps) {
             ) : null}
           </div>
           <a
-            href={p.link}
+            href={"https://vote.vitadao.com/#/proposal/" + p.id}
             target="_blank"
             className="font-semibold leading-[22px] text-vita-purple underline underline-offset-4"
           >
