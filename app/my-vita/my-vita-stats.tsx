@@ -105,7 +105,7 @@ export default function MyVitaStats() {
             </div>
           </div>
         ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-[20px] @xl/main:gap-[30px]">
+          <div className="flex h-full w-full flex-col items-center justify-center gap-[20px] py-[20px] @xl/main:gap-[30px] @xl/main:py-[30px]">
             <p className="text-center text-[20px] font-medium leading-[24px] tracking-[-0.2px]">
               Please connect a wallet to view your balances.
             </p>
