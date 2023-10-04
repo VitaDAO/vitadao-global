@@ -97,7 +97,7 @@ export function RedemptionTrigger({
             dangerouslySetInnerHTML={{
               __html: service.redemption_instructions,
             }}
-            className="prose"
+            className="prose text-black"
           />
         </div>
       );

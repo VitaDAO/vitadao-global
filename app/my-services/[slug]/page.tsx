@@ -83,7 +83,7 @@ export default async function Page({ params }: PageProps) {
           </p>
           <div
             dangerouslySetInnerHTML={{ __html: service.body }}
-            className="prose"
+            className="prose text-black"
           />
           <p className="pb-[20px] text-right @3xl/main:hidden">
             <RedemptionTrigger did={did} balance={balance} service={service}>
