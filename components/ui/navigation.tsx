@@ -2,6 +2,7 @@
 
 import * as Popover from "@radix-ui/react-popover";
 import Image from "next/image";
+import NextLink from "next/link";
 import { useState } from "react";
 
 import { AuthControls } from "@/components/ui/auth-controls";
@@ -53,14 +54,18 @@ export function TopNavigation({ hide = false }: TopNavigationProps) {
             hide && !open && "-translate-y-full",
           )}
         >
-          <Image
-            src="/vitadao-logo.svg"
-            alt="VitaDAO Logo"
-            width={160}
-            height={26}
-            priority
-            className="max-h-[26px] min-w-0 flex-1 object-contain object-left"
-          />
+          <div className="mix-w-0 flex-1">
+            <NextLink href="/">
+              <Image
+                src="/vitadao-logo.svg"
+                alt="VitaDAO Logo"
+                width={160}
+                height={26}
+                priority
+                className="max-h-[26px] object-contain object-left"
+              />
+            </NextLink>
+          </div>
           <Popover.Trigger asChild>
             <Button
               intent="tertiary"
@@ -125,13 +130,15 @@ export function SidebarNavigation() {
   return (
     <nav className="hidden h-screen w-[clamp(300px,30vw,340px)] flex-shrink-0 flex-col justify-between border-r border-gray-400 bg-white md:flex">
       <div className="p-[30px]">
-        <Image
-          src="/vitadao-logo.svg"
-          alt="VitaDAO Logo"
-          width={192}
-          height={31}
-          priority
-        />
+        <NextLink href="/">
+          <Image
+            src="/vitadao-logo.svg"
+            alt="VitaDAO Logo"
+            width={192}
+            height={31}
+            priority
+          />
+        </NextLink>
       </div>
       <menu className="flex-shrink flex-grow overflow-auto border-t border-gray-400 font-medium tracking-[0.48px]">
         <li>
