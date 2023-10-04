@@ -12,31 +12,33 @@ interface ServiceCardProps {
 export function ServiceCard({ service, className }: ServiceCardProps) {
   if (service.is_featured) {
     return (
-      <div className={cn("@container", className)}>
-        <div className="grid grid-cols-1 overflow-clip rounded-xl bg-white @2xl:grid-cols-2">
-          <div className="relative @2xl:order-2">
+      <div className={cn("@container/card", className)}>
+        <div className="grid grid-cols-1 overflow-clip rounded-xl bg-white @3xl/card:min-h-[350px] @3xl/card:grid-cols-2">
+          <div className="relative @3xl/card:order-2">
             <Image
               src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.image}`}
               alt=""
               width={600}
               height={300}
-              className="h-full max-h-[300px] w-full object-cover @2xl:absolute @2xl:top-0 @2xl:max-h-none"
+              className="h-full max-h-[300px] w-full object-cover @3xl/card:absolute @3xl/card:top-0 @3xl/card:max-h-none"
             />
           </div>
-          <div className="flex h-max flex-col p-[20px] md:p-[30px]">
-            <p className="mb-[33px] text-sm/[17px] uppercase tracking-[0.56px] text-[#606060]">
-              Featured service
-            </p>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.logo}`}
-              alt=""
-              className="mb-[20px] h-[32px] max-w-[270px] object-contain object-left"
-            />
+          <div className="flex h-full flex-col p-[20px] md:p-[30px]">
+            <div className="mb-[40px] flex flex-wrap justify-between gap-5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.logo}`}
+                alt=""
+                className="h-[32px] max-w-[270px] object-contain object-left"
+              />
+              <p className="text-sm/[17px] uppercase tracking-[0.56px] text-[#606060]">
+                Featured service
+              </p>
+            </div>
             <p className="mb-[10px] max-w-[485px] text-h3/[35px] font-medium tracking-[-0.02rem]">
               {service.title}
             </p>
-            <p className="mb-[20px] max-w-[485px] text-base/[22px]">
+            <p className="mb-[20px] max-w-[485px] flex-grow text-base/[22px]">
               {service.summary}
             </p>
             <div className="flex flex-wrap items-end justify-between gap-[10px] text-base/[22px]">
