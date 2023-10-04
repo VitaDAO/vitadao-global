@@ -77,7 +77,7 @@ export default async function Page({ params }: PageProps) {
           <h1 className="hidden text-h2 font-medium @3xl/main:block">
             {service.title}
           </h1>
-          <p className="mt-[20px] hidden text-base/[22.4px] font-medium @3xl/main:block">
+          <p className="mb-[22px] mt-[30px] hidden text-base/[22.4px] font-medium @3xl/main:block">
             <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
             {service.vita_required.toLocaleString()} VITA +
           </p>
