@@ -29,8 +29,8 @@ export function RedemptionTrigger({
 
   if (did === null) {
     content = (
-      <div className="space-y-5 p-[20px] @xl/main:p-[30px]">
-        <p className="text-lg font-medium">Register and log in</p>
+      <div className="space-y-3">
+        <p className="text-lg font-semibold">Register or log in</p>
         <p>
           Services are available to VitaDAO members with the required VITA.
           Register, log in and link your existing VITA or buy some more to gain
@@ -63,8 +63,8 @@ export function RedemptionTrigger({
   } else {
     if (balance < service.vita_required) {
       content = (
-        <div className="space-y-5 p-[20px] @xl/main:p-[30px]">
-          <p className="text-lg font-medium">Buy more VITA</p>
+        <div className="space-y-3">
+          <p className="text-lg font-semibold">Buy more VITA</p>
           <p>
             We recommend using CoW Swap or Uniswap to buy VITA for ease of use
             and security.
@@ -91,8 +91,8 @@ export function RedemptionTrigger({
       );
     } else {
       content = (
-        <div className="space-y-5 p-[20px] @xl/main:p-[30px]">
-          <p className="text-lg font-medium">Redeem this offer</p>
+        <div className="space-y-3">
+          <p className="text-lg font-semibold">Redeem this offer</p>
           <div
             dangerouslySetInnerHTML={{
               __html: service.redemption_instructions,
