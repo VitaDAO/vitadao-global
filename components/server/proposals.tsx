@@ -99,7 +99,7 @@ export async function Proposals({ first, skip = 0 }: ProposalsProps) {
               </Pill>
             )}
           </div>
-          <p className="line-clamp-3 text-h4 font-medium leading-[120%]">
+          <p className="line-clamp-3 text-h4 font-medium leading-[120%] pt-[5px]">
             {p.title}
           </p>
           <div className="flex-grow">
