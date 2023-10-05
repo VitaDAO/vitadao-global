@@ -59,7 +59,7 @@ function AssetRow({ asset }: AssetRowProps) {
           )}
         </div>
       </div>
-      <div className="flex flex-shrink-0 flex-col text-right text-sm leading-[120%]">
+      <div className="flex flex-shrink-0 flex-col gap-[3px] text-right text-sm leading-[120%]">
         <p>${formatNumber(asset.value, { cutoff: 10 })}</p>
         {asset.type === "fungible-asset" ? (
           <p>{`${formatNumber(asset.balance)} ${asset.symbol}`}</p>
