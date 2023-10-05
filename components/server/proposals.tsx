@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-import { cn, formatNumber } from "@/lib/utils";
+import { Pill } from "@/components/ui/pill";
+import { formatNumber } from "@/lib/utils";
 
 const proposalsQuery = `query Query($first: Int!, $skip: Int!) {
   proposals(first: $first, skip: $skip, where: {space: "vote.vitadao.eth"}, orderBy: "created", orderDirection: desc) {
@@ -30,19 +31,7 @@ const proposalsSchema = z
   })
   .transform((val) => val.data.proposals);
 
-function Pill({ className, ...rest }: React.ComponentPropsWithoutRef<"span">) {
-  return (
-    <span
-      className={cn(
-        "rounded-md px-[7px] pt-[5px] pb-[3.5px] text-xs font-medium uppercase leading-none tracking-[1.2px]",
-        className,
-      )}
-      {...rest}
-    />
-  );
-}
-
-function Category({ title }: { title: string}) {
+function Category({ title }: { title: string }) {
   let category = "Governance";
   if (title.includes("[Project]")) {
     category = "Project";
@@ -52,7 +41,17 @@ function Category({ title }: { title: string}) {
     category = "Funding";
   }
 
-  return <Pill className={category === "Governance" ? "bg-vita-purple text-white" : "bg-vita-yellow"}>{category}</Pill>;
+  return (
+    <Pill
+      className={
+        category === "Governance"
+          ? "bg-vita-purple text-white"
+          : "bg-vita-yellow"
+      }
+    >
+      {category}
+    </Pill>
+  );
 }
 
 interface FetchSnapshotProps {
@@ -94,12 +93,10 @@ export async function Proposals({ first, skip = 0 }: ProposalsProps) {
           <div className="flex flex-wrap gap-[10px]">
             <Category title={p.title} />
             {p.state === "active" && (
-              <Pill className="bg-[#41F4D4]">
-                VOTING ACTIVE
-              </Pill>
+              <Pill className="bg-[#41F4D4]">VOTING ACTIVE</Pill>
             )}
           </div>
-          <p className="line-clamp-3 text-h4 font-medium leading-[120%] pt-[5px]">
+          <p className="line-clamp-3 pt-[5px] text-h4 font-medium leading-[120%]">
             {p.title}
           </p>
           <div className="flex-grow">

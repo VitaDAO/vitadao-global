@@ -44,7 +44,7 @@ interface MediaElementProps {
 
 export function MediaElement({ children, src }: MediaElementProps) {
   const [displayAs, setDisplayAs] = useState<DisplayAs>(
-    src ? "image" : "fallback"
+    src ? "image" : "fallback",
   );
 
   const imageStatus = useImageLoadingStatus(src);
@@ -55,7 +55,7 @@ export function MediaElement({ children, src }: MediaElementProps) {
       <img
         src={src}
         alt=""
-        className="h-full w-full object-cover"
+        className="h-full w-full rounded-full object-cover"
         // onError={() => setDisplayAs("video")}
       />
     );
@@ -71,7 +71,7 @@ export function MediaElement({ children, src }: MediaElementProps) {
       autoPlay
       loop
       onError={() => setDisplayAs("fallback")}
-      className="h-full w-full object-cover"
+      className="h-full w-full rounded-full object-cover"
     />
   );
 }

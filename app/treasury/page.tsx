@@ -1,6 +1,5 @@
-import { Fragment } from "react";
-
 import { MediaElement } from "@/components/ui/media-element";
+import { Pill } from "@/components/ui/pill";
 import { buildMetadata } from "@/lib/metadata";
 import { formatNumber } from "@/lib/utils";
 import type { Asset, TreasuryGroup } from "./schemas";
@@ -41,8 +40,8 @@ function stringToHsl(s: string) {
 
 function AssetRow({ asset }: AssetRowProps) {
   return (
-    <div className="flex items-start justify-between border-t border-gray-400">
-      <div className="flex items-start gap-3 px-2 py-3">
+    <div className="flex items-center justify-between border-t border-gray-400 px-2 py-[15px]">
+      <div className="flex items-center gap-3">
         <div className="h-6 w-6 flex-shrink-0 sm:h-9 sm:w-9">
           <MediaElement src={asset.mediaUrl}>
             <div
@@ -54,21 +53,23 @@ function AssetRow({ asset }: AssetRowProps) {
           </MediaElement>
         </div>
         <div>
-          <div className="font-bold">{asset.label}</div>
-          {asset.secondaryLabel && <span>{asset.secondaryLabel}</span>}
+          <p className="font-semibold leading-[120%]">{asset.label}</p>
+          {asset.secondaryLabel && (
+            <p className="text-sm leading-[120%]">{asset.secondaryLabel}</p>
+          )}
         </div>
       </div>
-      <div className="flex flex-shrink-0 flex-col px-2 py-3 text-right">
-        <span>${formatNumber(asset.value, { cutoff: 10 })}</span>
+      <div className="flex flex-shrink-0 flex-col text-right text-sm leading-[120%]">
+        <p>${formatNumber(asset.value, { cutoff: 10 })}</p>
         {asset.type === "fungible-asset" ? (
-          <span>{`${formatNumber(asset.balance)} ${asset.symbol}`}</span>
+          <p>{`${formatNumber(asset.balance)} ${asset.symbol}`}</p>
         ) : (
           asset.moleculesBalance && (
-            <span>
+            <p>
               {`${formatNumber(asset.moleculesBalance)} ${
                 asset.moleculesSymbol
               }`}
-            </span>
+            </p>
           )
         )}
       </div>
@@ -104,10 +105,11 @@ export default async function Page() {
             .
           </p>
         </div>
-        <div className="flex flex-grow items-center justify-center rounded-xl bg-white p-[20px] @xl/main:p-[30px]">
-          <span className="whitespace-nowrap text-h2 font-medium">
+        <div className="flex flex-grow flex-col items-center justify-center rounded-xl bg-vita-purple p-[20px] text-white @xl/main:p-[30px]">
+          <p className="whitespace-nowrap pt-2 text-h2 font-medium">
             <span className="text-h3">$</span> {formatNumber(treasury.value)}
-          </span>
+          </p>
+          <p className="text-[14px] leading-[120%]">Live DAO Treasury</p>
         </div>
       </div>
       {treasury.children.map((s) => (
@@ -116,47 +118,60 @@ export default async function Page() {
           className="mb-[20px] space-y-[30px] rounded-xl bg-white p-[20px] last:mb-0 @xl/main:mb-[30px] @xl/main:p-[30px]"
         >
           <div className="flex items-center justify-between">
-            <h2 className="text-lg">{`${s.label} · $${formatNumber(
-              s.value,
-            )}`}</h2>
+            <h2 className="font-semibold leading-[120%]">{`${
+              s.label
+            } · $${formatNumber(s.value)}`}</h2>
             {s.percent && (
-              <span className="rounded-lg bg-gray-400 px-2 py-1 text-sm uppercase leading-none">
+              <Pill className="rounded-sm bg-vita-purple text-white">
                 {`${formatNumber(s.percent)}%`}
-              </span>
+              </Pill>
             )}
           </div>
-          <div>
-            {s.type === "group" &&
-              typeOfChildren(s) === "group" &&
-              s.children.map(
-                (t) =>
-                  t.value >= 100 && (
-                    <Fragment key={s.label + t.label}>
-                      <h3 className="mb-3 font-semibold">{t.label}</h3>
-                      {t.type === "group" &&
-                        t.children.map(
-                          (a) =>
-                            (a.type === "fungible-asset" ||
-                              a.type === "generic-asset") && (
-                              <AssetRow
-                                key={s.label + t.label + a.label}
-                                asset={a}
-                              />
-                            ),
-                        )}
-                    </Fragment>
-                  ),
-              )}
-            {s.type === "group" &&
-              typeOfChildren(s) !== "unknown" &&
-              s.children.map(
-                (a) =>
-                  (a.type === "fungible-asset" ||
-                    a.type === "generic-asset") && (
-                    <AssetRow key={s.label + a.label} asset={a} />
-                  ),
-              )}
-          </div>
+          {s.type === "group" &&
+            typeOfChildren(s) === "group" &&
+            s.children.map(
+              (t) =>
+                t.value >= 100 && (
+                  <div key={s.label + t.label}>
+                    <h3 className="mb-3 font-medium leading-[120%] text-[#606060]">
+                      {t.label}
+                    </h3>
+                    {t.type === "group" &&
+                      t.children.map(
+                        (a) =>
+                          (a.type === "fungible-asset" ||
+                            a.type === "generic-asset") && (
+                            <AssetRow
+                              key={s.label + t.label + a.label}
+                              asset={a}
+                            />
+                          ),
+                      )}
+                  </div>
+                ),
+            )}
+          {s.type === "group" &&
+            typeOfChildren(s) !== "unknown" &&
+            s.children.reduce(
+              (acc, cur) =>
+                ["fungible-asset", "generic-asset"].includes(cur.type)
+                  ? (acc += 1)
+                  : acc,
+              0,
+            ) > 0 && (
+              <div>
+                <h3 className="mb-3 font-medium leading-[120%] text-[#606060]">
+                  Assets
+                </h3>
+                {s.children.map(
+                  (a) =>
+                    (a.type === "fungible-asset" ||
+                      a.type === "generic-asset") && (
+                      <AssetRow key={s.label + a.label} asset={a} />
+                    ),
+                )}
+              </div>
+            )}
         </div>
       ))}
     </div>
