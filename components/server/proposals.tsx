@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { formatNumber } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 
 const proposalsQuery = `query Query($first: Int!, $skip: Int!) {
   proposals(first: $first, skip: $skip, where: {space: "vote.vitadao.eth"}, orderBy: "created", orderDirection: desc) {
@@ -30,52 +30,31 @@ const proposalsSchema = z
   })
   .transform((val) => val.data.proposals);
 
-function getCategory(title: string) {
+function Pill({ className, ...rest }: React.ComponentPropsWithoutRef<"span">) {
+  return (
+    <span
+      className={cn(
+        "rounded-md px-[7px] pt-[5px] pb-[3.5px] text-xs font-medium uppercase leading-none tracking-[1.2px]",
+        className,
+      )}
+      {...rest}
+    />
+  );
+}
+
+function Category({ title }: { title: string}) {
+  let category = "Governance";
   if (title.includes("[Project]")) {
-    return "Project";
+    category = "Project";
   } else if (title.includes("[IP]")) {
-    return "IP";
+    category = "IP";
   } else if (title.includes("[Funding]")) {
-    return "Funding";
-  } else {
-    return "Governance";
+    category = "Funding";
   }
+
+  return <Pill className={category === "Governance" ? "bg-vita-purple text-white" : "bg-vita-yellow"}>{category}</Pill>;
 }
 
-interface CategoryProps {
-  title: string;
-}
-
-function Category({ title }: CategoryProps) {
-  const category = getCategory(title);
-
-  switch (category) {
-    case "Funding":
-      return (
-        <span className="rounded-md bg-vita-yellow px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px]">
-          {category}
-        </span>
-      );
-    case "Project":
-      return (
-        <span className="rounded-md bg-vita-yellow px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px]">
-          {category}
-        </span>
-      );
-    case "Governance":
-      return (
-        <span className="rounded-md bg-vita-purple px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px] text-white">
-          {category}
-        </span>
-      );
-    case "IP":
-      return (
-        <span className="rounded-md bg-vita-yellow px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px]">
-          {category}
-        </span>
-      );
-  }
-}
 interface FetchSnapshotProps {
   query: string;
   variables?: Record<string, unknown>;
@@ -115,9 +94,9 @@ export async function Proposals({ first, skip = 0 }: ProposalsProps) {
           <div className="flex flex-wrap gap-[10px]">
             <Category title={p.title} />
             {p.state === "active" && (
-              <span className="rounded-md bg-[#41F4D4] px-[7px] py-[2px] text-xs font-medium uppercase leading-[140%] tracking-[1.2px]">
+              <Pill className="bg-[#41F4D4]">
                 VOTING ACTIVE
-              </span>
+              </Pill>
             )}
           </div>
           <p className="line-clamp-3 text-h4 font-medium leading-[120%]">
