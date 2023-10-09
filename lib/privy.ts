@@ -1,49 +1,78 @@
 import { z } from "zod";
 
+// Implementing only partial schemas on a needs basis
+
 const Apple = z.object({
   type: z.literal("apple_oauth"),
+  email: z.string(),
 });
 
 type Apple = z.infer<typeof Apple>;
 
 const Custom = z.object({
-  type: z.literal("custom_oauth"),
+  type: z.literal("custom_auth"),
 });
 
 type Custom = z.infer<typeof Custom>;
 
 const Discord = z.object({
   type: z.literal("discord_oauth"),
+  email: z.union([z.null(), z.string()]),
+  username: z.union([z.null(), z.string()]),
 });
 
 type Discord = z.infer<typeof Discord>;
 
 const Email = z.object({
   type: z.literal("email"),
+  address: z.string(),
 });
 
 type Email = z.infer<typeof Email>;
 
 const Github = z.object({
   type: z.literal("github_oauth"),
+  email: z.union([z.null(), z.string()]),
+  name: z.union([z.null(), z.string()]),
+  username: z.union([z.null(), z.string()]),
 });
 
 type Github = z.infer<typeof Github>;
 
 const Google = z.object({
   type: z.literal("google_oauth"),
+  email: z.string(),
+  name: z.union([z.null(), z.string()]),
 });
 
 type Google = z.infer<typeof Google>;
 
+const LinkedIn = z.object({
+  type: z.literal("linkedin_oauth"),
+  email: z.union([z.null(), z.string()]),
+  name: z.union([z.null(), z.string()]),
+});
+
+type LinkedIn = z.infer<typeof LinkedIn>;
+
 const Phone = z.object({
   type: z.literal("phone"),
+  number: z.string(),
 });
 
 type Phone = z.infer<typeof Phone>;
 
+const TikTok = z.object({
+  type: z.literal("tiktok_oauth"),
+  username: z.union([z.null(), z.string()]),
+});
+
+type TikTok = z.infer<typeof TikTok>;
+
 const Twitter = z.object({
   type: z.literal("twitter_oauth"),
+  name: z.union([z.null(), z.string()]),
+  username: z.union([z.null(), z.string()]),
 });
 
 type Twitter = z.infer<typeof Twitter>;
@@ -55,8 +84,6 @@ const Wallet = z.object({
 
 type Wallet = z.infer<typeof Wallet>;
 
-// This is not a comprehensive schema, just complete enough to meet our
-// requirements at the moment.
 const LinkedAccount = z.discriminatedUnion("type", [
   Apple,
   Custom,
@@ -64,7 +91,9 @@ const LinkedAccount = z.discriminatedUnion("type", [
   Email,
   Github,
   Google,
+  LinkedIn,
   Phone,
+  TikTok,
   Twitter,
   Wallet,
 ]);

@@ -53,20 +53,21 @@ export function getUserHandle(account: User["linkedAccounts"][number]): string {
     case "custom_auth":
       return "custom auth";
     case "discord_oauth":
-      // @ts-expect-error
-      return account.username;
+      return account.username ?? "Discord";
     case "email":
       return account.address;
     case "github_oauth":
-      // @ts-expect-error
-      return account.username;
+      return account.username ?? "GitHub";
     case "google_oauth":
       return truncateEmail(account.email);
+    case "linkedin_oauth":
+      return account.name ?? account.email ?? "LinkedIn";
     case "phone":
       return account.number;
+    case "tiktok_oauth":
+      return account.username ?? "TikTok";
     case "twitter_oauth":
-      // @ts-expect-error
-      return account.username;
+      return account.username ?? "Twitter";
     case "wallet":
       return truncateWallet(account.address);
   }

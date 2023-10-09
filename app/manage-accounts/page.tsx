@@ -123,6 +123,18 @@ export default function Page() {
               <span className="icon--vita icon--vita--phone mr-2" />
               Phone
             </Button>
+            <Button
+              intent="tertiary"
+              variant="thin"
+              onClick={privy.linkLinkedIn}
+            >
+              <span className="icon--logos--linkedin mr-2" />
+              LinkedIn
+            </Button>
+            <Button intent="tertiary" variant="thin" onClick={privy.linkTiktok}>
+              <span className="icon--logos--tiktok mr-2" />
+              TikTok
+            </Button>
           </div>
         </div>
         <div>
@@ -154,7 +166,9 @@ const iconClassName: Record<AccountType, string> = {
   email: "icon--vita icon--vita--email",
   github_oauth: "icon--logos--github",
   google_oauth: "icon--logos--google",
+  linkedin_oauth: "icon--logos--linkedin",
   phone: "icon--vita icon--vita--phone",
+  tiktok_oauth: "icon--logos--tiktok",
   twitter_oauth: "icon--logos--twitter",
   wallet: "icon--vita icon--vita--wallet",
 };
@@ -173,7 +187,9 @@ function UnlinkButton({ account, disabled = false }: UnlinkButtonProps) {
     unlinkEmail,
     unlinkGithub,
     unlinkGoogle,
+    unlinkLinkedIn,
     unlinkPhone,
+    unlinkTiktok,
     unlinkTwitter,
     unlinkWallet,
   } = usePrivy();
@@ -198,8 +214,14 @@ function UnlinkButton({ account, disabled = false }: UnlinkButtonProps) {
         case "google_oauth":
           onClick = () => unlinkGoogle(account.subject);
           break;
+        case "linkedin_oauth":
+          onClick = () => unlinkLinkedIn(account.subject);
+          break;
         case "phone":
           onClick = () => unlinkPhone(account.number);
+          break;
+        case "tiktok_oauth":
+          onClick = () => unlinkTiktok(account.subject);
           break;
         case "twitter_oauth":
           onClick = () => unlinkTwitter(account.subject);
