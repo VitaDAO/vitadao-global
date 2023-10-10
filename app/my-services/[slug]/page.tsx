@@ -24,9 +24,12 @@ export async function generateMetadata(
   _parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const service = await getService(params);
+  const imagePath = `https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.image}`;
 
   return buildMetadata({
     title: service.title,
+    description: service.summary,
+    imagePath,
   });
 }
 

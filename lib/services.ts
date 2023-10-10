@@ -50,6 +50,7 @@ export type ServiceCard = z.infer<typeof ServiceCardSchema>;
 export const ServiceStandaloneSchema = ServiceSchema.pick({
   id: true,
   title: true,
+  summary: true,
   body: true,
   vita_required: true,
   logo: true,
@@ -58,7 +59,7 @@ export const ServiceStandaloneSchema = ServiceSchema.pick({
 });
 
 const serviceStandaloneFields =
-  "id,title,body,vita_required,logo,image,redemption_instructions";
+  "id,title,summary,body,vita_required,logo,image,redemption_instructions";
 
 export type ServiceStandalone = z.infer<typeof ServiceStandaloneSchema>;
 
