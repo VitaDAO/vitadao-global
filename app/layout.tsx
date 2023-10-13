@@ -18,8 +18,8 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <head>
-        <GoogleAnalytics env={process.env.NODE_ENV} />
-        <Hotjar env={process.env.NODE_ENV} />
+        <GoogleAnalytics env={process.env.VERCEL_ENV} />
+        <Hotjar env={process.env.VERCEL_ENV} />
       </head>
       <body className="h-[100dvh] overflow-hidden bg-gray-200 font-tt-hoves">
         <Providers>
