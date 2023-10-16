@@ -43,9 +43,9 @@ export default async function Page({ params }: PageProps) {
       <Image
         src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.image}`}
         width={1140}
-        height={320}
+        height={480}
         alt=""
-        className="mb-[10px] h-[120px] rounded-[20px] object-cover @3xl/main:mb-[30px] @3xl/main:h-[320px]"
+        className="mb-[10px] aspect-[1140/480] w-full rounded-[20px] object-cover @3xl/main:mb-[30px]"
       />
       <div className="flex flex-col gap-[20px] @3xl/main:flex-row @3xl/main:gap-[30px]">
         <div className="flex-grow @3xl/main:order-1 @3xl/main:w-[380px]">
