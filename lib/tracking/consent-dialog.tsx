@@ -11,8 +11,8 @@ import {
   AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Csr } from "@/lib/browser/csr";
 
-import { Csr } from "../browser/csr";
 import { useConsent } from "./use-consent";
 
 function UnwrappedConsentDialog() {
