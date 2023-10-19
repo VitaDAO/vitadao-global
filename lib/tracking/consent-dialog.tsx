@@ -1,15 +1,8 @@
 "use client";
 
+import * as Dialog from "@radix-ui/react-dialog";
 import { useState } from "react";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Csr } from "@/lib/browser/csr";
 
@@ -20,37 +13,50 @@ function UnwrappedConsentDialog() {
   const [open, setOpen] = useState(consent === "unknown");
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogContent
-        className="isolate"
-        onEscapeKeyDown={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <AlertDialogHeader>
-          <AlertDialogDescription className="mt-3 text-base text-black">
+    <Dialog.Root open={open} onOpenChange={setOpen} modal={false}>
+      <Dialog.Portal>
+        <Dialog.Content
+          className="fixed bottom-0 left-[50%] z-50 w-full max-w-md translate-x-[-50%] space-y-[10px] rounded-t-3xl bg-background p-[20px] shadow-[rgba(55,65,81,0.15)_0px_8px_36px] duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-bottom-[48%] data-[state=closed]:slide-out-to-left-1/2 data-[state=open]:slide-in-from-bottom-[48%] data-[state=open]:slide-in-from-left-1/2 sm:bottom-[20px] sm:rounded-3xl"
+          onEscapeKeyDown={(e) => {
+            e.preventDefault();
+          }}
+          onPointerDownOutside={(e) => {
+            e.preventDefault();
+          }}
+          onInteractOutside={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <Dialog.Description className="text-center text-base text-black">
             Can we use Hotjar and Google Analytics to gather usage data to
             improve this site?
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogAction asChild>
+          </Dialog.Description>
+          <div className="flex gap-[10px]">
+            <Button
+              variant="thin"
+              onClick={() => {
+                setConsent("yes");
+                setOpen(false);
+              }}
+              className="grow"
+            >
+              Yes
+            </Button>
             <Button
               variant="thin"
               intent="tertiary"
-              onClick={() => setConsent("no")}
+              onClick={() => {
+                setConsent("no");
+                setOpen(false);
+              }}
+              className="grow"
             >
               No
             </Button>
-          </AlertDialogAction>
-          <AlertDialogAction asChild>
-            <Button variant="thin" onClick={() => setConsent("yes")}>
-              Yes
-            </Button>
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
 
