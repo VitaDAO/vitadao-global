@@ -15,7 +15,7 @@ export default async function Page() {
       <p className="mb-[30px] max-w-[770px] text-base">
         Enjoy a suite of member services exclusive to VitaDAO members. VITA
         holders qualify for member services based on the amount of VITA in their
-        connected wallet/s.
+        linked wallet/s.
       </p>
       <div className="grid grid-cols-1 gap-[20px] @2xl/main:grid-cols-2 md:gap-[30px]">
         {services.map((s) => (

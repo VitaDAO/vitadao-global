@@ -27,7 +27,7 @@ export default function MyVitaStats() {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-[20px] py-[20px]  @xl/main:gap-[30px] @xl/main:py-[30px]">
         <p className="text-center text-[20px] font-medium leading-[24px] tracking-[-0.2px]">
-          Please log in and connect a wallet to view your balances.
+          Please log in and link a wallet to view your balances.
         </p>
         <div className="flex justify-stretch gap-2">
           <Button
@@ -79,7 +79,7 @@ export default function MyVitaStats() {
                   )}
                   onClick={disabled ? () => {} : () => unlinkWallet(b.address)}
                 >
-                  Disconnect
+                  Unlink
                 </button>
               </div>
             ))}
@@ -92,7 +92,7 @@ export default function MyVitaStats() {
                 className="hidden font-semibold text-vita-purple underline underline-offset-4 @xl/card:block"
                 onClick={linkWallet}
               >
-                Connect another wallet
+                Link another wallet
               </button>
             </div>
             <div className="flex items-center justify-center @xl/card:hidden">
@@ -100,21 +100,21 @@ export default function MyVitaStats() {
                 className="font-semibold text-vita-purple underline underline-offset-4"
                 onClick={linkWallet}
               >
-                Connect another wallet
+                Link another wallet
               </button>
             </div>
           </div>
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-[20px] py-[20px] @xl/main:gap-[30px] @xl/main:py-[30px]">
             <p className="text-center text-[20px] font-medium leading-[24px] tracking-[-0.2px]">
-              Please connect a wallet to view your balances.
+              Please link a wallet to view your balances.
             </p>
             <Button
               intent="tertiary"
               className="px-[33px] text-base font-medium leading-none text-vita-purple"
               onClick={linkWallet}
             >
-              Connect a Wallet
+              Link a Wallet
             </Button>
           </div>
         )}

@@ -107,7 +107,7 @@ Delete user:
 VITA indexing:
 
 - [ ] Before linking any wallets, go to My VITA (`/my-vita`) and confirm that
-      you get a prompt to connect a wallet.
+      you get a prompt to link a wallet.
 - [ ] After linking one or several wallets, the VITA balances of those wallets
       should appear on My VITA (`/my-vita`).
 

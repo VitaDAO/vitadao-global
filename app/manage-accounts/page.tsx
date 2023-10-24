@@ -240,7 +240,7 @@ function UnlinkButton({ account, disabled = false }: UnlinkButtonProps) {
         )}
         onClick={onClick}
       >
-        Disconnect
+        Unlink
       </button>
     );
   }
