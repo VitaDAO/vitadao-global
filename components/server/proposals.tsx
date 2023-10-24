@@ -39,6 +39,8 @@ function Category({ title }: { title: string }) {
     category = "IP";
   } else if (title.includes("[Funding]")) {
     category = "Funding";
+  } else if (title.includes("[Assessment]")) {
+    category = "Assessment";
   }
 
   return (
