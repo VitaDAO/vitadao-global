@@ -68,13 +68,19 @@ export default async function Page({ params }: PageProps) {
           <RedemptionTrigger did={did} balance={balance} service={service}>
             <Button className="mt-[20px] w-full">Redeem This Offer</Button>
           </RedemptionTrigger>
-          <p className="mt-[12px] hidden text-center text-sm text-[#989898] @3xl/main:block">
-            Available to members with{" "}
-            <span className="whitespace-nowrap">
-              {service.vita_required.toLocaleString()} VITA
-            </span>{" "}
-            or more
-          </p>
+          {did !== null && balance >= service.vita_required ? (
+            <p className="mt-[12px] hidden text-center text-sm text-[#989898] @3xl/main:block">
+              Congratulations, you can redeem this offer!
+            </p>
+          ) : (
+            <p className="mt-[12px] hidden text-center text-sm text-[#989898] @3xl/main:block">
+              Available to members with{" "}
+              <span className="whitespace-nowrap">
+                {service.vita_required.toLocaleString()} VITA
+              </span>{" "}
+              or more
+            </p>
+          )}
         </div>
         <div className="flex-grow @3xl/main:w-[730px]">
           <h1 className="hidden text-h2 font-medium @3xl/main:block">
