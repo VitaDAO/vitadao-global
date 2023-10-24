@@ -63,7 +63,7 @@ export function ServiceCard({ service, className }: ServiceCardProps) {
   return (
     <div
       className={cn(
-        "flex flex-col rounded-xl bg-white p-[20px] md:p-[30px]",
+        "flex min-h-[300px] flex-col rounded-xl bg-white p-[20px] md:p-[30px]",
         className,
       )}
     >
@@ -73,7 +73,7 @@ export function ServiceCard({ service, className }: ServiceCardProps) {
         alt=""
         className="mb-[40px] h-[32px] max-w-[270px] object-contain object-left"
       />
-      <p className="mb-[88px] text-h4 font-medium">{service.title}</p>
+      <p className="mb-[88px] grow text-h4 font-medium">{service.title}</p>
       <div className="flex flex-wrap items-end justify-between gap-[10px] text-base">
         <Link
           href={`/my-services/${service.slug}`}
