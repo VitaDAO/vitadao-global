@@ -12,7 +12,7 @@ interface BuildMetadataProps {
 export function buildMetadata({
   baseUrl = "https://www.vitadao.global/",
   title: inputTitle,
-  description = "The home for VitaDAO members, providing exclusive services, portfolio management and governance tools to VITA holders.",
+  description = "Take advantage of exclusive member benefits, link multiple wallets for an overview of your VITA holdings, and explore active and past governance proposals - all in one place.",
   imagePath = "vitadao-global-seo.png",
 }: BuildMetadataProps = {}): Metadata {
   const title = inputTitle
