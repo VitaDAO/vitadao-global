@@ -1,7 +1,7 @@
 import type { User } from "@privy-io/react-auth";
 
 import { cn, getUserHandle } from "@/lib/utils";
-import { BlockieAvatar } from "./blockie-avatar";
+import { Avitar } from "./avitar";
 
 interface AvatarAndHandleProps extends React.ComponentPropsWithoutRef<"div"> {
   user: Pick<User, "id" | "linkedAccounts">;
@@ -18,8 +18,8 @@ export function AvatarAndHandle({
 
   return (
     <div className={cn("flex items-center gap-3", className)} {...rest}>
-      <BlockieAvatar
-        seed={user.id}
+      <Avitar
+        id={user.id}
         className={cn("h-10 w-10 flex-shrink-0 rounded-full", avatarClassName)}
       />
       <div className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap">

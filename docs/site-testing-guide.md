@@ -99,7 +99,7 @@ Delete user:
       should log you out and all of your user data should be deleted from our
       backend. If you log back in with the same email/wallet, you'll find that
       all the accounts that were linked are no longer there. You'll also notice
-      your user will get a new blockie avatar, as a new user with a new ID will
+      your user might get a different avitar, as a new user with a new ID will
       have been created.
 
 ## VITA indexing and service access
