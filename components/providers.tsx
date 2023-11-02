@@ -3,7 +3,7 @@
 import { PrivyProvider } from "@privy-io/react-auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiConfig, configureChains, createConfig, mainnet } from "wagmi";
-import { publicProvider } from "wagmi/providers/public";
+import { alchemyProvider } from "wagmi/providers/alchemy";
 
 // TODO maybe reconsider wagmi vs @wagmi/core. I'm combining react-query and
 // fetchBalance because useBalance only supports a single address and we want to
@@ -11,9 +11,9 @@ import { publicProvider } from "wagmi/providers/public";
 // to end up using it.
 
 // Wagmi
-const { chains, publicClient, webSocketPublicClient } = configureChains(
+const { publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
-  [publicProvider()],
+  [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_KEY as string })],
 );
 
 const config = createConfig({
