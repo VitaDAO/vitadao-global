@@ -3,16 +3,16 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const avitarSrcs = [
-  "avitars/avitar-01.svg",
-  "avitars/avitar-02.svg",
-  "avitars/avitar-03.svg",
-  "avitars/avitar-04.svg",
-  "avitars/avitar-05.svg",
-  "avitars/avitar-06.svg",
-  "avitars/avitar-07.svg",
-  "avitars/avitar-08.svg",
-  "avitars/avitar-09.svg",
-  "avitars/avitar-10.svg",
+  "/avitars/avitar-01.svg",
+  "/avitars/avitar-02.svg",
+  "/avitars/avitar-03.svg",
+  "/avitars/avitar-04.svg",
+  "/avitars/avitar-05.svg",
+  "/avitars/avitar-06.svg",
+  "/avitars/avitar-07.svg",
+  "/avitars/avitar-08.svg",
+  "/avitars/avitar-09.svg",
+  "/avitars/avitar-10.svg",
 ];
 
 interface AvitarProps
