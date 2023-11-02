@@ -57,7 +57,7 @@ type LinkedIn = z.infer<typeof LinkedIn>;
 
 const Phone = z.object({
   type: z.literal("phone"),
-  number: z.string(),
+  phoneNumber: z.string(),
 });
 
 type Phone = z.infer<typeof Phone>;
