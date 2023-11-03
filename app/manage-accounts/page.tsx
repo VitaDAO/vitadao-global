@@ -90,10 +90,16 @@ export default function Page() {
                 Email
               </Button>
             )}
-            <Button intent="tertiary" variant="thin" onClick={privy.linkGoogle}>
-              <span className="icon--logos--google mr-2" />
-              Google
-            </Button>
+            {!user?.google && (
+              <Button
+                intent="tertiary"
+                variant="thin"
+                onClick={privy.linkGoogle}
+              >
+                <span className="icon--logos--google mr-2" />
+                Google
+              </Button>
+            )}
             {/* TODO re-enable Twitter if the mobile authn problems get fixed */}
             {/* <Button
               intent="tertiary"
@@ -103,38 +109,66 @@ export default function Page() {
               <span className="icon--logos--twitter mr-2" />
               Twitter
             </Button> */}
-            <Button
-              intent="tertiary"
-              variant="thin"
-              onClick={privy.linkDiscord}
-            >
-              <span className="icon--logos--discord mr-2" />
-              Discord
-            </Button>
-            <Button intent="tertiary" variant="thin" onClick={privy.linkGithub}>
-              <span className="icon--logos--github mr-2" />
-              Github
-            </Button>
-            <Button intent="tertiary" variant="thin" onClick={privy.linkApple}>
-              <span className="icon--logos--apple mr-2" />
-              Apple
-            </Button>
-            <Button intent="tertiary" variant="thin" onClick={privy.linkPhone}>
-              <span className="icon--vita icon--vita--phone mr-2" />
-              Phone
-            </Button>
-            <Button
-              intent="tertiary"
-              variant="thin"
-              onClick={privy.linkLinkedIn}
-            >
-              <span className="icon--logos--linkedin mr-2" />
-              LinkedIn
-            </Button>
-            <Button intent="tertiary" variant="thin" onClick={privy.linkTiktok}>
-              <span className="icon--logos--tiktok mr-2" />
-              TikTok
-            </Button>
+            {!user?.discord && (
+              <Button
+                intent="tertiary"
+                variant="thin"
+                onClick={privy.linkDiscord}
+              >
+                <span className="icon--logos--discord mr-2" />
+                Discord
+              </Button>
+            )}
+            {!user?.github && (
+              <Button
+                intent="tertiary"
+                variant="thin"
+                onClick={privy.linkGithub}
+              >
+                <span className="icon--logos--github mr-2" />
+                Github
+              </Button>
+            )}
+            {!user?.apple && (
+              <Button
+                intent="tertiary"
+                variant="thin"
+                onClick={privy.linkApple}
+              >
+                <span className="icon--logos--apple mr-2" />
+                Apple
+              </Button>
+            )}
+            {!user?.phone && (
+              <Button
+                intent="tertiary"
+                variant="thin"
+                onClick={privy.linkPhone}
+              >
+                <span className="icon--vita icon--vita--phone mr-2" />
+                Phone
+              </Button>
+            )}
+            {!user?.linkedin && (
+              <Button
+                intent="tertiary"
+                variant="thin"
+                onClick={privy.linkLinkedIn}
+              >
+                <span className="icon--logos--linkedin mr-2" />
+                LinkedIn
+              </Button>
+            )}
+            {!user?.tiktok && (
+              <Button
+                intent="tertiary"
+                variant="thin"
+                onClick={privy.linkTiktok}
+              >
+                <span className="icon--logos--tiktok mr-2" />
+                TikTok
+              </Button>
+            )}
           </div>
         </div>
         <div>
