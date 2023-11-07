@@ -32,7 +32,9 @@ export default async function Page() {
         </div>
         <div className="hidden flex-shrink flex-grow self-stretch bg-[url('/fresh-3d-bg.jpg')] bg-cover bg-[center_left] bg-no-repeat @xl/main:block" />
       </div>
-      {featuredService && <ServiceCard service={featuredService} />}
+      {featuredService && (
+        <ServiceCard service={featuredService} showMyServicesLink={true} />
+      )}
       <VitaStatsCard className="p-[20px] @xl/main:p-[30px]" />
       <div className="flex justify-between">
         <p className="uppercase">Recent Proposals</p>

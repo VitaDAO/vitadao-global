@@ -7,9 +7,14 @@ import { cn } from "@/lib/utils";
 interface ServiceCardProps {
   service: ServiceCard;
   className?: string;
+  showMyServicesLink?: boolean;
 }
 
-export function ServiceCard({ service, className }: ServiceCardProps) {
+export function ServiceCard({
+  service,
+  className,
+  showMyServicesLink = false,
+}: ServiceCardProps) {
   if (service.is_featured) {
     return (
       <div className={cn("@container/card", className)}>
@@ -23,7 +28,7 @@ export function ServiceCard({ service, className }: ServiceCardProps) {
               className="h-full max-h-[300px] w-full object-cover @3xl/card:absolute @3xl/card:top-0 @3xl/card:max-h-none"
             />
           </div>
-          <div className="flex h-full flex-col p-[20px] md:p-[30px]">
+          <div className="flex h-full flex-col p-[20px] @container/card-text md:p-[30px]">
             <div className="mb-[40px] flex flex-wrap justify-between gap-5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -41,14 +46,25 @@ export function ServiceCard({ service, className }: ServiceCardProps) {
             <p className="mb-[20px] max-w-[485px] flex-grow text-base/[22px]">
               {service.summary}
             </p>
-            <div className="flex flex-wrap items-end justify-between gap-[10px] text-base/[22px]">
-              <Link
-                href={`/my-services/${service.slug}`}
-                className="font-semibold text-vita-purple underline underline-offset-4"
-              >
-                View this service
-                <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
-              </Link>
+            <div className="flex flex-wrap items-end justify-between gap-x-[35px] gap-y-[12px] text-base/[22px]">
+              <div className="flex flex-col gap-x-[35px] gap-y-[12px] @md/card-text:flex-row">
+                <Link
+                  href={`/my-services/${service.slug}`}
+                  className="font-semibold text-vita-purple underline underline-offset-4"
+                >
+                  View this service
+                  <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
+                </Link>
+                {showMyServicesLink && (
+                  <Link
+                    href="/my-services"
+                    className="font-semibold text-vita-purple underline underline-offset-4"
+                  >
+                    More services
+                    <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
+                  </Link>
+                )}
+              </div>
               <span className="inline-flex items-center font-medium">
                 <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
                 {service.vita_required.toLocaleString()} VITA +
