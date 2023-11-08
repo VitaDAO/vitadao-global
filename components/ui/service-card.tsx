@@ -60,7 +60,7 @@ export function ServiceCard({
                     href="/my-services"
                     className="font-semibold text-vita-purple underline underline-offset-4"
                   >
-                    More services
+                    View all services
                     <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
                   </Link>
                 )}
