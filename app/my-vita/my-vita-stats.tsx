@@ -12,9 +12,9 @@ export default function MyVitaStats() {
   const router = useRouter();
   const { login } = useLogin({ onComplete: router.refresh });
   const { ready, authenticated, user, linkWallet, unlinkWallet } = usePrivy();
-  const { data, isInitialLoading } = useVitaBalance(user);
+  const { data, isLoading } = useVitaBalance(user);
 
-  if (!ready || isInitialLoading) {
+  if (!ready || isLoading) {
     // TODO better loading UI, maybe improve with RSC, maybe Suspense
     return (
       <div className="flex h-full w-full items-center justify-center py-[20px] @xl/main:py-[30px]">
