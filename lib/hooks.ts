@@ -52,7 +52,9 @@ export async function getVitaBalance(user: User | null) {
 }
 
 export function useVitaBalance(user: User | null) {
-  return useQuery(["useVitaBalance", user], () => getVitaBalance(user), {
+  return useQuery({
+    queryKey: ["useVitaBalance", user],
+    queryFn: () => getVitaBalance(user),
     enabled: !!user,
   });
 }
