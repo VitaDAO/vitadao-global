@@ -43,7 +43,7 @@ export async function getEndptsItems({
   page,
   channel,
 }: GetEndptsItemsProps = {}) {
-  gate(MIN_VITA);
+  await gate(MIN_VITA);
 
   const slug =
     (channel === "all" || channel === undefined
@@ -112,7 +112,7 @@ export async function getEndptsItems({
 }
 
 export async function getArticle(path: string) {
-  gate(MIN_VITA);
+  await gate(MIN_VITA);
 
   let cookieString = cookieJar.getCookieStringSync(BASE_URL);
   if (!cookieString) {
