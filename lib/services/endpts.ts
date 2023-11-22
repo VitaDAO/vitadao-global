@@ -1,4 +1,38 @@
+import "server-only";
+
 import { parse } from "node-html-parser";
+import { CookieJar } from "tough-cookie";
+import { z } from "zod";
+
+import { gate } from "@/lib/auth";
+
+const BASE_URL = "https://endpts.com";
+const MIN_VITA = 100;
+
+const cookieJar = new CookieJar();
+
+async function authenticateEndpts() {
+  const endptsEmail = z
+    .string({ required_error: "Missing Endpoints News email env var." })
+    .parse(process.env.ENDPTS_EMAIL);
+  const endptsPassword = z
+    .string({ required_error: "Missing Endpoints News password env var." })
+    .parse(process.env.ENDPTS_PASSWORD);
+
+  const formData = new FormData();
+  formData.append("action", "log_in");
+  formData.append("email", endptsEmail);
+  formData.append("password", endptsPassword);
+
+  const path = "/wp-admin/admin-ajax.php";
+  const res = await fetch(BASE_URL + path, {
+    method: "POST",
+    body: formData,
+  });
+  res.headers
+    .getSetCookie()
+    .map((header) => cookieJar.setCookieSync(header, BASE_URL));
+}
 
 interface GetEndptsItemsProps {
   page?: number;
@@ -9,6 +43,8 @@ export async function getEndptsItems({
   page,
   channel,
 }: GetEndptsItemsProps = {}) {
+  gate(MIN_VITA);
+
   const slug =
     (channel === "all" || channel === undefined
       ? "/news"
@@ -75,8 +111,20 @@ export async function getEndptsItems({
   };
 }
 
-export async function getArticle(slug: string) {
-  const res = await fetch("https://endpts.com/" + slug);
+export async function getArticle(path: string) {
+  gate(MIN_VITA);
+
+  let cookieString = cookieJar.getCookieStringSync(BASE_URL);
+  if (!cookieString) {
+    await authenticateEndpts();
+    cookieString = cookieJar.getCookieStringSync(BASE_URL);
+  }
+
+  const res = await fetch(BASE_URL + "/" + path, {
+    headers: {
+      Cookie: cookieString,
+    },
+  });
   const html = await res.text();
   const dom = parse(html);
 
