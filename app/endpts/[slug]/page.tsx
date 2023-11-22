@@ -7,14 +7,16 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={imageSrc}
-        width={1140}
-        height={480}
-        alt=""
-        className="mb-[10px] aspect-[1140/480] w-full rounded-[20px] object-cover @3xl/main:mb-[30px]"
-      />
+      {imageSrc && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={imageSrc}
+          width={1140}
+          height={480}
+          alt=""
+          className="mb-[10px] aspect-[1140/480] w-full rounded-[20px] object-cover @3xl/main:mb-[30px]"
+        />
+      )}
       <div className="max-w-[65ch]">
         <h1 className="mb-[30px] mt-[20px] text-lg/[26.4px] font-medium tracking-[-0.24px] @3xl/main:hidden">
           {title}
