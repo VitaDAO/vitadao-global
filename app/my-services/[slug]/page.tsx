@@ -3,9 +3,9 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { getCurrentUser } from "@/lib/auth";
 import { buildMetadata } from "@/lib/metadata";
 import { getServiceBySlug } from "@/lib/services";
-import { getUserBalance, getUserDidFromCookie } from "@/lib/users";
 import { RedemptionTrigger } from "./redemption-trigger";
 
 interface PageProps {
@@ -34,8 +34,7 @@ export async function generateMetadata(
 }
 
 export default async function Page({ params }: PageProps) {
-  const did = await getUserDidFromCookie();
-  const balance = did ? await getUserBalance(did) : 0;
+  const { did = null, totalVita = 0 } = (await getCurrentUser()) ?? {};
   const service = await getService(params);
 
   return (
@@ -65,10 +64,10 @@ export default async function Page({ params }: PageProps) {
             <span className="icon--vita icon--vita--logo mr-[10px] text-xs text-vita-yellow" />
             {service.vita_required.toLocaleString()} VITA +
           </p>
-          <RedemptionTrigger did={did} balance={balance} service={service}>
+          <RedemptionTrigger did={did} balance={totalVita} service={service}>
             <Button className="mt-[20px] w-full">Redeem This Offer</Button>
           </RedemptionTrigger>
-          {did !== null && balance >= service.vita_required ? (
+          {did !== null && totalVita >= service.vita_required ? (
             <p className="mt-[12px] hidden text-center text-sm text-[#989898] @3xl/main:block">
               Congratulations, you can redeem this offer!
             </p>
@@ -95,7 +94,7 @@ export default async function Page({ params }: PageProps) {
             className="prose text-black"
           />
           <p className="pb-[20px] text-right @3xl/main:hidden">
-            <RedemptionTrigger did={did} balance={balance} service={service}>
+            <RedemptionTrigger did={did} balance={totalVita} service={service}>
               <button className="font-semibold text-vita-purple underline underline-offset-4">
                 Redeem This Offer
                 <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
