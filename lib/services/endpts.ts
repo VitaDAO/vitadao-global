@@ -7,6 +7,7 @@ import { z } from "zod";
 import { gate } from "@/lib/auth";
 
 const BASE_URL = "https://endpts.com";
+// TODO fetch VITA required from Pocketbase assuming a given slug
 const MIN_VITA = 100;
 
 const cookieJar = new CookieJar();
@@ -61,13 +62,13 @@ export async function getEndptsItems({
       title: titleElement?.getAttribute("title"),
       pathname: titleElement
         ?.getAttribute("href")
-        ?.replace("https://endpts.com", "/endpts"),
+        ?.replace("https://endpts.com", "endpts/"),
       age: timeElement?.textContent,
       channels: channelElements.map((channel) => ({
         name: channel.textContent,
         pathname: channel
           .getAttribute("href")
-          ?.replace("https://endpts.com", "/endpts"),
+          ?.replace("https://endpts.com", "endpts/"),
       })),
     };
   });
