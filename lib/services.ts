@@ -1,7 +1,7 @@
 import { z } from "zod";
 
+import { User, getCurrentUser } from "@/lib/auth";
 import { getFirstListItem, getFullList } from "@/lib/pocketbase";
-import { getUserBalance, getUserDidFromCookie } from "@/lib/users";
 
 const ServiceSchema = z.object({
   id: z.string(),
@@ -71,27 +71,8 @@ function and(...args: Array<undefined | null | boolean | string>) {
   return "(" + args.filter(Boolean).join(") && (") + ")";
 }
 
-interface User {
-  did: string | null;
-  balance: number;
-}
-
-async function getUserAuthzProperties() {
-  const did = await getUserDidFromCookie();
-
-  let balance = 0;
-  if (did !== null) {
-    balance = await getUserBalance(did);
-  }
-
-  return {
-    did,
-    balance,
-  };
-}
-
-function buildFilter({ user, filter }: { user: User; filter?: string }) {
-  const { did, balance } = user;
+function buildFilter({ user, filter }: { user: User | null; filter?: string }) {
+  const { did = null, totalVita = 0 } = user ?? {};
   // The read permissions are as follows:
   // - "public" services are readable by everyone.
   // - "private" services are readable by logged in users, irrespective of VITA
@@ -106,14 +87,14 @@ function buildFilter({ user, filter }: { user: User; filter?: string }) {
     or(
       `read_access = "public"`,
       did && `read_access = "private"`,
-      did && balance > 0 && `read_access = "holder"`,
-      did && `read_access = "redeemer" && vita_required <= ${balance}`,
+      did && totalVita > 0 && `read_access = "holder"`,
+      did && `read_access = "redeemer" && vita_required <= ${totalVita}`,
     ),
   );
 }
 
 export async function getServices() {
-  const user = await getUserAuthzProperties();
+  const user = await getCurrentUser();
   const filter = buildFilter({ user });
   const fields = serviceCardFields;
 
@@ -125,7 +106,7 @@ export async function getServices() {
 }
 
 export async function getServiceBySlug(slug: string) {
-  const user = await getUserAuthzProperties();
+  const user = await getCurrentUser();
   const filter = buildFilter({ user, filter: `slug = "${slug}"` });
   const fields = serviceStandaloneFields;
 
@@ -135,7 +116,7 @@ export async function getServiceBySlug(slug: string) {
 
   if (service === null) return null;
 
-  if (user.did === null || user.balance < service.vita_required) {
+  if (user === null || user.totalVita < service.vita_required) {
     service.redemption_instructions = "";
   }
 
@@ -143,7 +124,7 @@ export async function getServiceBySlug(slug: string) {
 }
 
 export async function getFeaturedService() {
-  const user = await getUserAuthzProperties();
+  const user = await getCurrentUser();
   const filter = buildFilter({ user, filter: "is_featured = true" });
   const fields = serviceCardFields;
 

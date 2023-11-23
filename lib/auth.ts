@@ -69,7 +69,7 @@ export const getCurrentUserVitaBalance = cache(async () => {
 // We encapsulate the current user's data in a class with private fields to
 // mitigate risk of unintentionally leaking info to the client.
 // https://nextjs.org/blog/security-nextjs-server-components-actions#data-access-layer
-class User {
+export class User {
   #did: string;
   #totalVita: number;
 
