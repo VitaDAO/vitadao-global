@@ -1,9 +1,15 @@
+import { notFound } from "next/navigation";
+
 import { ErrorUi } from "@/components/ui/error-ui";
+import { getServiceBySlug } from "@/lib/services";
 import { getArticle } from "@/lib/services/endpts";
 
 export const revalidate = 300;
 
 export default async function Page({ params }: { params: { slug: string } }) {
+  const endptsService = await getServiceBySlug("endpoints-news");
+  if (endptsService === null) notFound();
+
   try {
     const { title, body, imageSrc } = await getArticle(params.slug);
 

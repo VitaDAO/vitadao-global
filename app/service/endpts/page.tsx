@@ -1,10 +1,12 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { z } from "zod";
 
 import { ErrorUi } from "@/components/ui/error-ui";
 import { Pagination } from "@/components/ui/pagination";
 import { Pill } from "@/components/ui/pill";
 import { buildMetadata } from "@/lib/metadata";
+import { getServiceBySlug } from "@/lib/services";
 import { getEndptsItems } from "@/lib/services/endpts";
 
 import { ChannelSelect } from "./channel-select";
@@ -24,6 +26,9 @@ interface PageProps {
 }
 
 export default async function Page({ searchParams }: PageProps) {
+  const endptsService = await getServiceBySlug("endpoints-news");
+  if (endptsService === null) notFound();
+
   try {
     const page = pageSchema.parse(searchParams?.page);
     const channel = channelSchema.parse(searchParams?.channel);
