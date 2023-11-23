@@ -64,12 +64,18 @@ export async function getEndptsItems({
         ?.getAttribute("href")
         ?.replace("https://endpts.com", "endpts/"),
       age: timeElement?.textContent,
-      channels: channelElements.map((channel) => ({
-        name: channel.textContent,
-        pathname: channel
+      channels: channelElements.map((channel) => {
+        const match = channel
           .getAttribute("href")
-          ?.replace("https://endpts.com", "endpts/"),
-      })),
+          ?.match(/channel\/([\w-]+)\//);
+        console.log(
+          `${channel.getAttribute("href")} ### ${match?.[0]} ### ${match?.[1]}`,
+        );
+        return {
+          name: channel.textContent,
+          pathname: match?.[1],
+        };
+      }),
     };
   });
 
