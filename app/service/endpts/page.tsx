@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { z } from "zod";
 
 import { ErrorUi } from "@/components/ui/error-ui";
@@ -9,7 +10,7 @@ import { getEndptsItems } from "@/lib/services/endpts";
 import { ChannelSelect } from "./channel-select";
 
 export const metadata = buildMetadata({
-  title: "Endpoint News",
+  title: "Endpoints News",
 });
 
 const pageSchema = z.coerce
@@ -35,7 +36,7 @@ export default async function Page({ searchParams }: PageProps) {
     return (
       <div className="px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
         <div className="mb-[30px] flex flex-wrap items-center justify-between gap-[30px]">
-          <h1 className="text-h2 font-medium">Endpoint News</h1>
+          <h1 className="text-h2 font-medium">Endpoints News</h1>
           {maxPage && <Pagination page={page} maxPage={maxPage} />}
         </div>
         <ChannelSelect options={channels} />
@@ -56,13 +57,15 @@ export default async function Page({ searchParams }: PageProps) {
                 {item.title}
               </p>
               <p className="grow">{item.age}</p>
-              <a
-                href={item.pathname}
-                className="font-semibold leading-[22px] text-vita-purple underline underline-offset-4"
-              >
-                Read
-                <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
-              </a>
+              {item.pathname && (
+                <Link
+                  href={item.pathname}
+                  className="font-semibold leading-[22px] text-vita-purple underline underline-offset-4"
+                >
+                  Read
+                  <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
+                </Link>
+              )}
             </div>
           ))}
         </div>
