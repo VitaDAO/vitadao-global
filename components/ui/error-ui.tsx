@@ -2,7 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AuthButtons } from "@/components/ui/auth-buttons";
-import { NotAuthenticatedError, NotEnoughVitaError } from "@/lib/errors";
+import {
+  NotAuthenticatedError,
+  NotEnoughVitaError,
+  NotFoundError,
+} from "@/lib/errors";
 import vitaPlanet from "@/public/vita-planet.png";
 
 interface ErrorUiProps {
@@ -53,6 +57,13 @@ export function ErrorUi({ error }: ErrorUiProps) {
             </a>
           </div>
         </div>
+      </>
+    );
+  } else if (error instanceof NotFoundError) {
+    content = (
+      <>
+        <p className="mb-[20px] text-h4 font-medium">Not Found</p>
+        <p className="mb-[20px]">Could not find the requested page.</p>
       </>
     );
   }
