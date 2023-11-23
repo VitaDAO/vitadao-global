@@ -1,3 +1,5 @@
+import "server-only";
+
 import { z } from "zod";
 
 import { User, getCurrentUser } from "@/lib/auth";
