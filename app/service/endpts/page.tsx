@@ -48,9 +48,12 @@ export default async function Page({ searchParams }: PageProps) {
             >
               <div className="flex flex-wrap gap-[10px]">
                 {item.channels.map((channel) => (
-                  <Pill key={channel.pathname} className="border">
-                    {channel.name}
-                  </Pill>
+                  <Link
+                    key={channel.pathname}
+                    href={`?channel=${channel.pathname}`}
+                  >
+                    <Pill className="border">{channel.name}</Pill>
+                  </Link>
                 ))}
               </div>
               <p className="line-clamp-4 pt-[5px] text-h4 font-medium leading-[120%]">
