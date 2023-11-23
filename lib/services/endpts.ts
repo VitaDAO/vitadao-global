@@ -5,10 +5,10 @@ import { CookieJar } from "tough-cookie";
 import { z } from "zod";
 
 import { gate } from "@/lib/auth";
+import { NotFoundError } from "@/lib/errors";
+import { getServiceBySlug } from "@/lib/services";
 
 const BASE_URL = "https://endpts.com";
-// TODO fetch VITA required from Pocketbase assuming a given slug
-const MIN_VITA = 100;
 
 const cookieJar = new CookieJar();
 
@@ -44,7 +44,10 @@ export async function getEndptsItems({
   page,
   channel,
 }: GetEndptsItemsProps = {}) {
-  await gate(MIN_VITA);
+  const endptsService = await getServiceBySlug("endpoints-news");
+  if (endptsService === null) throw new NotFoundError();
+
+  await gate(endptsService.vita_required);
 
   const slug =
     (channel === "all" || channel === undefined
@@ -116,7 +119,10 @@ export async function getEndptsItems({
 }
 
 export async function getArticle(path: string) {
-  await gate(MIN_VITA);
+  const endptsService = await getServiceBySlug("endpoints-news");
+  if (endptsService === null) throw new NotFoundError();
+
+  await gate(endptsService.vita_required);
 
   let cookieString = cookieJar.getCookieStringSync(BASE_URL);
   if (!cookieString) {
