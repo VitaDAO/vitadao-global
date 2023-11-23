@@ -68,9 +68,6 @@ export async function getEndptsItems({
         const match = channel
           .getAttribute("href")
           ?.match(/channel\/([\w-]+)\//);
-        console.log(
-          `${channel.getAttribute("href")} ### ${match?.[0]} ### ${match?.[1]}`,
-        );
         return {
           name: channel.textContent,
           pathname: match?.[1],
