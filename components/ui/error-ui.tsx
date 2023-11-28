@@ -66,6 +66,13 @@ export function ErrorUi({ error }: ErrorUiProps) {
         <p className="mb-[20px]">Could not find the requested page.</p>
       </>
     );
+  } else {
+    content = (
+      <>
+        <p className="mb-[20px] text-h4 font-medium">Unknown error</p>
+        <p className="mb-[20px]">{error.message}</p>
+      </>
+    );
   }
 
   return (
