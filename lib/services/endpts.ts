@@ -1,6 +1,7 @@
 import "server-only";
 
 import { parse } from "node-html-parser";
+import sanitizeHtml from "sanitize-html";
 import { CookieJar } from "tough-cookie";
 import { z } from "zod";
 
@@ -35,6 +36,50 @@ async function authenticateEndpts() {
     .map((header) => cookieJar.setCookieSync(header, BASE_URL));
 }
 
+const sanitizeOptions: sanitizeHtml.IOptions = {
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    a: ["href", "name", "title"],
+    "*": ["id", "style"],
+  },
+  allowedClasses: { "*": ["epn_*"] },
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+    "html",
+    "body",
+    "head",
+    "title",
+    "img",
+  ]),
+  transformTags: {
+    a: function (tagName, attribs) {
+      let newAttribs = {};
+      if (attribs.href.startsWith("https://endpts.com/channel/")) {
+        newAttribs = {
+          href: attribs.href.replace(
+            "https://endpts.com/channel/",
+            "/service/endpts/channel/",
+          ),
+        };
+      } else if (attribs.href.startsWith("https://endpts.com/")) {
+        // TODO maybe make this more specific by matching URLs with no
+        // sub-levels? For example, we now transform the /author/author_name
+        // routes even though we don't support them.
+        newAttribs = {
+          href: attribs.href.replace("https://endpts.com/", "/service/endpts/"),
+        };
+      }
+
+      return {
+        tagName,
+        attribs: {
+          ...attribs,
+          ...newAttribs,
+        },
+      };
+    },
+  },
+};
+
 interface GetEndptsItemsProps {
   page?: number;
   channel?: string;
@@ -55,7 +100,7 @@ export async function getEndptsItems({
       : "/channel/" + channel) + `/page/${page ?? 1}/`;
   const res = await fetch("https://endpts.com" + slug);
   const html = await res.text();
-  const dom = parse(html);
+  const dom = parse(sanitizeHtml(html, sanitizeOptions));
 
   const items = dom.querySelectorAll("div.epn_item").map((item) => {
     const titleElement = item.querySelector("h3 > a");
@@ -136,7 +181,7 @@ export async function getArticle(path: string) {
     },
   });
   const html = await res.text();
-  const dom = parse(html);
+  const dom = parse(sanitizeHtml(html, sanitizeOptions));
 
   const titleElement = dom.querySelector("article h1");
 
