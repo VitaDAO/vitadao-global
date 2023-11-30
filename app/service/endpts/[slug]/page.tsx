@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <div
             // TODO please don't forget to somehow sanitize this
             dangerouslySetInnerHTML={{ __html: body }}
-            className="prose text-black [&_div.epn\_image]:h-16 [&_div.epn\_image]:w-16 [&_div.epn\_image]:rounded-full [&_div.epn\_image]:bg-cover [&_div.epn\_image]:bg-center"
+            className="endpts prose text-black"
           />
         )}
       </>
