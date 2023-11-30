@@ -110,7 +110,7 @@ export async function VitaStatsCard({
             </Link>
           )}
           <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild>
               <button className="text-base font-semibold text-vita-purple underline underline-offset-4">
                 How are these calculated?
                 <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
