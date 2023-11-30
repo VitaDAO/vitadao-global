@@ -108,6 +108,60 @@
   }
 }
 
+@layer components {
+  .endpts {
+    .epn_image {
+      font-size: 0;
+      margin-bottom: 1.5625rem;
+      position: relative;
+      overflow: hidden;
+      img {
+        display: inline-block;
+        width: 100%;
+        height: auto;
+      }
+    }
+    .epn_image_aside {
+      float: left;
+      margin-right: 2rem;
+      width: 13.75rem;
+      border-radius: 6px;
+      border: solid 1px #dfdfdf;
+      span {
+        display: block;
+        padding: 0.75rem;
+        font-size: 1rem;
+        line-height: 1.375rem;
+        color: #2d2d2d;
+        text-align: center;
+      }
+    }
+    .epn_image_aside_align_right {
+      float: right;
+      margin-left: 2rem;
+      margin-right: 0;
+    }
+    .epn_author_box {
+      .epn_image {
+        height: 4rem;
+        width: 4rem;
+        border: solid 1px #dfdfdf;
+        background-position: center;
+        background-size: cover;
+        border-radius: 100%;
+      }
+    }
+    .epn_social {
+      display: flex;
+      flex-direction: column;
+      .epn_left {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
+
 /* Monochrome icons */
 
 .icon--vita {
