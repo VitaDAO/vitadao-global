@@ -57,7 +57,16 @@ export default async function Page({ searchParams }: PageProps) {
                 ))}
               </div>
               <p className="line-clamp-4 pt-[5px] text-h4 font-medium leading-[120%]">
-                {item.title}
+                {item.pathname ? (
+                  <Link
+                    href={item.pathname}
+                    className="underline-offset-4 hover:underline"
+                  >
+                    {item.title}
+                  </Link>
+                ) : (
+                  item.title
+                )}
               </p>
               <p className="grow">{item.age}</p>
               {item.pathname && (
