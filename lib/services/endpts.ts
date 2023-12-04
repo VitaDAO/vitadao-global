@@ -80,6 +80,88 @@ const sanitizeOptions: sanitizeHtml.IOptions = {
   },
 };
 
+interface SearchEndptsItemsProps {
+  page?: number;
+  search: string;
+}
+
+export async function searchEndptsItems({
+  page,
+  search,
+}: SearchEndptsItemsProps) {
+  const endptsService = await getServiceBySlug("endpoints-news");
+  if (endptsService === null) throw new NotFoundError();
+
+  await gate(endptsService.vita_required);
+
+  const slug = `/page/${page ?? 1}/?s=${search}`;
+  const res = await fetch("https://endpts.com" + slug);
+  const html = await res.text();
+  const dom = parse(sanitizeHtml(html, sanitizeOptions));
+
+  const items = dom
+    .querySelectorAll("div.epn_result_list > div.epn_item")
+    .map((item) => {
+      const titleElement = item.querySelector("h3 > a");
+      const timeElement = item.querySelector("div.epn_time");
+      const channelElements = item.querySelectorAll("div.epn_channel > a");
+      return {
+        title: titleElement?.getAttribute("title"),
+        pathname: titleElement
+          ?.getAttribute("href")
+          ?.replace("https://endpts.com", "endpts/"),
+        age: timeElement?.textContent,
+        channels: channelElements.map((channel) => {
+          const match = channel
+            .getAttribute("href")
+            ?.match(/channel\/([\w-]+)\//);
+          return {
+            name: channel.textContent,
+            pathname: match?.[1],
+          };
+        }),
+      };
+    });
+
+  const pages = dom
+    .querySelectorAll("div.epn_ux_pagination > .epn_navigation")
+    .map((el) => {
+      const href = el.getAttribute("href");
+
+      if (typeof href === "string") {
+        const matches = href.match(/\/(\d+)\//);
+        return matches ? Number(matches[matches.length - 1]) : null;
+      } else {
+        return Number(el.textContent);
+      }
+    })
+    .filter(isNotNull);
+
+  const channels = [
+    { label: "All News", value: "all" },
+    ...dom
+      .querySelectorAll("div.epn_menu a")
+      .map((el) => {
+        const matches = el.getAttribute("href")?.match(/channel\/([\w-]+)\//);
+
+        if (matches) {
+          const value = matches[matches.length - 1];
+          const label = el.textContent;
+          return { value, label };
+        }
+
+        return null;
+      })
+      .filter(isNotNull),
+  ];
+
+  return {
+    channels,
+    items,
+    maxPage: pages[pages.length - 1],
+  };
+}
+
 interface GetEndptsItemsProps {
   page?: number;
   channel?: string;
