@@ -200,6 +200,15 @@ export function SidebarNavigation() {
             coming soon
           </span>
         </li>
+        <li>
+          <a
+            href="https://v3.parcel.money/request/hxqDbGWPpp"
+            className="block px-[30px] py-4 hover:bg-gray-200"
+          >
+            <span className="icon--vita icon--vita--ethereum mr-[17px] text-sm" />
+            Payments
+          </a>
+        </li>
       </menu>
       <div className="border-t border-gray-400 px-[30px] py-4">
         <AuthControls />
