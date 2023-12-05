@@ -102,9 +102,14 @@ export function TopNavigation({ hide = false }: TopNavigationProps) {
               <span className="icon--vita icon--vita--piechart mr-3 text-lg text-vita-purple" />
               Treasury
             </MenuCard>
-            <MenuCard href="https://v3.parcel.money/request/hxqDbGWPpp">
-              <span className="icon--vita icon--vita--ethereum mr-3 text-lg text-vita-purple" />
-              Payments
+            <MenuCard className="relative overflow-hidden text-gray-600">
+              <span className="icon--vita icon--vita--bro mr-3 text-lg text-gray-600" />
+              Delegation
+              <div className="absolute left-0 top-0 h-full w-full text-sm landscape:text-[11px]">
+                <div className="absolute right-[-38px] top-[28px] rotate-[30deg] transform whitespace-nowrap bg-[#D9D9D9] px-10 text-center uppercase tracking-widest text-white landscape:top-[20px]">
+                  Coming soon
+                </div>
+              </div>
             </MenuCard>
           </div>
           <div
