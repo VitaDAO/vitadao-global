@@ -2,7 +2,7 @@ import { VitadaoSpinner } from "@/components/ui/vitadao-spinner";
 
 export default function Loading() {
   return (
-    <div className="flex justify-center pt-[90px]">
+    <div className="flex flex-grow items-center justify-center">
       <VitadaoSpinner />
     </div>
   );
