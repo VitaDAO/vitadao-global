@@ -102,14 +102,9 @@ export function TopNavigation({ hide = false }: TopNavigationProps) {
               <span className="icon--vita icon--vita--piechart mr-3 text-lg text-vita-purple" />
               Treasury
             </MenuCard>
-            <MenuCard className="relative overflow-hidden text-gray-600">
-              <span className="icon--vita icon--vita--bro mr-3 text-lg text-gray-600" />
-              Delegation
-              <div className="absolute left-0 top-0 h-full w-full text-sm landscape:text-[11px]">
-                <div className="absolute right-[-38px] top-[28px] rotate-[30deg] transform whitespace-nowrap bg-[#D9D9D9] px-10 text-center uppercase tracking-widest text-white landscape:top-[20px]">
-                  Coming soon
-                </div>
-              </div>
+            <MenuCard href="https://v3.parcel.money/request/hxqDbGWPpp">
+              <span className="icon--vita icon--vita--ethereum mr-3 text-lg text-vita-purple" />
+              Payments
             </MenuCard>
           </div>
           <div
@@ -191,15 +186,6 @@ export function SidebarNavigation() {
             Treasury
           </Link>
         </li>
-        <li className="flex items-center justify-between px-[30px] py-4 text-gray-600">
-          <span>
-            <span className="icon--vita icon--vita--bro mr-[17px] text-sm" />
-            Delegation
-          </span>
-          <span className="rounded-lg bg-gray-200 px-[6px] py-[3px] text-xs uppercase leading-none tracking-[0.36px]">
-            coming soon
-          </span>
-        </li>
         <li>
           <a
             href="https://v3.parcel.money/request/hxqDbGWPpp"
@@ -208,6 +194,15 @@ export function SidebarNavigation() {
             <span className="icon--vita icon--vita--ethereum mr-[17px] text-sm" />
             Payments
           </a>
+        </li>
+        <li className="flex items-center justify-between px-[30px] py-4 text-gray-600">
+          <span>
+            <span className="icon--vita icon--vita--bro mr-[17px] text-sm" />
+            Delegation
+          </span>
+          <span className="rounded-lg bg-gray-200 px-[6px] py-[3px] text-xs uppercase leading-none tracking-[0.36px]">
+            coming soon
+          </span>
         </li>
       </menu>
       <div className="border-t border-gray-400 px-[30px] py-4">
