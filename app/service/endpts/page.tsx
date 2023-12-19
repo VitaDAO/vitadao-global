@@ -43,7 +43,7 @@ export default async function Page({ searchParams }: PageProps) {
           <a href="/service/endpts">Endpoints News</a>
         </h1>
         <div className="mb-[30px] flex flex-wrap justify-between gap-3">
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <ChannelSelect options={channels} />
             <form method="GET" className="relative">
               <span className="absolute left-[1px] top-1/2 flex h-[40px] w-[40px] -translate-y-1/2 items-center justify-center rounded-full text-[#A4A4A4]">
