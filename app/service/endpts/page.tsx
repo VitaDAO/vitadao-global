@@ -45,10 +45,13 @@ export default async function Page({ searchParams }: PageProps) {
         <div className="mb-[30px] flex flex-wrap justify-between gap-3">
           <div className="flex gap-3">
             <ChannelSelect options={channels} />
-            <form method="GET">
+            <form method="GET" className="relative">
+              <span className="absolute left-[1px] top-1/2 flex h-[40px] w-[40px] -translate-y-1/2 items-center justify-center rounded-full text-[#A4A4A4]">
+                <span className="icon--vita icon--vita--search" />
+              </span>
               <input
                 type="text"
-                className="rounded-full border px-5 py-2"
+                className="rounded-full border py-2 pl-[40px] pr-5 placeholder:text-[#A4A4A4]"
                 name="search"
                 placeholder="Search"
                 defaultValue={search}
