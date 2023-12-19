@@ -225,6 +225,16 @@
   --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='16' height='16'%3E%3Cpath fill='black' d='m3.747 2.042.139.092a7.353 7.353 0 008.355-.013c2.068-1.438 4.69.874 3.43 3.03L11.374 12.5c-1.48 2.533-5.216 2.533-6.702 0L.33 5.073C-.93 2.93 1.677.61 3.747 2.042Z'/%3E%3C/svg%3E");
 }
 
+.icon--vita--pagination-last {
+  width: 0.82em;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11.346 14' width='11.346' height='14'%3E%3Cpath fill='none' stroke='black' stroke-miterlimit='10' stroke-width='1.508' d='M.533.533 7 7 .533 13.467M10.592.533v12.934'/%3E%3C/svg%3E");
+}
+
+.icon--vita--pagination-next {
+  width: 0.59em;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8.137 14' width='8.137' height='14'%3E%3Cpath fill='none' stroke='black' stroke-miterlimit='10' stroke-width='1.608' d='M.568.568 7 7 .568 13.432'/%3E%3C/svg%3E");
+}
+
 .icon--vita--phone {
   --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12'%3E%3Cpath fill='black' d='M3.273 12q-.45 0-.771-.32-.32-.321-.32-.77V1.09q0-.45.32-.77.321-.32.77-.32h5.455q.45 0 .771.32.32.321.32.77v9.82q0 .45-.32.77-.321.32-.77.32zm0-2.727h5.454V2.727H3.273Z'/%3E%3C/svg%3E");
 }
