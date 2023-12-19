@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { z } from "zod";
 
-import { ConcisePagination } from "@/components/ui/concise-pagination";
+import { ConciseServerPagination } from "@/components/ui/concise-server-pagination";
 import { ErrorUi } from "@/components/ui/error-ui";
 import { Pill } from "@/components/ui/pill";
 import { buildMetadata } from "@/lib/metadata";
@@ -39,23 +39,29 @@ export default async function Page({ searchParams }: PageProps) {
 
     return (
       <div className="px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
-        <div className="mb-[30px] flex flex-wrap items-center justify-between gap-[30px]">
-          <h1 className="text-h2 font-medium">
-            <a href="/service/endpts">Endpoints News</a>
-          </h1>
-          {maxPage && <ConcisePagination page={page} maxPage={maxPage} />}
-        </div>
+        <h1 className="mb-[30px] text-h2 font-medium">
+          <a href="/service/endpts">Endpoints News</a>
+        </h1>
         <div className="mb-[30px] flex flex-wrap justify-between gap-3">
-          <ChannelSelect options={channels} />
-          <form method="GET">
-            <input
-              type="text"
-              className="rounded-full border px-5 py-2"
-              name="search"
-              placeholder="Search"
-              defaultValue={search}
+          <div className="flex gap-3">
+            <ChannelSelect options={channels} />
+            <form method="GET">
+              <input
+                type="text"
+                className="rounded-full border px-5 py-2"
+                name="search"
+                placeholder="Search"
+                defaultValue={search}
+              />
+            </form>
+          </div>
+          {maxPage && (
+            <ConciseServerPagination
+              page={page}
+              maxPage={maxPage}
+              searchParams={searchParams}
             />
-          </form>
+          )}
         </div>
         <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-1 gap-[20px] @xl/main:gap-[30px] sm:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
           {items.map((item) => (
@@ -98,6 +104,15 @@ export default async function Page({ searchParams }: PageProps) {
             </div>
           ))}
         </div>
+        {maxPage && (
+          <div className="flex justify-end">
+            <ConciseServerPagination
+              page={page}
+              maxPage={maxPage}
+              searchParams={searchParams}
+            />
+          </div>
+        )}
       </div>
     );
   } catch (e) {
