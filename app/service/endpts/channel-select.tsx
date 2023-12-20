@@ -28,7 +28,7 @@ export function ChannelSelect({ options }: ChannelSelectProps) {
         value={value}
         onValueChange={(newValue) => router.push(`?channel=${newValue}`)}
       >
-        <SelectTrigger className="h-[42px] w-[180px] rounded-full pl-4 text-base focus-visible:ring-0 focus-visible:ring-offset-0">
+        <SelectTrigger className="h-[42px] w-[180px] rounded-full pl-4 text-base">
           <SelectValue placeholder="Channel" />
         </SelectTrigger>
         <SelectContent>
