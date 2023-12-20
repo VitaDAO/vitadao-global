@@ -42,7 +42,7 @@ const sanitizeOptions: sanitizeHtml.IOptions = {
     a: ["href", "name", "title"],
     "*": ["id", "style"],
   },
-  allowedClasses: { "*": ["epn_*"] },
+  allowedClasses: { "*": ["epn_*", "single_author"] },
   allowedTags: sanitizeHtml.defaults.allowedTags.concat([
     "html",
     "body",
@@ -281,10 +281,56 @@ export async function getArticle(path: string) {
 
   const imageElement = dom.querySelector("article > div.epn_image > img");
 
+  const trending = dom
+    .querySelectorAll(
+      "div.epn_stream_box > div.epn_item:not(.epn_item--sponsored) a",
+    )
+    .map((a) => ({
+      label: a.getAttribute("title"),
+      href: a.getAttribute("href"),
+    }));
+
+  const authors = dom.querySelectorAll("div.single_author").map((author) => {
+    const imageSrc = author
+      .querySelector("div.epn_image")
+      ?.getAttribute("style")
+      ?.match(/background-image:url\('(?<imageSrc>\S+)'\)/)?.groups?.imageSrc;
+    const name = author.querySelector("h3")?.textContent;
+    const title = author.querySelector("h4")?.textContent;
+    const email = author
+      .querySelector("div.epn_social a.epn_mail")
+      ?.getAttribute("href");
+    const x = author
+      .querySelector("div.epn_social a.epn_twitter")
+      ?.getAttribute("href");
+    const linkedin = author
+      .querySelector("div.epn_social a.epn_linkedin")
+      ?.getAttribute("href");
+
+    const authorBoxElement =
+      contentElement?.querySelector("div.epn_author_box");
+    if (contentElement && authorBoxElement) {
+      contentElement.removeChild(authorBoxElement);
+    }
+
+    return {
+      imageSrc,
+      name,
+      title,
+      socials: {
+        email,
+        x,
+        linkedin,
+      },
+    };
+  });
+
   return {
     title: titleElement?.textContent,
     body: contentElement?.innerHTML,
     imageSrc: imageElement?.getAttribute("src"),
+    trending,
+    authors,
   };
 }
 
