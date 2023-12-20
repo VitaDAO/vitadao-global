@@ -106,6 +106,7 @@ export async function searchEndptsItems({
       const timeElement = item.querySelector("div.epn_time");
       const channelElements = item.querySelectorAll("div.epn_channel > a");
       return {
+        imageSrc: undefined,
         title: titleElement?.getAttribute("title"),
         pathname: titleElement
           ?.getAttribute("href")
@@ -185,10 +186,15 @@ export async function getEndptsItems({
   const dom = parse(sanitizeHtml(html, sanitizeOptions));
 
   const items = dom.querySelectorAll("div.epn_item").map((item) => {
+    const imageElement = item.querySelector("div.epn_image");
+    const imageMatch = imageElement
+      ?.getAttribute("style")
+      ?.match(/background-image:url\('(?<imageSrc>\S+)'\)/);
     const titleElement = item.querySelector("h3 > a");
     const timeElement = item.querySelector("div.epn_time");
     const channelElements = item.querySelectorAll("div.epn_channel > a");
     return {
+      imageSrc: imageMatch?.groups?.imageSrc,
       title: titleElement?.getAttribute("title"),
       pathname: titleElement
         ?.getAttribute("href")

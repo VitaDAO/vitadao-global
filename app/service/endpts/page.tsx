@@ -70,37 +70,66 @@ export default async function Page({ searchParams }: PageProps) {
           {items.map((item) => (
             <div
               key={item.pathname}
-              className="flex min-h-[300px] flex-col items-start gap-[10px] rounded-xl bg-white p-[20px] @xl:p-[30px]"
+              className="flex min-h-[300px] flex-col items-start gap-[28px] rounded-xl bg-white p-[20px] @xl:p-[30px]"
             >
-              <div className="flex flex-wrap gap-[10px]">
-                {item.channels.map((channel) => (
-                  <Link
-                    key={channel.pathname}
-                    href={`?channel=${channel.pathname}`}
-                  >
-                    <Pill className="border">{channel.name}</Pill>
-                  </Link>
-                ))}
-              </div>
-              <p className="line-clamp-4 pt-[5px] text-h4 font-medium leading-[120%]">
-                {item.pathname ? (
+              {item.imageSrc &&
+                (item.pathname ? (
                   <Link
                     href={item.pathname}
                     className="underline-offset-4 hover:underline"
                   >
-                    {item.title}
+                    <img
+                      src={item.imageSrc}
+                      alt=""
+                      height={104}
+                      width={156}
+                      className="h-[104px] w-[156px] rounded-lg object-cover"
+                    />
                   </Link>
                 ) : (
-                  item.title
+                  <img
+                    src={item.imageSrc}
+                    alt=""
+                    height={104}
+                    width={156}
+                    className="h-[104px] w-[156px] rounded-lg object-cover"
+                  />
+                ))}
+              <div className="flex grow flex-col gap-[10px]">
+                {item.channels.length > 0 && (
+                  <div className="flex flex-wrap gap-[10px]">
+                    {item.channels.map((channel) => (
+                      <Link
+                        key={channel.pathname}
+                        href={`?channel=${channel.pathname}`}
+                      >
+                        <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
+                          {channel.name}
+                        </Pill>
+                      </Link>
+                    ))}
+                  </div>
                 )}
-              </p>
-              <p className="grow">{item.age}</p>
+                <p className="line-clamp-4 pt-[5px] text-h4 font-medium leading-[120%]">
+                  {item.pathname ? (
+                    <Link
+                      href={item.pathname}
+                      className="underline-offset-4 hover:underline"
+                    >
+                      {item.title}
+                    </Link>
+                  ) : (
+                    item.title
+                  )}
+                </p>
+                <p className="text-[#CCCCCC]">{item.age}</p>
+              </div>
               {item.pathname && (
                 <Link
                   href={item.pathname}
                   className="font-semibold leading-[22px] text-vita-purple underline underline-offset-4"
                 >
-                  Read
+                  Read this article
                   <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
                 </Link>
               )}
