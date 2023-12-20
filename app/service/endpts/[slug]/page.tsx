@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           {authors.length > 0 && (
             <div className="flex flex-col gap-[16px] rounded-[20px] border p-[24px]">
               <h3 className="text-sm/[120%] uppercase tracking-[0.56px] text-[#606060]">
-                Authors
+                {authors.length > 1 ? "Authors" : "Author"}
               </h3>
               {authors
                 .flatMap((a) => [null, a])
