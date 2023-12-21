@@ -307,12 +307,6 @@ export async function getArticle(path: string) {
       .querySelector("div.epn_social a.epn_linkedin")
       ?.getAttribute("href");
 
-    const authorBoxElement =
-      contentElement?.querySelector("div.epn_author_box");
-    if (contentElement && authorBoxElement) {
-      contentElement.removeChild(authorBoxElement);
-    }
-
     return {
       imageSrc,
       name,
@@ -325,12 +319,35 @@ export async function getArticle(path: string) {
     };
   });
 
+  const channels = dom
+    .querySelectorAll("article div.epn_channel a")
+    .map((channel) => ({
+      name: channel.textContent,
+      pathname: channel
+        .getAttribute("href")
+        ?.match(/channel\/(?<pathname>[\w-]+)\//)?.groups?.pathname,
+    }));
+
+  const date = dom.querySelector("article div.epn_time")?.innerHTML;
+
+  const authorBoxElement = contentElement?.querySelector("div.epn_author_box");
+  if (contentElement && authorBoxElement) {
+    contentElement.removeChild(authorBoxElement);
+  }
+
+  const tagBoxElement = contentElement?.querySelector("div.epn_tag_box");
+  if (contentElement && tagBoxElement) {
+    contentElement.removeChild(tagBoxElement);
+  }
+
   return {
     title: titleElement?.textContent,
     body: contentElement?.innerHTML,
     imageSrc: imageElement?.getAttribute("src"),
     trending,
     authors,
+    channels,
+    date,
   };
 }
 

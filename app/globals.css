@@ -141,23 +141,12 @@
       margin-left: 2rem;
       margin-right: 0;
     }
-    .epn_author_box {
-      .epn_image {
-        height: 4rem;
-        width: 4rem;
-        border: solid 1px #dfdfdf;
-        background-position: center;
-        background-size: cover;
-        border-radius: 100%;
-      }
-    }
-    .epn_social {
-      display: flex;
-      flex-direction: column;
-      .epn_left {
-        display: flex;
-        flex-direction: column;
-      }
+  }
+
+  .endpts-time {
+    span.epn_time_updated {
+      font-style: italic;
+      margin-left: 5px;
     }
   }
 }
