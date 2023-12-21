@@ -1,13 +1,15 @@
+import Link from "next/link";
+
 import { ErrorUi } from "@/components/ui/error-ui";
+import { Pill } from "@/components/ui/pill";
 import { getArticle } from "@/lib/services/endpts";
 
 export const revalidate = 300;
 
 export default async function Page({ params }: { params: { slug: string } }) {
   try {
-    const { title, body, imageSrc, trending, authors } = await getArticle(
-      params.slug,
-    );
+    const { title, body, imageSrc, trending, authors, channels, date } =
+      await getArticle(params.slug);
 
     return (
       <div className="flex flex-wrap gap-x-[30px] gap-y-[20px]">
@@ -16,16 +18,37 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <img
               src={imageSrc}
               alt=""
-              className="mb-[10px] aspect-[730/412] w-full rounded-[20px] object-cover @3xl/main:mb-[30px]"
+              className="mb-[12px] aspect-[730/412] w-full rounded-[20px] object-cover @xl/main:mb-[17px] @3xl/main:mb-[20px]"
             />
           )}
-          <h1 className="text-lg/[26.4px] font-medium tracking-[-0.24px] @3xl/main:text-h2">
+          {channels.length > 0 && (
+            <div className="mb-[10px] flex flex-wrap gap-[10px] @xl/main:mb-[15px] @3xl/main:mb-[20px]">
+              {channels.map((c) => (
+                <Link
+                  key={c.pathname}
+                  href={`/service/endpts?channel=${c.pathname}`}
+                >
+                  <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
+                    {c.name}
+                  </Pill>
+                </Link>
+              ))}
+            </div>
+          )}
+          <h1 className="mb-[10px] text-lg/[26.4px] font-medium @xl/main:mb-[12px] @xl/main:text-h3 @3xl/main:mb-[17px] @3xl/main:text-h2 @3xl/main:tracking-[-0.24px]">
             {title}
           </h1>
+          {date && (
+            <p
+              className="endpts-time mb-[14px] text-base/[140%] font-medium text-[#989898] @xl/main:mb-[18px] @3xl/main:mb-[24px]"
+              dangerouslySetInnerHTML={{ __html: date }}
+            ></p>
+          )}
+          <div className="mb-[14px] border-t border-[#ECECEC] @xl/main:mb-[18px] @3xl/main:mb-[24px]"></div>
           {body && (
             <div
               dangerouslySetInnerHTML={{ __html: body }}
-              className="endpts prose text-black"
+              className="endpts prose max-w-none text-black"
             />
           )}
         </div>
