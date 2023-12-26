@@ -4,10 +4,14 @@ import { z } from "zod";
 import { ConciseServerPagination } from "@/components/ui/concise-server-pagination";
 import { ErrorUi } from "@/components/ui/error-ui";
 import { Pill } from "@/components/ui/pill";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { buildMetadata } from "@/lib/metadata";
 import { getEndptsItems, searchEndptsItems } from "@/lib/services/endpts";
 
-import { ChannelSelect } from "./channel-select";
 
 export const metadata = buildMetadata({
   title: "Endpoints News",
@@ -37,6 +41,9 @@ export default async function Page({ searchParams }: PageProps) {
           channel,
         });
 
+    const selectedChannelLabel =
+      channels.find(({ value }) => value === channel)?.label ?? "Pick channel";
+
     return (
       <div className="px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
         <h1 className="mb-[30px] text-h2 font-medium">
@@ -44,7 +51,24 @@ export default async function Page({ searchParams }: PageProps) {
         </h1>
         <div className="mb-[30px] flex flex-wrap justify-between gap-3">
           <div className="flex flex-wrap gap-3">
-            <ChannelSelect options={channels} />
+            <Popover>
+              <PopoverTrigger className="relative h-[42px] min-w-[200px] rounded-full border bg-white px-4 text-left">
+                {selectedChannelLabel}
+                <span className="icon--vita icon--vita--chevron absolute right-[15px] top-1/2 -translate-y-1/2 rotate-180 text-xs text-[#989898]" />
+              </PopoverTrigger>
+              <PopoverContent
+                className="max-h-[var(--radix-popover-content-available-height)] w-[var(--radix-popover-trigger-width)] overflow-auto rounded-xl p-0"
+                collisionPadding={20}
+              >
+                <ul>
+                  {channels.map(({ label, value }) => (
+                    <a key={value} href={`?channel=${value}`}>
+                      <li className="px-3 py-2 hover:bg-gray-50">{label}</li>
+                    </a>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>
             <form method="GET" className="relative">
               <span className="absolute left-[1px] top-1/2 flex h-[40px] w-[40px] -translate-y-1/2 items-center justify-center rounded-full text-[#A4A4A4]">
                 <span className="icon--vita icon--vita--search" />
