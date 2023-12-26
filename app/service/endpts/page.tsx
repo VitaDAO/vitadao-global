@@ -99,14 +99,14 @@ export default async function Page({ searchParams }: PageProps) {
                 {item.channels.length > 0 && (
                   <div className="flex flex-wrap gap-[10px]">
                     {item.channels.map((channel) => (
-                      <Link
+                      <a
                         key={channel.pathname}
                         href={`?channel=${channel.pathname}`}
                       >
                         <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
                           {channel.name}
                         </Pill>
-                      </Link>
+                      </a>
                     ))}
                   </div>
                 )}
