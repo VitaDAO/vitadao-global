@@ -1,3 +1,4 @@
+import { SearchX } from "lucide-react";
 import Link from "next/link";
 import { z } from "zod";
 
@@ -44,7 +45,7 @@ export default async function Page({ searchParams }: PageProps) {
       channels.find(({ value }) => value === channel)?.label ?? "Pick channel";
 
     return (
-      <div className="px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
+      <div className="flex grow flex-col px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
         <h1 className="mb-[30px] text-h2 font-medium">
           <a href="/service/endpts">Endpoints News</a>
         </h1>
@@ -89,18 +90,28 @@ export default async function Page({ searchParams }: PageProps) {
             />
           )}
         </div>
-        <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-1 gap-[20px] @xl/main:gap-[30px] sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
-          {items.map((item) => (
-            <div
-              key={item.pathname}
-              className="flex min-h-[300px] flex-col items-start gap-[28px] rounded-xl bg-white p-[20px] @xl:p-[30px]"
-            >
-              {item.imageSrc &&
-                (item.pathname ? (
-                  <Link
-                    href={item.pathname}
-                    className="underline-offset-4 hover:underline"
-                  >
+        {items.length > 0 ? (
+          <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-1 gap-[20px] @xl/main:gap-[30px] sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+            {items.map((item) => (
+              <div
+                key={item.pathname}
+                className="flex min-h-[300px] flex-col items-start gap-[28px] rounded-xl bg-white p-[20px] @xl:p-[30px]"
+              >
+                {item.imageSrc &&
+                  (item.pathname ? (
+                    <Link
+                      href={item.pathname}
+                      className="underline-offset-4 hover:underline"
+                    >
+                      <img
+                        src={item.imageSrc}
+                        alt=""
+                        height={104}
+                        width={156}
+                        className="h-[104px] w-[156px] rounded-lg object-cover"
+                      />
+                    </Link>
+                  ) : (
                     <img
                       src={item.imageSrc}
                       alt=""
@@ -108,57 +119,54 @@ export default async function Page({ searchParams }: PageProps) {
                       width={156}
                       className="h-[104px] w-[156px] rounded-lg object-cover"
                     />
-                  </Link>
-                ) : (
-                  <img
-                    src={item.imageSrc}
-                    alt=""
-                    height={104}
-                    width={156}
-                    className="h-[104px] w-[156px] rounded-lg object-cover"
-                  />
-                ))}
-              <div className="flex grow flex-col gap-[10px]">
-                {item.channels.length > 0 && (
-                  <div className="flex flex-wrap gap-[10px]">
-                    {item.channels.map((channel) => (
-                      <a
-                        key={channel.pathname}
-                        href={`?channel=${channel.pathname}`}
-                      >
-                        <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
-                          {channel.name}
-                        </Pill>
-                      </a>
-                    ))}
-                  </div>
-                )}
-                <p className="line-clamp-4 pt-[5px] text-h4 font-medium leading-[120%]">
-                  {item.pathname ? (
-                    <Link
-                      href={item.pathname}
-                      className="underline-offset-4 hover:underline"
-                    >
-                      {item.title}
-                    </Link>
-                  ) : (
-                    item.title
+                  ))}
+                <div className="flex grow flex-col gap-[10px]">
+                  {item.channels.length > 0 && (
+                    <div className="flex flex-wrap gap-[10px]">
+                      {item.channels.map((channel) => (
+                        <a
+                          key={channel.pathname}
+                          href={`?channel=${channel.pathname}`}
+                        >
+                          <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
+                            {channel.name}
+                          </Pill>
+                        </a>
+                      ))}
+                    </div>
                   )}
-                </p>
-                <p className="text-[#CCCCCC]">{item.age}</p>
+                  <p className="line-clamp-4 pt-[5px] text-h4 font-medium leading-[120%]">
+                    {item.pathname ? (
+                      <Link
+                        href={item.pathname}
+                        className="underline-offset-4 hover:underline"
+                      >
+                        {item.title}
+                      </Link>
+                    ) : (
+                      item.title
+                    )}
+                  </p>
+                  <p className="text-[#CCCCCC]">{item.age}</p>
+                </div>
+                {item.pathname && (
+                  <Link
+                    href={item.pathname}
+                    className="font-semibold leading-[22px] text-vita-purple underline underline-offset-4"
+                  >
+                    Read this article
+                    <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
+                  </Link>
+                )}
               </div>
-              {item.pathname && (
-                <Link
-                  href={item.pathname}
-                  className="font-semibold leading-[22px] text-vita-purple underline underline-offset-4"
-                >
-                  Read this article
-                  <span className="icon--vita icon--vita--chevron ml-2 rotate-90 text-[9px]" />
-                </Link>
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex grow flex-col items-center justify-center gap-3 text-center text-h4 text-[#989898]">
+            <SearchX className="h-10 w-10" />
+            <p>Nothing found</p>
+          </div>
+        )}
         {maxPage && (
           <div className="flex justify-end">
             <ConciseServerPagination
