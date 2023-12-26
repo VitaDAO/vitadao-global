@@ -12,7 +12,6 @@ import {
 import { buildMetadata } from "@/lib/metadata";
 import { getEndptsItems, searchEndptsItems } from "@/lib/services/endpts";
 
-
 export const metadata = buildMetadata({
   title: "Endpoints News",
 });
@@ -90,7 +89,7 @@ export default async function Page({ searchParams }: PageProps) {
             />
           )}
         </div>
-        <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-1 gap-[20px] @xl/main:gap-[30px] sm:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
+        <div className="mb-[30px] grid auto-rows-[1fr] grid-cols-1 gap-[20px] @xl/main:gap-[30px] sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
           {items.map((item) => (
             <div
               key={item.pathname}
