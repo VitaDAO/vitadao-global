@@ -1,4 +1,5 @@
 import { SearchX } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { z } from "zod";
 
@@ -12,6 +13,9 @@ import {
 } from "@/components/ui/popover";
 import { buildMetadata } from "@/lib/metadata";
 import { getEndptsItems, searchEndptsItems } from "@/lib/services/endpts";
+
+import endpoints from "./endpts-logo-01-endpoints.svg";
+import news from "./endpts-logo-02-news.svg";
 
 export const metadata = buildMetadata({
   title: "Endpoints News",
@@ -47,12 +51,22 @@ export default async function Page({ searchParams }: PageProps) {
     return (
       <div className="flex grow flex-col px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
         <h1 className="mb-[30px] text-h2 font-medium">
-          <a href="/service/endpts">Endpoints News</a>
+          <a
+            href="/service/endpts"
+            className="flex flex-wrap items-center gap-x-4 gap-y-2 px-1 py-3"
+          >
+            <Image
+              src={endpoints}
+              alt="Endpoints"
+              className="h-[30px] w-auto"
+            />
+            <Image src={news} alt="News" className="h-[30px] w-auto" />
+          </a>
         </h1>
         <div className="mb-[30px] flex flex-wrap justify-between gap-3">
           <div className="flex flex-wrap gap-3">
             <Popover>
-              <PopoverTrigger className="relative h-[42px] min-w-[200px] rounded-full border bg-white px-4 text-left">
+              <PopoverTrigger className="relative h-[42px] min-w-[210px] rounded-full border bg-white px-4 text-left">
                 {selectedChannelLabel}
                 <span className="icon--vita icon--vita--chevron absolute right-[15px] top-1/2 -translate-y-1/2 rotate-180 text-xs text-[#989898]" />
               </PopoverTrigger>
