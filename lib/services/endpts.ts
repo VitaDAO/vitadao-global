@@ -140,6 +140,7 @@ export async function searchEndptsItems({
 
   const channels = [
     { label: "All News", value: "all" },
+    { label: "News Briefing", value: "news-briefing" },
     ...dom
       .querySelectorAll("div.epn_menu a")
       .map((el) => {
@@ -228,6 +229,7 @@ export async function getEndptsItems({
 
   const channels = [
     { label: "All News", value: "all" },
+    { label: "News Briefing", value: "news-briefing" },
     ...dom
       .querySelectorAll("div.epn_menu a")
       .map((el) => {
