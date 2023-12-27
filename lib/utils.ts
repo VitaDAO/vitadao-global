@@ -72,3 +72,39 @@ export function getUserHandle(account: User["linkedAccounts"][number]): string {
       return truncateWallet(account.address);
   }
 }
+
+export type NextSearchParams = { [key: string]: string | string[] | undefined };
+
+export function nextToWebSearchParams(nextSearchParams: NextSearchParams) {
+  const webSearchParams = new URLSearchParams();
+
+  Object.entries(nextSearchParams).forEach(([name, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((v) => webSearchParams.append(name, v));
+    } else if (value) {
+      webSearchParams.append(name, value);
+    }
+  });
+
+  return webSearchParams;
+}
+
+export function generateHref(baseHref: string, searchParams: URLSearchParams) {
+  return searchParams.size > 0
+    ? baseHref + "?" + searchParams.toString()
+    : baseHref;
+}
+
+export function updateSearchParams(
+  searchParams: URLSearchParams,
+  name: string,
+  value: unknown,
+) {
+  const newSearchParams = new URLSearchParams(searchParams);
+  if (value) {
+    newSearchParams.set(name, String(value));
+  } else {
+    newSearchParams.delete(name);
+  }
+  return newSearchParams;
+}

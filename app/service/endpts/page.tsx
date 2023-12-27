@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/popover";
 import { buildMetadata } from "@/lib/metadata";
 import { getEndptsItems, searchEndptsItems } from "@/lib/services/endpts";
+import { nextToWebSearchParams, type NextSearchParams } from "@/lib/utils";
 
 import endpoints from "./endpts-logo-01-endpoints.svg";
 import news from "./endpts-logo-02-news.svg";
@@ -28,11 +29,11 @@ const pageSchema = z.coerce
 const channelSchema = z.string().optional();
 const searchSchema = z.string().optional();
 
-interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: NextSearchParams;
+}) {
   try {
     const page = pageSchema.parse(searchParams?.page);
     const channel = channelSchema.parse(searchParams?.channel);
@@ -46,7 +47,8 @@ export default async function Page({ searchParams }: PageProps) {
         });
 
     const selectedChannelLabel =
-      channels.find(({ value }) => value === channel)?.label ?? "Pick channel";
+      channels.find(({ value }) => value === channel)?.label ??
+      "Pick a channel";
 
     return (
       <div className="flex grow flex-col px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
@@ -100,7 +102,8 @@ export default async function Page({ searchParams }: PageProps) {
             <ConciseServerPagination
               page={page}
               maxPage={maxPage}
-              searchParams={searchParams}
+              searchParams={nextToWebSearchParams(searchParams)}
+              baseHref="/service/endpts"
             />
           )}
         </div>
@@ -186,7 +189,8 @@ export default async function Page({ searchParams }: PageProps) {
             <ConciseServerPagination
               page={page}
               maxPage={maxPage}
-              searchParams={searchParams}
+              searchParams={nextToWebSearchParams(searchParams)}
+              baseHref="/service/endpts"
             />
           </div>
         )}
