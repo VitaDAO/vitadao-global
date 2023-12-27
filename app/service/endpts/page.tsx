@@ -53,7 +53,7 @@ export default async function Page({ searchParams }: PageProps) {
         <h1 className="mb-[30px] text-h2 font-medium">
           <a
             href="/service/endpts"
-            className="flex flex-wrap items-center gap-x-4 gap-y-2 px-1 py-3"
+            className="inline-flex flex-wrap items-center gap-x-4 gap-y-2 px-1 py-3"
           >
             <Image
               src={endpoints}
