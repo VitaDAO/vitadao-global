@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { Proposals, fetchSnapshot } from "@/components/server/proposals";
 import { buildMetadata } from "@/lib/metadata";
-import { cn } from "@/lib/utils";
+import { cn, type NextSearchParams } from "@/lib/utils";
 
 export const metadata = buildMetadata({
   title: "Proposals",
@@ -26,11 +26,11 @@ const proposalsCountSchema = z
   })
   .transform((val) => val.data.space.proposalsCount);
 
-interface PageProps {
-  searchParams?: { page?: number };
-}
-
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: NextSearchParams;
+}) {
   // Get the total number of proposals
   const proposalsCount = proposalsCountSchema.parse(
     await fetchSnapshot({ query: proposalsCountQuery }),
