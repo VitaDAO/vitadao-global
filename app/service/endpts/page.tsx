@@ -36,7 +36,7 @@ export default async function Page({
 }) {
   try {
     const page = pageSchema.parse(searchParams?.page);
-    const channel = channelSchema.parse(searchParams?.channel);
+    const channel = channelSchema.parse(searchParams?.channel) ?? "all";
     const search = searchSchema.parse(searchParams?.search);
 
     const { items, maxPage, channels } = search
@@ -77,11 +77,20 @@ export default async function Page({
                 collisionPadding={20}
               >
                 <ul>
-                  {channels.map(({ label, value }) => (
-                    <a key={value} href={`?channel=${value}`}>
-                      <li className="px-3 py-2 hover:bg-gray-50">{label}</li>
-                    </a>
-                  ))}
+                  {channels
+                    .filter(({ value }) => value !== channel)
+                    .map(({ label, value }) => (
+                      <a
+                        key={value}
+                        href={
+                          value === "all"
+                            ? "/service/endpts"
+                            : `?channel=${value}`
+                        }
+                      >
+                        <li className="px-3 py-2 hover:bg-gray-50">{label}</li>
+                      </a>
+                    ))}
                 </ul>
               </PopoverContent>
             </Popover>
