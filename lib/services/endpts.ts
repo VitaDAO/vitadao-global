@@ -282,6 +282,10 @@ export async function getArticle(path: string) {
 
   const contentElement = dom.querySelector("article div.epn_content");
 
+  if (titleElement === null || contentElement === null) {
+    throw new NotFoundError();
+  }
+
   // Remove crap
   contentElement
     ?.querySelectorAll(".epn_ad_wrapper")
