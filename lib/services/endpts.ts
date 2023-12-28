@@ -60,6 +60,11 @@ const sanitizeOptions: sanitizeHtml.IOptions = {
             "/service/endpts/channel/",
           ),
         };
+      } else if (
+        attribs.href.startsWith("https://endpts.com/wp-content/") ||
+        attribs.href.startsWith("https://endpts.com/author/")
+      ) {
+        // Do nothing
       } else if (attribs.href.startsWith("https://endpts.com/")) {
         // TODO maybe make this more specific by matching URLs with no
         // sub-levels? For example, we now transform the /author/author_name
