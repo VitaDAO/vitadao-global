@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { ErrorUi } from "@/components/ui/error-ui";
 import { Pill } from "@/components/ui/pill";
 import { getArticle } from "@/lib/services/endpts";
@@ -24,14 +22,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
           {channels.length > 0 && (
             <div className="mb-[10px] flex flex-wrap gap-[10px] @xl/main:mb-[15px] @3xl/main:mb-[20px]">
               {channels.map((c) => (
-                <Link
+                <a
                   key={c.pathname}
                   href={`/service/endpts?channel=${c.pathname}`}
                 >
                   <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
                     {c.name}
                   </Pill>
-                </Link>
+                </a>
               ))}
             </div>
           )}
