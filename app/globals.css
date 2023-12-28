@@ -115,18 +115,26 @@
       margin-bottom: 1.5625rem;
       position: relative;
       overflow: hidden;
+      border-radius: 6px;
+      border: solid 1px #dfdfdf;
       img {
         display: inline-block;
         width: 100%;
         height: auto;
+      }
+      h6 {
+        display: block;
+        padding: 0.75rem;
+        font-size: 1rem;
+        line-height: 1.375rem;
+        color: #2d2d2d;
+        text-align: center;
       }
     }
     .epn_image_aside {
       float: left;
       margin-right: 2rem;
       width: 13.75rem;
-      border-radius: 6px;
-      border: solid 1px #dfdfdf;
       span {
         display: block;
         padding: 0.75rem;

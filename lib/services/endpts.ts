@@ -276,9 +276,18 @@ export async function getArticle(path: string) {
   const titleElement = dom.querySelector("article h1");
 
   const contentElement = dom.querySelector("article div.epn_content");
+
+  // Remove crap
+  contentElement
+    ?.querySelectorAll(".epn_ad_wrapper")
+    .forEach((el) => contentElement.removeChild(el));
   const limitElement = contentElement?.querySelector("div.epn_limit");
   if (contentElement && limitElement) {
     contentElement.removeChild(limitElement);
+  }
+  const tagBoxElement = contentElement?.querySelector("div.epn_tag_box");
+  if (contentElement && tagBoxElement) {
+    contentElement.removeChild(tagBoxElement);
   }
 
   const imageElement = dom.querySelector("article > div.epn_image > img");
@@ -321,6 +330,12 @@ export async function getArticle(path: string) {
     };
   });
 
+  // Remove author box (we already scraped what we wanted into the authors const)
+  const authorBoxElement = contentElement?.querySelector("div.epn_author_box");
+  if (contentElement && authorBoxElement) {
+    contentElement.removeChild(authorBoxElement);
+  }
+
   const channels = dom
     .querySelectorAll("article div.epn_channel a")
     .map((channel) => ({
@@ -332,15 +347,19 @@ export async function getArticle(path: string) {
 
   const date = dom.querySelector("article div.epn_time")?.innerHTML;
 
-  const authorBoxElement = contentElement?.querySelector("div.epn_author_box");
-  if (contentElement && authorBoxElement) {
-    contentElement.removeChild(authorBoxElement);
-  }
-
-  const tagBoxElement = contentElement?.querySelector("div.epn_tag_box");
-  if (contentElement && tagBoxElement) {
-    contentElement.removeChild(tagBoxElement);
-  }
+  // Clean up (rare) full-width in-article images
+  // e.g. brii-bio-backs-infectious-disease-startup-while-inking-deal-for-its-lead-tb-drug-doubling-down-on-antibiotics
+  contentElement
+    ?.querySelectorAll("div.epn_image:not(.epn_image_aside)")
+    .forEach((contentImageElement) => {
+      const image = contentImageElement.querySelector("img");
+      contentImageElement
+        .querySelectorAll("p")
+        .forEach((paragraph) => contentImageElement.removeChild(paragraph));
+      if (image) {
+        contentImageElement.appendChild(image);
+      }
+    });
 
   return {
     title: titleElement?.textContent,
