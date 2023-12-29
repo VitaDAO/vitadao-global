@@ -35,6 +35,12 @@ export function formatNumber(
   }
 }
 
+export function truncateText(text: string, maxLength: number) {
+  return text.length > maxLength
+    ? text.slice(0, maxLength - 3).trimEnd() + "..."
+    : text;
+}
+
 function truncateEmail(address: string, maxLength: number = 28) {
   const [user, domain] = address.split("@");
   return [user.slice(0, maxLength - 4 - domain.length), domain].join("...@");

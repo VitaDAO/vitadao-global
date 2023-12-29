@@ -1,4 +1,5 @@
 import { SearchX } from "lucide-react";
+import { type Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { z } from "zod";
@@ -13,14 +14,14 @@ import {
 } from "@/components/ui/popover";
 import { buildMetadata } from "@/lib/metadata";
 import { getEndptsItems, searchEndptsItems } from "@/lib/services/endpts";
-import { nextToWebSearchParams, type NextSearchParams } from "@/lib/utils";
+import {
+  nextToWebSearchParams,
+  truncateText,
+  type NextSearchParams,
+} from "@/lib/utils";
 
 import endpoints from "./endpts-logo-01-endpoints.svg";
 import news from "./endpts-logo-02-news.svg";
-
-export const metadata = buildMetadata({
-  title: "Endpoints News",
-});
 
 const pageSchema = z.coerce
   .number()
@@ -29,25 +30,69 @@ const pageSchema = z.coerce
 const channelSchema = z.string().optional();
 const searchSchema = z.string().optional();
 
+async function getItems(searchParams: NextSearchParams) {
+  const page = pageSchema.parse(searchParams?.page);
+  const channel = channelSchema.parse(searchParams?.channel) ?? "all";
+  const search = searchSchema.parse(searchParams?.search);
+
+  const res = search
+    ? await searchEndptsItems({ page, search })
+    : await getEndptsItems({
+        page,
+        channel,
+      });
+
+  return {
+    page,
+    channel,
+    search,
+    ...res,
+  };
+}
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: NextSearchParams;
+}): Promise<Metadata> {
+  try {
+    const { page, channel, search, channels } = await getItems(searchParams);
+
+    const pageSegment = page > 1 ? `(p. ${page})` : undefined;
+    const channelSegment = channels.find(({ value }) => value === channel)
+      ?.label;
+    const searchSegment = search
+      ? `Search results for "${truncateText(search, 35)}"`
+      : undefined;
+
+    const title = [
+      [searchSegment ?? channelSegment, pageSegment].filter(Boolean).join(" "),
+      "Endpoints News",
+    ]
+      .filter(Boolean)
+      .join(" - ");
+
+    return buildMetadata({ title });
+  } catch (e) {
+    if (e instanceof Error) {
+      return buildMetadata({ title: "Not found - Endpoints News" });
+    } else {
+      return buildMetadata({ title: "Unknown error - Endpoints News" });
+    }
+  }
+}
+
 export default async function Page({
   searchParams,
 }: {
   searchParams: NextSearchParams;
 }) {
   try {
-    const page = pageSchema.parse(searchParams?.page);
-    const channel = channelSchema.parse(searchParams?.channel) ?? "all";
-    const search = searchSchema.parse(searchParams?.search);
-
-    const { items, maxPage, channels } = search
-      ? await searchEndptsItems({ page, search })
-      : await getEndptsItems({
-          page,
-          channel,
-        });
+    const { page, channel, search, items, maxPage, channels } =
+      await getItems(searchParams);
 
     const selectedChannelLabel =
-      channels.find(({ value }) => value === channel)?.label ??
+      (!search && channels.find(({ value }) => value === channel)?.label) ||
       "Pick a channel";
 
     return (
@@ -78,7 +123,7 @@ export default async function Page({
               >
                 <ul>
                   {channels
-                    .filter(({ value }) => value !== channel)
+                    .filter(({ value }) => search || value !== channel)
                     .map(({ label, value }) => (
                       <a
                         key={value}

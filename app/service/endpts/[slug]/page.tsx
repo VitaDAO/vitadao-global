@@ -1,8 +1,32 @@
+import { type Metadata } from "next";
+
 import { ErrorUi } from "@/components/ui/error-ui";
 import { Pill } from "@/components/ui/pill";
+import { buildMetadata } from "@/lib/metadata";
 import { getArticle } from "@/lib/services/endpts";
+import { truncateText } from "@/lib/utils";
 
 export const revalidate = 300;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  try {
+    const { title } = await getArticle(params.slug);
+    return buildMetadata({
+      title: truncateText(title, 45) + " - Endpoints News",
+      description: title,
+    });
+  } catch (e) {
+    if (e instanceof Error) {
+      return buildMetadata({ title: "Not found - Endpoints News" });
+    } else {
+      return buildMetadata({ title: "Unknown error - Endpoints News" });
+    }
+  }
+}
 
 export default async function Page({ params }: { params: { slug: string } }) {
   try {
