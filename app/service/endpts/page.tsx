@@ -20,6 +20,7 @@ import {
   type NextSearchParams,
 } from "@/lib/utils";
 
+import { cache } from "react";
 import endpoints from "./endpts-logo-01-endpoints.svg";
 import news from "./endpts-logo-02-news.svg";
 
@@ -30,7 +31,7 @@ const pageSchema = z.coerce
 const channelSchema = z.string().optional();
 const searchSchema = z.string().optional();
 
-async function getItems(searchParams: NextSearchParams) {
+const getItems = cache(async (searchParams: NextSearchParams) => {
   const page = pageSchema.parse(searchParams?.page);
   const channel = channelSchema.parse(searchParams?.channel) ?? "all";
   const search = searchSchema.parse(searchParams?.search);
@@ -48,7 +49,7 @@ async function getItems(searchParams: NextSearchParams) {
     search,
     ...res,
   };
-}
+});
 
 export async function generateMetadata({
   searchParams,
