@@ -8,6 +8,7 @@ import { z } from "zod";
 import { gate } from "@/lib/auth";
 import { NotFoundError } from "@/lib/errors";
 import { getServiceBySlug } from "@/lib/services";
+import { cache } from "react";
 
 const BASE_URL = "https://endpts.com";
 
@@ -258,7 +259,7 @@ export async function getEndptsItems({
   };
 }
 
-export async function getArticle(path: string) {
+export const getArticle = cache(async (path: string) => {
   const endptsService = await getServiceBySlug("endpoints-news");
   if (endptsService === null) throw new NotFoundError();
 
@@ -379,7 +380,7 @@ export async function getArticle(path: string) {
     channels,
     date,
   };
-}
+});
 
 function isNotNull<T>(v: T | null): v is T {
   return v !== null;
