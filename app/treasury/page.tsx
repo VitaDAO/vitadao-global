@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import { MediaElement } from "@/components/ui/media-element";
 import { Pill } from "@/components/ui/pill";
 import { buildMetadata } from "@/lib/metadata";
@@ -78,8 +80,13 @@ function AssetRow({ asset }: AssetRowProps) {
 }
 
 export default async function Page() {
+  const treasuryVitadaoUrl = z
+    .string()
+    .catch("https://api.bio.xyz/v1/treasury/vitadao")
+    .parse(process.env.TREASURY_VITADAO_URL);
+
   const treasury = treasuryGroupSchema.parse(
-    await fetch("https://api.bio.xyz/v1/treasury/vitadao", {
+    await fetch(treasuryVitadaoUrl, {
       next: { revalidate: 60 },
     }).then((res) => res.json()),
   );
