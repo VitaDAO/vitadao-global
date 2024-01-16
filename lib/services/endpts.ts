@@ -1,6 +1,7 @@
 import "server-only";
 
 import { parse } from "node-html-parser";
+import { cache } from "react";
 import sanitizeHtml from "sanitize-html";
 import { CookieJar } from "tough-cookie";
 import { z } from "zod";
@@ -8,7 +9,6 @@ import { z } from "zod";
 import { gate } from "@/lib/auth";
 import { NotFoundError } from "@/lib/errors";
 import { getServiceBySlug } from "@/lib/services";
-import { cache } from "react";
 
 const BASE_URL = "https://endpts.com";
 

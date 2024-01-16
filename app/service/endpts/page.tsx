@@ -2,6 +2,7 @@ import { SearchX } from "lucide-react";
 import { type Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { cache } from "react";
 import { z } from "zod";
 
 import { ConciseServerPagination } from "@/components/ui/concise-server-pagination";
@@ -20,7 +21,6 @@ import {
   type NextSearchParams,
 } from "@/lib/utils";
 
-import { cache } from "react";
 import endpoints from "./endpts-logo-01-endpoints.svg";
 import news from "./endpts-logo-02-news.svg";
 
