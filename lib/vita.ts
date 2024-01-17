@@ -5,7 +5,7 @@ import { z } from "zod";
 const publicClient = createPublicClient({
   chain: mainnet,
   transport: http(
-    `${mainnet.rpcUrls.alchemy.http[0]}/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`,
+    `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`,
   ),
 });
 

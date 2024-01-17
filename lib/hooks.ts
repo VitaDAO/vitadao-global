@@ -7,8 +7,11 @@ import type { User, WalletWithMetadata } from "@privy-io/react-auth";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { fetchBalance } from "wagmi/actions";
+import { formatUnits } from "viem";
+import { getBalance } from "wagmi/actions";
 import { z } from "zod";
+
+import { config } from "@/lib/wagmi-config";
 
 export function isWalletAccount(
   account: User["linkedAccounts"][number],
@@ -37,10 +40,10 @@ export async function getVitaBalance(user: User | null) {
       const validAddress = WalletAddress.parse(address);
       return {
         address: validAddress,
-        balance: await fetchBalance({
+        balance: await getBalance(config, {
           address: validAddress,
           token: "0x81f8f0bb1cB2A06649E51913A151F0E7Ef6FA321",
-        }).then((res) => Number(res.formatted)),
+        }).then((res) => Number(formatUnits(res.value, res.decimals))),
       };
     }),
   );
