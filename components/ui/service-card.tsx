@@ -34,7 +34,7 @@ export function ServiceCard({
               <img
                 src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.logo}`}
                 alt=""
-                className="h-[32px] max-w-[270px] object-contain object-left"
+                className="h-[32px] max-w-[200px] object-contain object-left"
               />
               <p className="text-sm/[17px] uppercase tracking-[0.56px] text-[#606060]">
                 Featured service
@@ -87,7 +87,7 @@ export function ServiceCard({
       <img
         src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.logo}`}
         alt=""
-        className="mb-[40px] h-[32px] max-w-[270px] object-contain object-left"
+        className="mb-[40px] h-[32px] max-w-[200px] object-contain object-left"
       />
       <p className="mb-[88px] grow text-h4 font-medium">{service.title}</p>
       <div className="flex flex-wrap items-end justify-between gap-[10px] text-base">
