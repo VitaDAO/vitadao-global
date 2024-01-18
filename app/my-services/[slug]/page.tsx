@@ -49,13 +49,13 @@ export default async function Page({ params }: PageProps) {
       />
       <div className="flex flex-col gap-[20px] @3xl/main:flex-row @3xl/main:gap-[30px]">
         <div className="flex-grow @3xl/main:order-1 @3xl/main:w-[380px]">
-          <div className="flex h-[120px] items-center justify-center rounded-[20px] border border-[#CCCCCC] px-[20px]">
+          <div className="flex h-[120px] items-center justify-center rounded-[20px] border border-[#CCCCCC] p-[20px] @3xl/main:p-[30px]">
             <Image
               src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.logo}`}
               width={280}
               height={32}
               alt=""
-              className="max-h-[32px] w-auto"
+              className="w-full h-full object-contain"
             />
           </div>
           <h1 className="mt-[20px] text-lg/[26.4px] font-medium tracking-[-0.24px] @3xl/main:hidden">
