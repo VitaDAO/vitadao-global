@@ -1,5 +1,4 @@
 import { SearchX } from "lucide-react";
-import { type Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { cache } from "react";
@@ -17,8 +16,7 @@ import { buildMetadata } from "@/lib/metadata";
 import { getEndptsItems, searchEndptsItems } from "@/lib/services/endpts";
 import {
   nextToWebSearchParams,
-  truncateText,
-  type NextSearchParams,
+  type NextSearchParams
 } from "@/lib/utils";
 
 import endpoints from "./endpts-logo-01-endpoints.svg";
@@ -51,37 +49,9 @@ const getItems = cache(async (searchParams: NextSearchParams) => {
   };
 });
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: NextSearchParams;
-}): Promise<Metadata> {
-  try {
-    const { page, channel, search, channels } = await getItems(searchParams);
-
-    const pageSegment = page > 1 ? `(p. ${page})` : undefined;
-    const channelSegment = channels.find(({ value }) => value === channel)
-      ?.label;
-    const searchSegment = search
-      ? `Search results for "${truncateText(search, 35)}"`
-      : undefined;
-
-    const title = [
-      [searchSegment ?? channelSegment, pageSegment].filter(Boolean).join(" "),
-      "Endpoints News",
-    ]
-      .filter(Boolean)
-      .join(" - ");
-
-    return buildMetadata({ title });
-  } catch (e) {
-    if (e instanceof Error) {
-      return buildMetadata({ title: "Not found - Endpoints News" });
-    } else {
-      return buildMetadata({ title: "Unknown error - Endpoints News" });
-    }
-  }
-}
+export const metadata = buildMetadata({
+  title: "Endpoints News"
+})
 
 export default async function Page({
   searchParams,
