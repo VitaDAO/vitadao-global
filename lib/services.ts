@@ -28,6 +28,15 @@ const ServiceSchema = z.object({
   ]),
   redemption_instructions: z.string(),
   published: z.boolean(),
+  categories: z.array(z.string()),
+  expand: z.object({
+    categories: z.array(
+      z.object({
+        label: z.string(),
+        slug: z.string(),
+      }),
+    ),
+  }),
 });
 
 export type Service = z.infer<typeof ServiceSchema>;
@@ -42,10 +51,13 @@ export const ServiceCardSchema = ServiceSchema.pick({
   order: true,
   logo: true,
   image: true,
+  expand: true,
 });
 
 const serviceCardFields =
-  "id,title,summary,vita_required,slug,is_featured,order,logo,image";
+  "id,title,summary,vita_required,slug,is_featured,order,logo,image,expand.categories.label,expand.categories.slug";
+
+const serviceCardExpand = "categories";
 
 export type ServiceCard = z.infer<typeof ServiceCardSchema>;
 
@@ -58,10 +70,13 @@ export const ServiceStandaloneSchema = ServiceSchema.pick({
   logo: true,
   image: true,
   redemption_instructions: true,
+  expand: true,
 });
 
 const serviceStandaloneFields =
-  "id,title,summary,body,vita_required,logo,image,redemption_instructions";
+  "id,title,summary,body,vita_required,logo,image,redemption_instructions,expand.categories.label,expand.categories.slug";
+
+const serviceStandaloneExpand = "categories";
 
 export type ServiceStandalone = z.infer<typeof ServiceStandaloneSchema>;
 
@@ -95,13 +110,24 @@ function buildFilter({ user, filter }: { user: User | null; filter?: string }) {
   );
 }
 
-export async function getServices() {
+export async function getServices({
+  expand = serviceCardExpand,
+  fields = serviceCardFields,
+  filter,
+}: {
+  expand?: string;
+  fields?: string;
+  filter?: string;
+} = {}) {
   const user = await getCurrentUser();
-  const filter = buildFilter({ user });
-  const fields = serviceCardFields;
 
   const services = ServiceCardSchema.array().parse(
-    await getFullList("services", { filter, fields, sort: "order" }),
+    await getFullList("services", {
+      expand,
+      fields,
+      filter: buildFilter({ filter, user }),
+      sort: "order",
+    }),
   );
 
   return services;
@@ -111,9 +137,10 @@ export async function getServiceBySlug(slug: string) {
   const user = await getCurrentUser();
   const filter = buildFilter({ user, filter: `slug = "${slug}"` });
   const fields = serviceStandaloneFields;
+  const expand = serviceStandaloneExpand;
 
   const service = ServiceStandaloneSchema.nullable().parse(
-    await getFirstListItem("services", filter, { fields }),
+    await getFirstListItem("services", filter, { expand, fields }),
   );
 
   if (service === null) return null;
@@ -129,10 +156,28 @@ export async function getFeaturedService() {
   const user = await getCurrentUser();
   const filter = buildFilter({ user, filter: "is_featured = true" });
   const fields = serviceCardFields;
+  const expand = serviceCardExpand;
 
   const service = ServiceCardSchema.nullable().parse(
-    await getFirstListItem("services", filter, { fields, sort: "order" }),
+    await getFirstListItem("services", filter, {
+      expand,
+      fields,
+      sort: "order",
+    }),
   );
 
   return service;
+}
+
+const CategoriesSchema = z.array(
+  z.object({
+    label: z.string(),
+    slug: z.string(),
+  }),
+);
+
+export async function getServiceCategories() {
+  return CategoriesSchema.parse(
+    await getFullList("service_categories", { sort: "label" }),
+  );
 }

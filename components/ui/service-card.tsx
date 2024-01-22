@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Pill } from "@/components/ui/pill";
 import { type ServiceCard } from "@/lib/services";
 import { cn } from "@/lib/utils";
 
@@ -8,13 +9,19 @@ interface ServiceCardProps {
   service: ServiceCard;
   className?: string;
   showMyServicesLink?: boolean;
+  selectedCategory?: string;
 }
 
 export function ServiceCard({
   service,
   className,
   showMyServicesLink = false,
+  selectedCategory = "",
 }: ServiceCardProps) {
+  const categories = service.expand.categories.filter(
+    ({ slug }) => slug !== selectedCategory,
+  );
+
   if (service.is_featured) {
     return (
       <div className={cn("@container/card", className)}>
@@ -29,14 +36,27 @@ export function ServiceCard({
             />
           </div>
           <div className="flex h-full flex-col p-[20px] @container/card-text md:p-[30px]">
-            <div className="mb-[40px] flex flex-wrap justify-between gap-5">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.logo}`}
-                alt=""
-                className="h-[32px] max-w-[200px] object-contain object-left"
-              />
-              <p className="text-sm/[17px] uppercase tracking-[0.56px] text-[#606060]">
+            <div className="mb-[40px] flex flex-wrap-reverse justify-between gap-5">
+              <div>
+                {categories.length > 0 && (
+                  <div className="mb-[20px] flex flex-wrap gap-[10px]">
+                    {categories.map(({ label, slug }) => (
+                      <a key={slug} href={`/my-services?category=${slug}`}>
+                        <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
+                          {label}
+                        </Pill>
+                      </a>
+                    ))}
+                  </div>
+                )}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.logo}`}
+                  alt=""
+                  className="h-[32px] max-w-[200px] object-contain object-left"
+                />
+              </div>
+              <p className="pb-[1px] pt-[3px] text-sm/[17px] uppercase tracking-[0.56px] text-[#606060]">
                 Featured service
               </p>
             </div>
@@ -83,6 +103,17 @@ export function ServiceCard({
         className,
       )}
     >
+      {categories.length > 0 && (
+        <div className="mb-[20px] flex flex-wrap gap-[10px]">
+          {categories.map(({ label, slug }) => (
+            <a key={slug} href={`/my-services?category=${slug}`}>
+              <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
+                {label}
+              </Pill>
+            </a>
+          ))}
+        </div>
+      )}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.logo}`}

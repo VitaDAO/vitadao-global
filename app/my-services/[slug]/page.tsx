@@ -3,9 +3,12 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { Link } from "@/components/ui/link";
+import { Pill } from "@/components/ui/pill";
 import { getCurrentUser } from "@/lib/auth";
 import { buildMetadata } from "@/lib/metadata";
 import { getServiceBySlug } from "@/lib/services";
+
 import { RedemptionTrigger } from "./redemption-trigger";
 
 interface PageProps {
@@ -54,9 +57,20 @@ export default async function Page({ params }: PageProps) {
               width={280}
               height={32}
               alt=""
-              className="w-full h-full object-contain max-w-[220px]"
+              className="h-full w-full max-w-[220px] object-contain"
             />
           </div>
+          {service.expand.categories.length > 0 && (
+            <div className="mt-[30px] flex flex-wrap gap-[10px] @3xl/main:hidden">
+              {service.expand.categories.map(({ label, slug }) => (
+                <Link key={slug} href={`/my-services?category=${slug}`}>
+                  <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
+                    {label}
+                  </Pill>
+                </Link>
+              ))}
+            </div>
+          )}
           <h1 className="mt-[20px] text-lg/[26.4px] font-medium tracking-[-0.24px] @3xl/main:hidden">
             {service.title}
           </h1>
@@ -82,6 +96,17 @@ export default async function Page({ params }: PageProps) {
           )}
         </div>
         <div className="flex-grow @3xl/main:w-[730px]">
+          {service.expand.categories.length > 0 && (
+            <div className="mb-[20px] hidden flex-wrap gap-[10px] @3xl/main:flex">
+              {service.expand.categories.map(({ label, slug }) => (
+                <Link key={slug} href={`/my-services?category=${slug}`}>
+                  <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
+                    {label}
+                  </Pill>
+                </Link>
+              ))}
+            </div>
+          )}
           <h1 className="hidden text-h2 font-medium @3xl/main:block">
             {service.title}
           </h1>

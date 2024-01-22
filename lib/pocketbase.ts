@@ -31,6 +31,7 @@ interface Options {
   sort?: string;
   filter?: string;
   fields?: string;
+  expand?: string;
 }
 
 export const getFullList = withAuth(
