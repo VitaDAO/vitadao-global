@@ -11,6 +11,8 @@ import { getServiceBySlug } from "@/lib/services";
 
 import { RedemptionTrigger } from "./redemption-trigger";
 
+export const maxDuration = 25;
+
 interface PageProps {
   params: { slug: string };
 }
