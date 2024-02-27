@@ -100,7 +100,7 @@ const LinkedAccount = z.discriminatedUnion("type", [
 
 type LinkedAccount = z.infer<typeof LinkedAccount>;
 
-export const PrivyUserSchema = z.object({
+const PrivyUserSchema = z.object({
   id: z.string(),
   linked_accounts: z.array(LinkedAccount),
 });
@@ -109,7 +109,7 @@ export function isWallet(account: LinkedAccount): account is Wallet {
   return account.type === "wallet";
 }
 
-export async function fetchPrivy(url: string, options: RequestInit = {}) {
+async function fetchPrivy(url: string, options: RequestInit = {}) {
   const privyAppId = z
     .string({ required_error: "Missing Privy app ID env var." })
     .parse(process.env.NEXT_PUBLIC_PRIVY_APP_ID);

@@ -55,10 +55,10 @@ const buttonVariants = cva(
         className: "border-none bg-none text-primary hover:text-primary-hover",
       },
     ],
-  }
+  },
 );
 
-export interface ButtonProps
+interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
@@ -68,7 +68,7 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     { children, className, icon, intent, variant, asChild = false, ...props },
-    ref
+    ref,
   ) => {
     const Comp = asChild ? Slot : "button";
 
@@ -89,7 +89,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         </>
       </Comp>
     );
-  }
+  },
 );
 Button.displayName = "Button";
 

@@ -29,7 +29,7 @@ const fungibleAssetSchema = baseNodeSchema.extend({
 
 type FungibleAsset = z.infer<typeof fungibleAssetSchema>;
 
-export const assetSchema = z.union([genericAssetSchema, fungibleAssetSchema]);
+const assetSchema = z.union([genericAssetSchema, fungibleAssetSchema]);
 
 export type Asset = z.infer<typeof assetSchema>;
 
@@ -37,7 +37,7 @@ export const treasuryGroupSchema: z.ZodType<TreasuryGroup> =
   baseNodeSchema.extend({
     type: z.literal("group"),
     children: z.lazy(() =>
-      z.union([assetSchema.array(), treasuryGroupSchema.array()])
+      z.union([assetSchema.array(), treasuryGroupSchema.array()]),
     ),
   });
 

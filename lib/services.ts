@@ -39,9 +39,7 @@ const ServiceSchema = z.object({
   }),
 });
 
-export type Service = z.infer<typeof ServiceSchema>;
-
-export const ServiceCardSchema = ServiceSchema.pick({
+const ServiceCardSchema = ServiceSchema.pick({
   id: true,
   title: true,
   summary: true,
@@ -61,7 +59,7 @@ const serviceCardExpand = "categories";
 
 export type ServiceCard = z.infer<typeof ServiceCardSchema>;
 
-export const ServiceStandaloneSchema = ServiceSchema.pick({
+const ServiceStandaloneSchema = ServiceSchema.pick({
   id: true,
   title: true,
   summary: true,

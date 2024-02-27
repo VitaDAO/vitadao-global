@@ -13,7 +13,7 @@ import { z } from "zod";
 
 import { config } from "@/lib/wagmi-config";
 
-export function isWalletAccount(
+function isWalletAccount(
   account: User["linkedAccounts"][number],
 ): account is WalletWithMetadata {
   return account.type === "wallet";
@@ -24,11 +24,11 @@ export function isWalletAccount(
 // required to please wagmi's `0x${string}` wallet address type but we go a step
 // further here and use Zod to enforce 40 char addresses, which I think is
 // always the case, at least in our expected use of this.
-export const WalletAddress = z.custom<`0x${string}`>((val) =>
+const walletAddressSchema = z.custom<`0x${string}`>((val) =>
   /^0x[a-fA-F0-9]{40}/.test(z.string().parse(val)),
 );
 
-export async function getVitaBalance(user: User | null) {
+async function getVitaBalance(user: User | null) {
   if (user === null) return null;
 
   const walletAddresses = user.linkedAccounts.filter(isWalletAccount);
@@ -37,7 +37,7 @@ export async function getVitaBalance(user: User | null) {
   // but maybe still early days.
   const balances = await Promise.all(
     walletAddresses.map(async ({ address }) => {
-      const validAddress = WalletAddress.parse(address);
+      const validAddress = walletAddressSchema.parse(address);
       return {
         address: validAddress,
         balance: await getBalance(config, {
