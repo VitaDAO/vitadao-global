@@ -1,6 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
@@ -17,18 +18,17 @@ interface PageProps {
   params: { slug: string };
 }
 
-async function getService(params: PageProps["params"]) {
-  const { slug } = params;
+const getService = cache(async (slug: string) => {
   const service = await getServiceBySlug(slug);
   if (service === null) redirect("/");
   return service;
-}
+});
 
 export async function generateMetadata(
   { params }: PageProps,
   _parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const service = await getService(params);
+  const service = await getService(params.slug);
   const imagePath = `https://${process.env.PB_HOSTNAME}/api/files/services/${service.id}/${service.image}`;
 
   return buildMetadata({
@@ -40,7 +40,7 @@ export async function generateMetadata(
 
 export default async function Page({ params }: PageProps) {
   const { did = null, totalVita = 0 } = (await getCurrentUser()) ?? {};
-  const service = await getService(params);
+  const service = await getService(params.slug);
 
   return (
     <>
