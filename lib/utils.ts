@@ -56,6 +56,8 @@ export function getUserHandle(account: User["linkedAccounts"][number]): string {
       return account.username ?? "Discord";
     case "email":
       return account.address;
+    case "farcaster":
+      return account.username ?? account.ownerAddress;
     case "github_oauth":
       return account.username ?? "GitHub";
     case "google_oauth":

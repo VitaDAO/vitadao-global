@@ -159,6 +159,16 @@ export default function Page() {
                 LinkedIn
               </Button>
             )}
+            {!user?.farcaster && (
+              <Button
+                intent="tertiary"
+                variant="thin"
+                onClick={privy.linkFarcaster}
+              >
+                <span className="icon--logos--farcaster mr-2" />
+                Farcaster
+              </Button>
+            )}
             {!user?.tiktok && (
               <Button
                 intent="tertiary"
@@ -198,6 +208,7 @@ const iconClassName: Record<AccountType, string> = {
   custom_auth: "icon--vita--asterisk",
   discord_oauth: "icon--logos--discord",
   email: "icon--vita icon--vita--email",
+  farcaster: "icon--logos--farcaster",
   github_oauth: "icon--logos--github",
   google_oauth: "icon--logos--google",
   linkedin_oauth: "icon--logos--linkedin",
