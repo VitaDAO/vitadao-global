@@ -70,6 +70,7 @@ export function ServiceCard({
               <div className="flex flex-col gap-x-[35px] gap-y-[12px] @md/card-text:flex-row">
                 <Link
                   href={`/my-services/${service.slug}`}
+                  prefetch={false}
                   className="font-semibold text-vita-purple underline underline-offset-4"
                 >
                   View this service
@@ -78,6 +79,7 @@ export function ServiceCard({
                 {showMyServicesLink && (
                   <Link
                     href="/my-services"
+                    prefetch={false}
                     className="font-semibold text-vita-purple underline underline-offset-4"
                   >
                     View all services
@@ -124,6 +126,7 @@ export function ServiceCard({
       <div className="flex flex-wrap items-end justify-between gap-[10px] text-base">
         <Link
           href={`/my-services/${service.slug}`}
+          prefetch={false}
           className="font-semibold text-vita-purple underline underline-offset-4"
         >
           View this service

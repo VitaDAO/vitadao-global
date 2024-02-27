@@ -1,10 +1,10 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Link } from "@/components/ui/link";
 import { Pill } from "@/components/ui/pill";
 import { getCurrentUser } from "@/lib/auth";
 import { buildMetadata } from "@/lib/metadata";
@@ -65,7 +65,11 @@ export default async function Page({ params }: PageProps) {
           {service.expand.categories.length > 0 && (
             <div className="mt-[30px] flex flex-wrap gap-[10px] @3xl/main:hidden">
               {service.expand.categories.map(({ label, slug }) => (
-                <Link key={slug} href={`/my-services?category=${slug}`}>
+                <Link
+                  key={slug}
+                  href={`/my-services?category=${slug}`}
+                  prefetch={false}
+                >
                   <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
                     {label}
                   </Pill>
@@ -101,7 +105,11 @@ export default async function Page({ params }: PageProps) {
           {service.expand.categories.length > 0 && (
             <div className="mb-[20px] hidden flex-wrap gap-[10px] @3xl/main:flex">
               {service.expand.categories.map(({ label, slug }) => (
-                <Link key={slug} href={`/my-services?category=${slug}`}>
+                <Link
+                  key={slug}
+                  href={`/my-services?category=${slug}`}
+                  prefetch={false}
+                >
                   <Pill className="border border-[#CCCCCC] pb-[1px] pt-[3px] hover:bg-[#EEE]">
                     {label}
                   </Pill>
