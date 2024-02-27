@@ -10,37 +10,31 @@ import { getPocketbaseUser } from "@/lib/pocketbase";
 import { getPrivyUser, isWallet } from "@/lib/privy";
 import { getWalletsBalance } from "@/lib/vita";
 
-// TODO in these functions, consider catching exceptions and returning null in
-// those cases rather than bubbling up.
-
 export const getCurrentUserDid = cache(async () => {
-  const privyAppPk = z
-    .string({ required_error: "Missing Privy public key env var." })
-    .parse(process.env.PRIVY_APP_PK);
-  const privyAppId = z
-    .string({ required_error: "Missing Privy app ID env var." })
-    .parse(process.env.NEXT_PUBLIC_PRIVY_APP_ID);
+  const PRIVY_APP_PK = z.string().parse(process.env.PRIVY_APP_PK);
+  const PRIVY_APP_ID = z.string().parse(process.env.NEXT_PUBLIC_PRIVY_APP_ID);
 
   const token = cookies().get("privy-token");
 
   if (token) {
-    const verificationKey = await importSPKI(privyAppPk, "ES256");
+    const verificationKey = await importSPKI(PRIVY_APP_PK, "ES256");
     const jwtPayload = await jwtVerify(token.value, verificationKey, {
       issuer: "privy.io",
-      audience: privyAppId,
+      audience: PRIVY_APP_ID,
     });
-    const JwtPayloadSchema = z.object({
-      sub: z.string(),
-    });
-    const { sub: did } = JwtPayloadSchema.parse(jwtPayload.payload);
 
-    return did;
+    return z
+      .object({
+        sub: z.string(),
+      })
+      .transform(({ sub }) => sub)
+      .parse(jwtPayload.payload);
   }
 
   return null;
 });
 
-export const getCurrentUserVitaBalance = cache(async () => {
+const getCurrentUserVitaBalance = cache(async () => {
   const did = await getCurrentUserDid();
 
   if (did) {
