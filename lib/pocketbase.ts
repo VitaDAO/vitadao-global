@@ -1,97 +1,83 @@
-import PocketBase, { ClientResponseError } from "pocketbase";
+import PocketBase, {
+  ClientResponseError,
+  type RecordFullListOptions,
+  type RecordListOptions,
+} from "pocketbase";
+import { cache } from "react";
 import { z } from "zod";
 
-const BaseRecord = z.object({
-  id: z.string(),
-  created: z.string(),
-  updated: z.string(),
-  collectionId: z.string(),
-  collectionName: z.string(),
-  expand: z.array(z.record(z.string())).optional(),
+const getPocketbaseInstance = cache(async () => {
+  const PB_HOSTNAME = z.string().parse(process.env.PB_HOSTNAME);
+  const pb = new PocketBase("https://" + PB_HOSTNAME);
+  const PB_USERNAME = z.string().parse(process.env.PB_USERNAME);
+  const PB_PASSWORD = z.string().parse(process.env.PB_PASSWORD);
+  await pb.collection("auth").authWithPassword(PB_USERNAME, PB_PASSWORD);
+  return pb;
 });
 
-const pb = new PocketBase("https://" + process.env.PB_HOSTNAME);
-pb.autoCancellation(false);
+export const getFullList = async (
+  collection: string,
+  options?: RecordFullListOptions,
+) => {
+  const pb = await getPocketbaseInstance();
+  return pb.collection(collection).getFullList(options);
+};
 
-function withAuth<
-  T extends (...args: any[]) => Promise<R>,
-  R = Awaited<ReturnType<T>>,
->(cb: T) {
-  return async (...args: Parameters<T>) => {
-    const username = z.string().parse(process.env.PB_USERNAME);
-    const password = z.string().parse(process.env.PB_PASSWORD);
-    await pb.collection("auth").authWithPassword(username, password);
-    const ret = await cb(...args);
-    pb.authStore.clear();
-    return ret;
-  };
-}
-
-interface Options {
-  sort?: string;
-  filter?: string;
-  fields?: string;
-  expand?: string;
-}
-
-export const getFullList = withAuth(
-  <T>(collection: string, options: Options = {}) =>
-    pb.collection(collection).getFullList<T>(options),
-);
-
-export const getFirstListItem = withAuth(
-  async <T>(collection: string, filter: string, options: Options = {}) => {
-    try {
-      return await pb
-        .collection(collection)
-        .getFirstListItem<T>(filter, options);
-    } catch (e) {
-      if (e instanceof ClientResponseError && e.status === 404) {
-        // Don't log 404s
-        return null;
-      }
-
-      console.error(e);
+export const getFirstListItem = async (
+  collection: string,
+  filter: string,
+  options?: RecordListOptions,
+) => {
+  const pb = await getPocketbaseInstance();
+  try {
+    return pb.collection(collection).getFirstListItem(filter, options);
+  } catch (e) {
+    if (e instanceof ClientResponseError && e.status === 404) {
+      // Don't log 404s
       return null;
     }
-  },
-);
 
-const deleteRecord = withAuth(async (collection: string, id: string) =>
-  pb.collection(collection).delete(id),
-);
+    console.error(e);
+    return null;
+  }
+};
 
-// Non-comprehensive schema, we just need these fields for now.
-const PocketbaseUserSchema = z.object({
+async function deleteRecord(collection: string, id: string) {
+  const pb = await getPocketbaseInstance();
+  return pb.collection(collection).delete(id);
+}
+
+// TODO migrate user related code below to users module
+
+const pocketbaseUserSchema = z.object({
   did: z.string(),
   id: z.string(),
   vita_offset: z.number(),
 });
 
 export async function getPocketbaseUser(did: string) {
-  return PocketbaseUserSchema.nullable().parse(
-    await getFirstListItem("users", `did = "${did}"`),
-  );
+  return pocketbaseUserSchema
+    .nullable()
+    .parse(await getFirstListItem("users", `did = "${did}"`));
 }
 
-// Non-comprehensive schema, we just need these fields for now.
-const RedeemOverridesSchema = z.object({
+const redeemOverridesSchema = z.object({
   id: z.string(),
 });
 
 export async function deletePocketbaseUser(did: string) {
   // 1. Delete all rows with did from "redeem_overrides" if any exist.
-  const redeemOverrides = RedeemOverridesSchema.array().parse(
-    await getFullList("redeem_overrides", { filter: `did = "${did}"` }),
-  );
-  for (const record of redeemOverrides) {
-    await deleteRecord("redeem_overrides", record.id);
+  const redeemOverrides = redeemOverridesSchema
+    .array()
+    .parse(await getFullList("redeem_overrides", { filter: `did = "${did}"` }));
+  for (const override of redeemOverrides) {
+    await deleteRecord("redeem_overrides", override.id);
   }
 
   // 2. Delete did row from "users" if one exists.
-  const user = PocketbaseUserSchema.nullable().parse(
-    await getFirstListItem("users", `did = "${did}"`),
-  );
+  const user = pocketbaseUserSchema
+    .nullable()
+    .parse(await getFirstListItem("users", `did = "${did}"`));
   if (user) {
     await deleteRecord("users", user.id);
   }
