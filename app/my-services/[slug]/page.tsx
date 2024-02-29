@@ -12,8 +12,6 @@ import { getCurrentUser } from "@/lib/user";
 
 import { RedemptionTrigger } from "./redemption-trigger";
 
-export const maxDuration = 25;
-
 interface PageProps {
   params: { slug: string };
 }
