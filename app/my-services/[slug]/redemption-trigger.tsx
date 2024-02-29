@@ -23,7 +23,13 @@ export function RedemptionTrigger({
 }: RedemptionTriggerProps) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const { login } = useLogin({ onComplete: router.refresh });
+  const { login } = useLogin({
+    onComplete: (_user, _isNewUser, wasAlreadyAuthenticated, _loginMethod) => {
+      if (!wasAlreadyAuthenticated) {
+        router.refresh();
+      }
+    },
+  });
 
   let content;
 
