@@ -3,10 +3,10 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { deleteAuthenticatedUser } from "@/lib/users";
+import { deleteCurrentUser } from "@/lib/user";
 
 export async function deleteUser() {
-  await deleteAuthenticatedUser();
+  await deleteCurrentUser();
   cookies().delete("privy-token");
   cookies().delete("privy-refresh-token");
   redirect("/");

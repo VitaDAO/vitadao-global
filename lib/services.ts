@@ -2,8 +2,8 @@ import "server-only";
 
 import { z } from "zod";
 
-import { User, getCurrentUser } from "@/lib/auth";
 import { getFirstListItem, getFullList } from "@/lib/pocketbase";
+import { User, getCurrentUser } from "@/lib/user";
 
 const ServiceSchema = z.object({
   id: z.string(),

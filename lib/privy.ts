@@ -100,7 +100,7 @@ const LinkedAccount = z.discriminatedUnion("type", [
 
 type LinkedAccount = z.infer<typeof LinkedAccount>;
 
-const PrivyUserSchema = z.object({
+export const PrivyUserSchema = z.object({
   id: z.string(),
   linked_accounts: z.array(LinkedAccount),
 });
@@ -109,7 +109,7 @@ export function isWallet(account: LinkedAccount): account is Wallet {
   return account.type === "wallet";
 }
 
-async function fetchPrivy(url: string, options: RequestInit = {}) {
+export async function fetchPrivy(url: string, options: RequestInit = {}) {
   const privyAppId = z
     .string({ required_error: "Missing Privy app ID env var." })
     .parse(process.env.NEXT_PUBLIC_PRIVY_APP_ID);
@@ -125,21 +125,4 @@ async function fetchPrivy(url: string, options: RequestInit = {}) {
       ...options.headers,
     },
   });
-}
-
-export async function getPrivyUser(did: string) {
-  const res = await fetchPrivy("https://auth.privy.io/api/v1/users/" + did);
-  const json = await res.json();
-  const user = PrivyUserSchema.parse(json);
-  return user;
-}
-
-export async function deletePrivyUser(did: string) {
-  const res = await fetchPrivy("https://auth.privy.io/api/v1/users/" + did, {
-    method: "DELETE",
-  });
-
-  if (res.status !== 204) {
-    throw new Error("Something failed when attempting to delete user.");
-  }
 }

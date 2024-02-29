@@ -6,9 +6,9 @@ import { cache } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Pill } from "@/components/ui/pill";
-import { getCurrentUser } from "@/lib/auth";
 import { buildMetadata } from "@/lib/metadata";
 import { getServiceBySlug } from "@/lib/services";
+import { getCurrentUser } from "@/lib/user";
 
 import { RedemptionTrigger } from "./redemption-trigger";
 

@@ -6,9 +6,9 @@ import sanitizeHtml from "sanitize-html";
 import { CookieJar } from "tough-cookie";
 import { z } from "zod";
 
-import { gate } from "@/lib/auth";
 import { NotFoundError } from "@/lib/errors";
 import { getServiceBySlug } from "@/lib/services";
+import { gate } from "@/lib/user";
 
 const BASE_URL = "https://endpts.com";
 

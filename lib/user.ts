@@ -6,11 +6,11 @@ import { cache } from "react";
 import { z } from "zod";
 
 import { NotAuthenticatedError, NotEnoughVitaError } from "@/lib/errors";
-import { getPocketbaseUser } from "@/lib/pocketbase";
-import { getPrivyUser, isWallet } from "@/lib/privy";
+import { deleteRecord, getFirstListItem, getFullList } from "@/lib/pocketbase";
+import { PrivyUserSchema, fetchPrivy, isWallet } from "@/lib/privy";
 import { getWalletsBalance } from "@/lib/vita";
 
-export const getCurrentUserDid = cache(async () => {
+const getCurrentUserDid = cache(async () => {
   const PRIVY_APP_PK = z.string().parse(process.env.PRIVY_APP_PK);
   const PRIVY_APP_ID = z.string().parse(process.env.NEXT_PUBLIC_PRIVY_APP_ID);
 
@@ -52,6 +52,57 @@ const getCurrentUserVitaBalance = cache(async () => {
 
   return null;
 });
+
+const pocketbaseUserSchema = z.object({
+  did: z.string(),
+  id: z.string(),
+  vita_offset: z.number(),
+});
+
+async function getPocketbaseUser(did: string) {
+  return pocketbaseUserSchema
+    .nullable()
+    .parse(await getFirstListItem("users", `did = "${did}"`));
+}
+
+const redeemOverridesSchema = z.object({
+  id: z.string(),
+});
+
+async function deletePocketbaseUser(did: string) {
+  // 1. Delete all rows with did from "redeem_overrides" if any exist.
+  const redeemOverrides = redeemOverridesSchema
+    .array()
+    .parse(await getFullList("redeem_overrides", { filter: `did = "${did}"` }));
+  for (const override of redeemOverrides) {
+    await deleteRecord("redeem_overrides", override.id);
+  }
+
+  // 2. Delete did row from "users" if one exists.
+  const user = pocketbaseUserSchema
+    .nullable()
+    .parse(await getFirstListItem("users", `did = "${did}"`));
+  if (user) {
+    await deleteRecord("users", user.id);
+  }
+}
+
+async function getPrivyUser(did: string) {
+  const res = await fetchPrivy("https://auth.privy.io/api/v1/users/" + did);
+  const json = await res.json();
+  const user = PrivyUserSchema.parse(json);
+  return user;
+}
+
+async function deletePrivyUser(did: string) {
+  const res = await fetchPrivy("https://auth.privy.io/api/v1/users/" + did, {
+    method: "DELETE",
+  });
+
+  if (res.status !== 204) {
+    throw new Error("Something failed when attempting to delete user.");
+  }
+}
 
 // TODO let's fetch everything about the user once and pass this around?
 // - Wallet addresses (Privy) and VITA balances for each (RPC).
@@ -105,3 +156,12 @@ export const gate = async (minVita: number = 0) => {
 
   return currentUser;
 };
+
+export async function deleteCurrentUser() {
+  const did = await getCurrentUserDid();
+
+  if (did) {
+    await deletePocketbaseUser(did);
+    await deletePrivyUser(did);
+  }
+}
