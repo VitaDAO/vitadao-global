@@ -35,7 +35,7 @@ export async function getFirstListItem(
 ) {
   const pb = await getPocketbaseInstance();
   try {
-    return pb.collection(collection).getFirstListItem(filter, {
+    return await pb.collection(collection).getFirstListItem(filter, {
       next: { revalidate: 3600 },
       ...options,
     });
