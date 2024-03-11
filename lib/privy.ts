@@ -30,6 +30,14 @@ const Email = z.object({
 
 type Email = z.infer<typeof Email>;
 
+const Farcaster = z.object({
+  type: z.literal("farcaster"),
+  username: z.string().nullable(),
+  ownerAddress: z.string(),
+});
+
+type Farcaster = z.infer<typeof Farcaster>;
+
 const Github = z.object({
   type: z.literal("github_oauth"),
   email: z.union([z.null(), z.string()]),
@@ -89,6 +97,7 @@ const LinkedAccount = z.discriminatedUnion("type", [
   Custom,
   Discord,
   Email,
+  Farcaster,
   Github,
   Google,
   LinkedIn,
