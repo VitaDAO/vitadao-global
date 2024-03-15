@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 export default function Page() {
   if (Math.random() > 0.5) throw new Error("Boom!");
 
