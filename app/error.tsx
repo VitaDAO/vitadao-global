@@ -1,8 +1,9 @@
 "use client";
 
+import { ReloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { startTransition, useEffect } from "react";
+import { useEffect, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import vitaPlanet from "@/public/vita-planet.png";
@@ -15,6 +16,7 @@ export default function Error({
   reset: () => void;
 }) {
   const router = useRouter();
+  const [isRetrying, startTransition] = useTransition();
 
   useEffect(() => {
     // TODO log error to an error reporting service
@@ -40,8 +42,15 @@ export default function Error({
       <Image src={vitaPlanet} alt="" height={287} width={668} />
       <p className="text-center text-h4 font-medium">Something went wrong</p>
       {message && <p className="max-w-2xl">{message}</p>}
-      <Button variant="thin" onClick={refetchAndReset}>
-        Try again
+      <Button variant="thin" onClick={refetchAndReset} disabled={isRetrying}>
+        {isRetrying ? (
+          <>
+            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+            Retrying...
+          </>
+        ) : (
+          "Try again"
+        )}
       </Button>
     </div>
   );

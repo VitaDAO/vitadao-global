@@ -1,6 +1,10 @@
 export const dynamic = "force-dynamic";
 
-export default function Page() {
+export default async function Page() {
+  await new Promise((resolve) =>
+    setTimeout(() => resolve("wait's over!"), 3000),
+  );
+
   if (Math.random() > 0.5) throw new Error("Boom!");
 
   return (
