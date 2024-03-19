@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { startTransition, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import vitaPlanet from "@/public/vita-planet.png";
@@ -13,10 +14,19 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const router = useRouter();
+
   useEffect(() => {
     // TODO log error to an error reporting service
     console.error(error);
   }, [error]);
+
+  function refetchAndReset() {
+    startTransition(() => {
+      router.refresh();
+      reset();
+    });
+  }
 
   const message = [
     error.digest && `Reference number: ${error.digest}.`,
@@ -30,7 +40,7 @@ export default function Error({
       <Image src={vitaPlanet} alt="" height={287} width={668} />
       <p className="text-center text-h4 font-medium">Something went wrong</p>
       {message && <p className="max-w-2xl">{message}</p>}
-      <Button variant="thin" onClick={() => reset()}>
+      <Button variant="thin" onClick={refetchAndReset}>
         Try again
       </Button>
     </div>
