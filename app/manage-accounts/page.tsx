@@ -213,6 +213,7 @@ const iconClassName: Record<AccountType, string> = {
   google_oauth: "icon--logos--google",
   linkedin_oauth: "icon--logos--linkedin",
   phone: "icon--vita icon--vita--phone",
+  spotify_oauth: "icon--logos--spotify",
   tiktok_oauth: "icon--logos--tiktok",
   twitter_oauth: "icon--logos--twitter",
   wallet: "icon--vita icon--vita--wallet",

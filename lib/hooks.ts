@@ -3,64 +3,8 @@
 // having a kitchensink "hooks.ts" file but sprinkling hooks in domain specific
 // modules. Will do for now.
 
-import type { User, WalletWithMetadata } from "@privy-io/react-auth";
-import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { formatUnits } from "viem";
-import { getBalance } from "wagmi/actions";
-import { z } from "zod";
-
-import { config } from "@/lib/wagmi-config";
-
-function isWalletAccount(
-  account: User["linkedAccounts"][number],
-): account is WalletWithMetadata {
-  return account.type === "wallet";
-}
-
-// TODO using this until Zod supports template literal types
-// https://github.com/colinhacks/zod/issues/419#issuecomment-830729336. This is
-// required to please wagmi's `0x${string}` wallet address type but we go a step
-// further here and use Zod to enforce 40 char addresses, which I think is
-// always the case, at least in our expected use of this.
-const walletAddressSchema = z.custom<`0x${string}`>((val) =>
-  /^0x[a-fA-F0-9]{40}/.test(z.string().parse(val)),
-);
-
-async function getVitaBalance(user: User | null) {
-  if (user === null) return null;
-
-  const walletAddresses = user.linkedAccounts.filter(isWalletAccount);
-  // TODO would be cool to find a light-weight way to limit concurrency, i.e.
-  // not trigger more than X fetch requests in parallel. Effect might be cool
-  // but maybe still early days.
-  const balances = await Promise.all(
-    walletAddresses.map(async ({ address }) => {
-      const validAddress = walletAddressSchema.parse(address);
-      return {
-        address: validAddress,
-        balance: await getBalance(config, {
-          address: validAddress,
-          token: "0x81f8f0bb1cB2A06649E51913A151F0E7Ef6FA321",
-        }).then((res) => Number(formatUnits(res.value, res.decimals))),
-      };
-    }),
-  );
-
-  return {
-    totalBalance: Number(balances.reduce((acc, cur) => acc + cur.balance, 0)),
-    balances,
-  };
-}
-
-export function useVitaBalance(user: User | null) {
-  return useQuery({
-    queryKey: ["useVitaBalance", user],
-    queryFn: () => getVitaBalance(user),
-    enabled: !!user,
-  });
-}
 
 export function useScrollDirectionY(
   triggerOffset: number = 0,

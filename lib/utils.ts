@@ -40,12 +40,10 @@ function truncateEmail(address: string, maxLength: number = 28) {
   return [user.slice(0, maxLength - 4 - domain.length), domain].join("...@");
 }
 
-// TODO I'm sure we can use something more robust
 export function truncateWallet(address: string, digits: number = 4) {
   return [address.slice(0, digits + 2), address.slice(-digits)].join("...");
 }
 
-// TODO do something about these type errors
 export function getUserHandle(account: User["linkedAccounts"][number]): string {
   switch (account.type) {
     case "apple_oauth":
@@ -66,6 +64,8 @@ export function getUserHandle(account: User["linkedAccounts"][number]): string {
       return account.name ?? account.email ?? "LinkedIn";
     case "phone":
       return account.number;
+    case "spotify_oauth":
+      return account.name ?? account.email ?? account.subject;
     case "tiktok_oauth":
       return account.username ?? "TikTok";
     case "twitter_oauth":

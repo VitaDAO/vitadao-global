@@ -1,19 +1,33 @@
+import { Suspense } from "react";
+
 import { VitaStatsCard } from "@/components/server/vita-stats";
+import { VitadaoSpinner } from "@/components/ui/vitadao-spinner";
 import { buildMetadata } from "@/lib/metadata";
-import MyVitaStats from "./my-vita-stats";
+
+import { MyVitaBalances } from "./my-vita-balances";
 import { UnstakeVita } from "./unstake-vita";
 
 export const metadata = buildMetadata({
   title: "My VITA",
 });
 
+export const dynamic = "force-dynamic";
+
 export default function Page() {
   return (
     <div className="px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
       <h1 className="mb-[30px] text-h2 font-medium">My VITA</h1>
       <div className="mb-[20px] grid gap-[20px] @xl/main:mb-[30px] @xl/main:gap-[30px] @3xl/main:grid-cols-[1fr_300px] @4xl/main:grid-cols-[1fr_340px] @5xl/main:grid-cols-[1fr_380px]">
-        <div className="rounded-xl bg-white px-[20px] @xl/main:px-[30px]">
-          <MyVitaStats />
+        <div className="rounded-xl bg-white p-[20px] @xl/main:p-[30px]">
+          <Suspense
+            fallback={
+              <div className="flex h-full w-full items-center justify-center">
+                <VitadaoSpinner />
+              </div>
+            }
+          >
+            <MyVitaBalances />
+          </Suspense>
         </div>
         <div className="space-y-5 rounded-xl bg-white p-[20px] @xl/main:p-[30px]">
           <p className="text-lg font-medium">Buy more VITA</p>
@@ -39,13 +53,31 @@ export default function Page() {
               Uniswap
             </a>
           </div>
+          <p>
+            Learn more about the{" "}
+            <a
+              href="https://www.vitadao.com/vita-token"
+              className="text-vita-purple underline underline-offset-4"
+            >
+              VITA token
+            </a>
+            .
+          </p>
         </div>
       </div>
       <UnstakeVita className="mb-[20px] @xl/main:mb-[30px]" />
-      <VitaStatsCard
-        className="p-[20px] @xl/main:p-[30px]"
-        showMyVitaLink={false}
-      />
+      <Suspense
+        fallback={
+          <div className="flex h-full w-full items-center justify-center">
+            <VitadaoSpinner />
+          </div>
+        }
+      >
+        <VitaStatsCard
+          className="p-[20px] @xl/main:p-[30px]"
+          showMyVitaLink={false}
+        />
+      </Suspense>
     </div>
   );
 }

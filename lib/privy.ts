@@ -107,7 +107,7 @@ const LinkedAccount = z.discriminatedUnion("type", [
   Wallet,
 ]);
 
-type LinkedAccount = z.infer<typeof LinkedAccount>;
+export type LinkedAccount = z.infer<typeof LinkedAccount>;
 
 export const PrivyUserSchema = z.object({
   id: z.string(),

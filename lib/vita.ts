@@ -1,12 +1,32 @@
+import "server-only";
+
+import { cache } from "react";
 import { createPublicClient, formatUnits, http } from "viem";
-import { mainnet } from "viem/chains";
+import { gnosis, mainnet, optimism } from "viem/chains";
 import { z } from "zod";
 
-const publicClient = createPublicClient({
+const ethereumClient = createPublicClient({
   chain: mainnet,
-  transport: http(
-    `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`,
-  ),
+  name: "Ethereum Mainnet",
+  transport: http(process.env.ETHEREUM_HTTP_RPC, {
+    timeout: 5_000,
+  }),
+});
+
+const optimismClient = createPublicClient({
+  chain: optimism,
+  name: "Optimism Mainnet",
+  transport: http(process.env.OPTIMISM_HTTP_RPC, {
+    timeout: 5_000,
+  }),
+});
+
+const gnosisClient = createPublicClient({
+  chain: gnosis,
+  name: "Gnosis Mainnet",
+  transport: http(process.env.GNOSIS_HTTP_RPC, {
+    timeout: 5_000,
+  }),
 });
 
 const abi = [
@@ -19,43 +39,81 @@ const abi = [
   },
 ] as const;
 
-const vitaAddress = "0x81f8f0bb1cB2A06649E51913A151F0E7Ef6FA321";
-const vitaDecimals = 18;
+const VITA_ETHEREUM_ADDRESS = "0x81f8f0bb1cB2A06649E51913A151F0E7Ef6FA321";
+const VITA_OPTIMISM_ADDRESS = "0x7d14206c937e70e19e3a5b94011faf0d5b3928e2";
+const VITA_GNOSIS_ADDRESS = "0x0939a7c3f8D37C1ce67fAda4963aE7E0bd112ff3";
+const VITA_DECIMALS = 18;
 
-const WalletAddress = z.custom<`0x${string}`>((val) =>
+const walletAddressSchema = z.custom<`0x${string}`>((val) =>
   /^0x[a-fA-F0-9]{40}/.test(z.string().parse(val)),
 );
 
-const VitaBalance = z.object({
-  addresses: z.record(z.number()),
-  total: z.number(),
-});
+const vitaBalanceSchema = z.tuple([
+  z.union([z.literal("Ethereum"), z.literal("Optimism"), z.literal("Gnosis")]),
+  walletAddressSchema,
+  z.number(),
+]);
 
-type VitaBalance = z.infer<typeof VitaBalance>;
+export type VitaBalance = z.infer<typeof vitaBalanceSchema>;
 
-export async function getWalletsBalance(addresses: Array<string>) {
-  const balance: VitaBalance = {
-    addresses: {},
-    total: 0,
-  };
+// TODO these generate POST requests that, as far as I can tell, are not cached
+// anywhere. Might be better to cache these requests for a few minutes in
+// Next.js's Data Cache rather than React's per-request cache. I think these
+// balance checks slow down the site significantly as they need to be done for
+// every request and come in series with the Privy user data fetch.
+const getVitaBalancesForSingleAddress = cache(
+  async (address: string): Promise<VitaBalance[]> => {
+    const parsedAddress = walletAddressSchema.parse(address);
+    return Promise.all([
+      ethereumClient.readContract({
+        address: VITA_ETHEREUM_ADDRESS,
+        abi,
+        functionName: "balanceOf",
+        args: [parsedAddress],
+      }),
+      optimismClient.readContract({
+        address: VITA_OPTIMISM_ADDRESS,
+        abi,
+        functionName: "balanceOf",
+        args: [parsedAddress],
+      }),
+      gnosisClient.readContract({
+        address: VITA_GNOSIS_ADDRESS,
+        abi,
+        functionName: "balanceOf",
+        args: [parsedAddress],
+      }),
+    ]).then(([ethereumBalance, optimismBalance, gnosisBalance]) => {
+      return [
+        [
+          "Ethereum",
+          parsedAddress,
+          Number(formatUnits(ethereumBalance, VITA_DECIMALS)),
+        ],
+        [
+          "Optimism",
+          parsedAddress,
+          Number(formatUnits(optimismBalance, VITA_DECIMALS)),
+        ],
+        [
+          "Gnosis",
+          parsedAddress,
+          Number(formatUnits(gnosisBalance, VITA_DECIMALS)),
+        ],
+      ];
+    });
+  },
+);
 
-  // TODO improve this with a bit of concurrency and retries. Effect, looking at you 👀
-  for (const address of addresses) {
-    const addressBalance = Number(
-      formatUnits(
-        await publicClient.readContract({
-          address: vitaAddress,
-          abi: abi,
-          functionName: "balanceOf",
-          args: [WalletAddress.parse(address)],
-        }),
-        vitaDecimals,
-      ),
+export async function getVitaBalances(addresses: string[]) {
+  const balances: VitaBalance[] = [];
+
+  for (const address of walletAddressSchema.array().parse(addresses)) {
+    // TODO improve fetching parallelism, retries, etc.
+    (await getVitaBalancesForSingleAddress(address)).forEach((balance) =>
+      balances.push(balance),
     );
-
-    balance.total += addressBalance;
-    balance.addresses[address] = addressBalance;
   }
 
-  return balance.total;
+  return balances;
 }

@@ -7,8 +7,13 @@ import { z } from "zod";
 
 import { NotAuthenticatedError, NotEnoughVitaError } from "@/lib/errors";
 import { deleteRecord, getFirstListItem, getFullList } from "@/lib/pocketbase";
-import { PrivyUserSchema, fetchPrivy, isWallet } from "@/lib/privy";
-import { getWalletsBalance } from "@/lib/vita";
+import {
+  PrivyUserSchema,
+  fetchPrivy,
+  isWallet,
+  type LinkedAccount,
+} from "@/lib/privy";
+import { getVitaBalances, type VitaBalance } from "@/lib/vita";
 
 const getCurrentUserDid = cache(async () => {
   const PRIVY_APP_PK = z.string().parse(process.env.PRIVY_APP_PK);
@@ -29,25 +34,6 @@ const getCurrentUserDid = cache(async () => {
       })
       .transform(({ sub }) => sub)
       .parse(jwtPayload.payload);
-  }
-
-  return null;
-});
-
-const getCurrentUserVitaBalance = cache(async () => {
-  const did = await getCurrentUserDid();
-
-  if (did) {
-    const privyUser = await getPrivyUser(did);
-    const wallets = privyUser.linked_accounts
-      .filter(isWallet)
-      .map((a) => a.address);
-    const walletsBalance = await getWalletsBalance(wallets);
-
-    const pocketbaseUser = await getPocketbaseUser(did);
-    const offsetBalance = pocketbaseUser?.vita_offset ?? 0;
-
-    return walletsBalance + offsetBalance;
   }
 
   return null;
@@ -104,40 +90,72 @@ async function deletePrivyUser(did: string) {
   }
 }
 
-// TODO let's fetch everything about the user once and pass this around?
-// - Wallet addresses (Privy) and VITA balances for each (RPC).
-// - VITA offset (Pocketbase).
-// - Maybe VITA total as a getter that aggregates the previous two.
-// - Service access overrides (Pocketbase), although this likely stays unused.
-// - Other Privy user data: linked accounts, etc.
-
 // We encapsulate the current user's data in a class with private fields to
 // mitigate risk of unintentionally leaking info to the client.
 // https://nextjs.org/blog/security-nextjs-server-components-actions#data-access-layer
 export class User {
   #did: string;
-  #totalVita: number;
+  #linkedAccounts: LinkedAccount[];
+  #vitaBalances: VitaBalance[];
+  #vitaOffset: number;
 
-  constructor(did: string, totalVita: number) {
+  constructor(
+    did: string,
+    linkedAccounts: LinkedAccount[],
+    vitaBalances: VitaBalance[] = [],
+    vitaOffset: number = 0,
+  ) {
     this.#did = did;
-    this.#totalVita = totalVita;
+    this.#linkedAccounts = linkedAccounts;
+    this.#vitaBalances = vitaBalances;
+    this.#vitaOffset = vitaOffset;
   }
 
   get did() {
     return this.#did;
   }
 
+  get linkedAccounts() {
+    return this.#linkedAccounts;
+  }
+
+  get vitaBalances() {
+    return this.#vitaBalances;
+  }
+
+  get vitaOffset() {
+    return this.#vitaOffset;
+  }
+
   get totalVita() {
-    return this.#totalVita;
+    return (
+      this.#vitaOffset +
+      this.#vitaBalances.reduce(
+        (acc, [_chain, _address, balance]) => acc + balance,
+        0,
+      )
+    );
   }
 }
 
 export const getCurrentUser = cache(async () => {
   const did = await getCurrentUserDid();
-  const vitaBalance = await getCurrentUserVitaBalance();
 
-  if (did && vitaBalance !== null) {
-    return new User(did, vitaBalance);
+  if (did) {
+    // TODO chain Privy user request with balance check because I think
+    // Pocketbase in series with that sequence is slowing things down.
+    const [privyUser, pocketbaseUser] = await Promise.all([
+      getPrivyUser(did),
+      getPocketbaseUser(did),
+    ]);
+
+    const wallets = privyUser.linked_accounts
+      .filter(isWallet)
+      .map((a) => a.address);
+    const vitaBalances = await getVitaBalances(wallets);
+    const vitaOffset = pocketbaseUser?.vita_offset ?? 0;
+
+    return new User(did, privyUser.linked_accounts, vitaBalances, vitaOffset);
   }
 
   return null;
