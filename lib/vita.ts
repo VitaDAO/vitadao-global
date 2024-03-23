@@ -1,6 +1,6 @@
 import "server-only";
 
-import { cache } from "react";
+import { unstable_cache } from "next/cache";
 import { createPublicClient, formatUnits, http } from "viem";
 import { gnosis, mainnet, optimism } from "viem/chains";
 import { z } from "zod";
@@ -56,12 +56,7 @@ const vitaBalanceSchema = z.tuple([
 
 export type VitaBalance = z.infer<typeof vitaBalanceSchema>;
 
-// TODO these generate POST requests that, as far as I can tell, are not cached
-// anywhere. Might be better to cache these requests for a few minutes in
-// Next.js's Data Cache rather than React's per-request cache. I think these
-// balance checks slow down the site significantly as they need to be done for
-// every request and come in series with the Privy user data fetch.
-const getVitaBalancesForSingleAddress = cache(
+const getVitaBalancesForSingleAddress = unstable_cache(
   async (address: string): Promise<VitaBalance[]> => {
     const parsedAddress = walletAddressSchema.parse(address);
     return Promise.all([
@@ -103,6 +98,10 @@ const getVitaBalancesForSingleAddress = cache(
       ];
     });
   },
+  ["getVitaBalancesForSingleAddress"],
+  {
+    revalidate: 180
+  }
 );
 
 export async function getVitaBalances(addresses: string[]) {
