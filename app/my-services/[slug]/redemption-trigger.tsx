@@ -97,7 +97,7 @@ export function RedemptionTrigger({
       );
     } else {
       content = (
-        <div className="space-y-3">
+        <div className="max-h-[80vh] space-y-3 overflow-y-auto">
           <p className="text-lg font-semibold">Redeem this offer</p>
           <div
             dangerouslySetInnerHTML={{
