@@ -19,7 +19,7 @@ const getCurrentUserDid = cache(async () => {
   const PRIVY_APP_PK = z.string().parse(process.env.PRIVY_APP_PK);
   const PRIVY_APP_ID = z.string().parse(process.env.NEXT_PUBLIC_PRIVY_APP_ID);
 
-  const token = cookies().get("privy-token");
+  const token = (await cookies()).get("privy-token");
 
   if (token) {
     const verificationKey = await importSPKI(PRIVY_APP_PK, "ES256");

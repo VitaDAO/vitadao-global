@@ -70,8 +70,17 @@ export function getUserHandle(account: User["linkedAccounts"][number]): string {
       return account.username ?? "TikTok";
     case "twitter_oauth":
       return account.username ?? "Twitter";
+    case "smart_wallet":
     case "wallet":
       return truncateWallet(account.address);
+    case "instagram_oauth":
+      return account.username ?? "Instagram";
+    case "telegram":
+      return account.username ?? account.telegramUserId;
+    case "passkey":
+      return account.authenticatorName ?? "Passkey";
+    case "cross_app":
+      return account.providerApp.name ?? "Connected app";
   }
 }
 

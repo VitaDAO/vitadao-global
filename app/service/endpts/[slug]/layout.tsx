@@ -4,8 +4,8 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
-  let referer = headers().get("referer") ?? "/service/endpts";
+export default async function Layout({ children }: LayoutProps) {
+  let referer = (await headers()).get("referer") ?? "/service/endpts";
   if (!/\/service\/endpts[^\/]/.test(referer)) {
     referer = "/service/endpts";
   }

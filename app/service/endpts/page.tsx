@@ -54,10 +54,11 @@ export const metadata = buildMetadata({
 })
 
 export default async function Page({
-  searchParams,
+  searchParams: searchParamsPromise,
 }: {
-  searchParams: NextSearchParams;
+  searchParams: Promise<NextSearchParams>;
 }) {
+  const searchParams = await searchParamsPromise;
   try {
     const { page, channel, search, items, maxPage, channels } =
       await getItems(searchParams);
@@ -69,8 +70,9 @@ export default async function Page({
     return (
       <div className="flex grow flex-col px-[20px] py-[30px] @xl/main:px-[30px] @xl/main:pt-[90px]">
         <h1 className="mb-[30px] text-h2 font-medium">
-          <a
+          <Link
             href="/service/endpts"
+            prefetch={false}
             className="inline-flex flex-wrap items-center gap-x-4 gap-y-2 px-1 py-3"
           >
             <Image
@@ -79,7 +81,7 @@ export default async function Page({
               className="h-[30px] w-auto"
             />
             <Image src={news} alt="News" className="h-[30px] w-auto" />
-          </a>
+          </Link>
         </h1>
         <div className="mb-[30px] flex flex-wrap justify-between gap-3">
           <div className="flex flex-wrap gap-3">

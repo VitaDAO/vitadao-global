@@ -27,10 +27,11 @@ const proposalsCountSchema = z
   .transform((val) => val.data.space.proposalsCount);
 
 export default async function Page({
-  searchParams,
+  searchParams: searchParamsPromise,
 }: {
-  searchParams: NextSearchParams;
+  searchParams: Promise<NextSearchParams>;
 }) {
+  const searchParams = await searchParamsPromise;
   // Get the total number of proposals
   const proposalsCount = proposalsCountSchema.parse(
     await fetchSnapshot({ query: proposalsCountQuery }),
