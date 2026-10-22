@@ -15,10 +15,11 @@ export const metadata = buildMetadata({
 });
 
 export default async function Page({
-  searchParams,
+  searchParams: searchParamsPromise,
 }: {
-  searchParams: NextSearchParams;
+  searchParams: Promise<NextSearchParams>;
 }) {
+  const searchParams = await searchParamsPromise;
   const categories = [
     { label: "All Services", slug: "" },
     ...(await getServiceCategories()),

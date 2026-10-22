@@ -10,10 +10,10 @@ export const metadata = buildMetadata({
   title: "Endpoints News"
 })
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   try {
     const { title, body, imageSrc, trending, authors, channels, date } =
-      await getArticle(params.slug);
+      await getArticle((await params).slug);
 
     return (
       <div className="flex flex-wrap gap-x-[30px] gap-y-[20px]">

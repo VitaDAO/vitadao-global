@@ -5,8 +5,8 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
-  let referer = headers().get("referer") ?? "/my-services";
+export default async function Layout({ children }: LayoutProps) {
+  let referer = (await headers()).get("referer") ?? "/my-services";
   if (!/\/my-services[^\/]/.test(referer)) {
     referer = "/my-services";
   }

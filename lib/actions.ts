@@ -7,7 +7,8 @@ import { deleteCurrentUser } from "@/lib/user";
 
 export async function deleteUser() {
   await deleteCurrentUser();
-  cookies().delete("privy-token");
-  cookies().delete("privy-refresh-token");
+  const cookieStore = await cookies();
+  cookieStore.delete("privy-token");
+  cookieStore.delete("privy-refresh-token");
   redirect("/");
 }
