@@ -217,6 +217,11 @@ const iconClassName: Record<AccountType, string> = {
   tiktok_oauth: "icon--logos--tiktok",
   twitter_oauth: "icon--logos--twitter",
   wallet: "icon--vita icon--vita--wallet",
+  smart_wallet: "icon--vita icon--vita--wallet",
+  instagram_oauth: "icon--vita--asterisk",
+  telegram: "icon--vita--asterisk",
+  passkey: "icon--vita--asterisk",
+  cross_app: "icon--vita--asterisk",
 };
 
 interface UnlinkButtonProps {
@@ -275,6 +280,9 @@ function UnlinkButton({ account, disabled = false }: UnlinkButtonProps) {
         case "wallet":
           onClick = () => unlinkWallet(account.address);
           break;
+        default:
+          // These account types have no unlink flow in this application.
+          return null;
       }
     }
 
